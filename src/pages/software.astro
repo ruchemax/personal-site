@@ -1,0 +1,45 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const { lang = "en" } = Astro.props;
+---
+
+<BaseLayout title="Software — Maksim Ruchkin" lang={lang}>
+  <section class="w-full text-white">
+    <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
+      <h1 class="text-4xl font-bold">Software</h1>
+      <p class="mt-3 text-white/80 max-w-2xl">
+         Programs and scripts I maintain
+      </p>
+
+      <!-- Cards -->
+      <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <!-- Card 1 -->
+        <article class="rounded-2xl border border-white/10 bg-black/20 p-5 shadow-lg backdrop-blur">
+          <h2 class="text-xl font-semibold">Balta</h2>
+          <p class="mt-2 text-sm text-white/75">
+            Application for grain size distribution data processing and the construction of plots.
+          </p>
+          <div class="mt-4 flex gap-3">
+            <a
+              href="/releases/balta-1.0.exe"           /* file lives in /public/releases/ */
+              download="Balta v1.0.exe"                /* hint browser to save as file */
+              class="rounded-lg bg-amber-500 px-3 py-2 text-sm font-semibold text-slate-950 hover:bg-amber-400"
+            >
+              Download v1.0
+            </a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Contact -->
+      <div class="mt-12 text-sm text-white/80">
+        Have questions or feature requests? Write me via
+        <a href={lang === "ru" ? "/ru/contact" : "/contact"} class="text-amber-400 hover:underline">
+          Contacts
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+

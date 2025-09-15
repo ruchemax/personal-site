@@ -1,51 +1,49 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
-<BaseLayout title="Maksim Ruchkin — Personal site" lang="en">
-  <!-- English content -->
+<BaseLayout title="Максим Ручкин — Персональный сайт" lang="ru">
+  <!-- Русский контент -->
 
-  <!-- Прозрачная секция: НИКАКИХ фоновых цветов, только контент -->
+  <!-- Прозрачная секция -->
   <section class="relative w-full text-white">
     <div class="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-10 px-6 py-16 md:grid-cols-2 md:items-center">
 
       <!-- ЛЕВЫЙ столбец: фото -->
       <div class="relative mx-auto w-72">
-
-        <!-- Фото в круге с оранжевым кантом -->
+        <!-- Фото -->
         <div class="aspect-square w-72 overflow-hidden rounded-full border-4 border-amber-500 shadow-2xl">
-          <img src="/portrait.jpg" alt="Portrait of Maksim" class="h-full w-full object-cover" />
+          <img src="/portrait.jpg" alt="Портрет Максима" class="h-full w-full object-cover" />
         </div>
 
-        <!-- Кнопки -->
+        <!-- Кнопка -->
         <div class="mt-8 flex flex-wrap justify-center gap-4">
           <a href="/cv.pdf"
             class="min-w-[180px] text-center rounded-xl bg-amber-500 px-6 py-3 font-semibold text-slate-950 hover:bg-amber-400">
-            Download CV
+            Скачать CV
           </a>
         </div>
       </div>
 
-      <!-- ПРАВЫЙ столбец: -->
+      <!-- ПРАВЫЙ столбец -->
       <div>
         <!-- Заголовок -->
-        <h1 class="mt-4 text-4xl font-bold leading-tight md:text-4xl">
-          Hi, I'm Maksim Ruchkin
+        <h1 class="mt-4 text-3xl font-bold leading-tight md:text-3xl">
+          Привет, меня зовут Максим Ручкин
         </h1>
 
         <!-- Подзаголовок -->
         <h2 class="mt-4 text-xl font-semibold leading-tight">
-          PhD in Geography, Researcher in Quaternary Science
+          Кандидат географических наук, исследователь четвертичного периода
         </h2>
 
         <!-- Описание -->
         <p class="mt-4 max-w-xl text-white/80">
-          My research interests are in the field of Quaternary geology and the paleogeography of Northern Europe, with a particular focus on luminescence dating. 
-          Currently, I am studying the Last Interglacial period in the Baltic region and Lake Schwerin in Germany.
-          On this website, you can find information about the projects I have worked on, links to my publications, software I have developed, as well as materials on the history
-          of my homeland (Cherepovets region) and my family tree, which I research as a hobby.
+          Мои научные интересы включают четвертичную геологию и палеогеографию Северной Европы, с особым акцентом на люминесцентное датирование. В настоящее время я изучаю 
+          последнее межледниковье в восточной Балтике и Шверинское озеро в Германии. На этом сайте вы найдёте описания проектов, в которых я принимал участие, ссылки на мои публикации, 
+          разработанные мной программы, а также материалы по краеведению (Череповецкий уезд) и генеалогии, которыми я занимаюсь в качестве хобби.
         </p>
 
-        <!-- Профили (иконки) -->
+        <!-- Профили -->
         <div class="mt-10 space-y-2 text-sm text-white/70">
           <div class="flex flex-wrap gap-4">
             <a href="https://www.scopus.com/authid/detail.uri?authorId=57223977950" target="_blank" rel="noopener noreferrer">
@@ -57,7 +55,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             <a href="https://www.researchgate.net/profile/Maksim_Ruchkin" target="_blank" rel="noopener noreferrer">
               <img src="/icons/researchgate.png" alt="ResearchGate" class="h-6 w-18 transition hover:opacity-80" />
             </a>
-            <a href="https://scholar.google.com/citations?user=sCTHWVwAAAAJ&hl=en" target="_blank" rel="noopener noreferrer">
+            <a href="https://scholar.google.com/citations?user=sCTHWVwAAAAJ&hl=ru" target="_blank" rel="noopener noreferrer">
               <img src="/icons/scholar.png" alt="Google Scholar" class="h-6 w-18 transition hover:opacity-80" />
             </a>
             <a href="https://elibrary.ru/author_items.asp?authorid=1089388&show_refs=1" target="_blank" rel="noopener noreferrer">
@@ -73,6 +71,3 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </div>
   </section>
 </BaseLayout>
-
-
-
