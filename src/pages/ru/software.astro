@@ -13,21 +13,36 @@ const { lang = "ru" } = Astro.props;
       </p>
 
       <!-- Cards -->
-      <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
         <!-- Card 1 -->
-        <article class="rounded-2xl border border-white/10 bg-black/20 p-5 shadow-lg backdrop-blur">
+        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[500px]">
           <h2 class="text-xl font-semibold">Balta</h2>
           <p class="mt-2 text-sm text-white/75">
-            Приложение для обработки данных распределения гранулометрического состава
-            и построения графиков.
+            Приложение для обработки данных гранулометрического анализа и построения графиков
           </p>
-          <div class="mt-4 flex gap-3">
+
+          <!-- Download button -->
+          <div class="mt-4">
             <a
               href="/releases/balta-1.0.exe"
               download="Balta v1.0.exe"
-              class="rounded-lg bg-amber-500 px-3 py-2 text-sm font-semibold text-slate-950 hover:bg-amber-400"
+              class="inline-block w-full max-w-[130px] text-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-amber-400"
             >
               Скачать v1.0
+            </a>
+          </div>
+
+          <!-- Citation -->
+          <div class="mt-4 text-xs text-white/70">
+            Вы можете использовать программу бесплатно, однако, пожалуйста, указывайте ссылку на этот сайт:<br />
+            Ручкин М.В., <i>Balta v1.0</i>. Доступно на:
+            <a
+              href="https://www.maksimruchkin.org/ru/software"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-amber-400 hover:underline"
+            >
+              https://www.maksimruchkin.org/ru/software
             </a>
           </div>
         </article>
@@ -43,3 +58,4 @@ const { lang = "ru" } = Astro.props;
     </div>
   </section>
 </BaseLayout>
+

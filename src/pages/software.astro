@@ -13,20 +13,36 @@ const { lang = "en" } = Astro.props;
       </p>
 
       <!-- Cards -->
-      <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
         <!-- Card 1 -->
-        <article class="rounded-2xl border border-white/10 bg-black/20 p-5 shadow-lg backdrop-blur">
+        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[470px]">
           <h2 class="text-xl font-semibold">Balta</h2>
           <p class="mt-2 text-sm text-white/75">
             Application for grain size distribution data processing and the construction of plots.
           </p>
-          <div class="mt-4 flex gap-3">
+
+          <!-- Download button -->
+          <div class="mt-4">
             <a
-              href="/releases/balta-1.0.exe"           /* file lives in /public/releases/ */
-              download="Balta v1.0.exe"                /* hint browser to save as file */
-              class="rounded-lg bg-amber-500 px-3 py-2 text-sm font-semibold text-slate-950 hover:bg-amber-400"
+              href="/releases/balta-1.0.exe"
+              download="Balta v1.0.exe"
+              class="inline-block w-full max-w-[130px] text-center rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-amber-400"
             >
               Download v1.0
+            </a>
+          </div>
+
+          <!-- Citation -->
+          <div class="mt-4 text-xs text-white/70">
+            The software is free to use; please cite this website as a reference:<br />
+            Ruchkin M.V., <i>Balta v1.0</i>. Available at:
+            <a
+              href="https://www.maksimruchkin.org/software"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-amber-400 hover:underline"
+            >
+              https://www.maksimruchkin.org/software
             </a>
           </div>
         </article>
@@ -34,10 +50,10 @@ const { lang = "en" } = Astro.props;
 
       <!-- Contact -->
       <div class="mt-12 text-sm text-white/80">
-        Have questions or feature requests? Write me via
-        <a href={lang === "ru" ? "/ru/contact" : "/contact"} class="text-amber-400 hover:underline">
-          Contacts
-        </a>
+        <p>
+          Have questions or feature requests? Write to me via
+          <a href={lang === "ru" ? "/ru/contact" : "/contact"} class="text-amber-400 hover:underline">Contacts</a>.
+        </p>
       </div>
     </div>
   </section>

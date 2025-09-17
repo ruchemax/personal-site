@@ -1,0 +1,184 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+type Pub = {
+  title: string;
+  authors: string;
+  year?: number | null;
+  venue: string;
+  doi?: string;
+};
+
+const journals: Pub[] = [
+  {
+    title: "The Mga Formation of the Neva Lowland (St. Petersburg region): A Review",
+    authors: "Ruchkin, M. V., Sheetov, M. V., Pleshivtseva, E. S., Ludikova, A. V., Taldenkova, E. E., Ovsepyan, Y. S., Kosintsev, P. A., Merkuliev, A. V.",
+    year: null,
+    venue: "Stratigraphy and Geological Correlation",
+  },
+  {
+    title: "The new key sections of the Last Interglacial transgression in the Eurasian Arctic (Eastern White Sea): paleoenvironmental reconstructions and interregional correlations",
+    authors: "Zaretskaya, N. E., Taldenkova, Е. E., Ruchkin, M. V., Ovsepyan, Y. S., Rudenko, O., Timofeeva, I. V.",
+    year: null,
+    venue: "Quaternary International",
+  },
+  {
+    title: "Glaciolacustrine sedimentary settings and the MIS2 palaeogeography of the eastern White Sea",
+    authors: "Zaretskaya, N. E., Vashkov, A. A., Baranov, D. V., Ruchkin, M. V., Nosova, O. Y., Cherezova, A. A.",
+    year: null,
+    venue: "Geomorfologiya i Paleogeografiya",
+  },
+  {
+    title: "Paleohydrological changes in the eastern Baltic Sea during the Middle/Late Pleistocene transition and the Last Interglacial",
+    authors: "Ruchkin, M. V., Sheetov, M. V., Taldenkova, Е. E., Pushina, Z. V., Dudanova, V. I., Ovsepyan, Y. S., Konstantinov, E. A., Nosevich, E. S., Mustafin, M. A.",
+    year: 2025,
+    venue: "Quaternary Science Reviews 360, 109244",
+    doi: "10.1016/j.quascirev.2025.109244",
+  },
+  {
+    title: "The Blake Geomagnetic Excursion Recorded in the Mikulino Interglacial Sediments of the Neva Lowland",
+    authors: "Dudanova, V. I., Veselovskiy, R. V., Ruchkin, M. V., Sheetov, M. V.",
+    year: 2024,
+    venue: "Doklady Earth Sciences 514, 244–248",
+    doi: "10.1134/S1028334X23602894",
+  },
+  {
+    title: "Stratigraphy and OSL chronology of the Middle–Upper Pleistocene sedimentary sequence and vegetation history during Late MIS6 – MIS5e in the Neva Lowland (St. Petersburg Region, Russia)",
+    authors: "Ruchkin, M. V., Nosevich, E. S., Sheetov, M. V., Brill, D.",
+    year: 2024,
+    venue: "Journal of Quaternary Science 39, 745–764",
+    doi: "10.1002/jqs.3618",
+  },
+  {
+    title: "The Azas ice sheet and its role in the formation of Late Pleistocene ice-dammed lakes in southern Siberia: case study of Upper Kharal paleolake",
+    authors: "Novikov, I. S., Nazarov, D. V., Mikharevich, M. V., Gladysheva, A. S., Ruchkin, M. V., Prudnikov, S. G.",
+    year: 2023,
+    venue: "Geology and Geophysics 64, 595–606",
+    doi: "10.2113/RGG20224494",
+  },
+  {
+    title: "First Data on the Paleogeographical Settings and Chronology of the Last Interglacial on the Zimnii Coast of the White Sea",
+    authors: "Zaretskaya, N. E., Taldenkova, Е. E., Ovsepyan, Y. S., Ruchkin, M. V., Baranov, D. V., Rudenko, O. V., Stepanova, A. Y.",
+    year: 2023,
+    venue: "Doklady Earth Sciences 512, 1059–1064",
+    doi: "10.1134/S1028334X23601360",
+  },
+  {
+    title: "Evidence for the intrusion of marine Atlantic waters into the West Siberian Arctic during the Middle Pleistocene",
+    authors: "Nazarov, D. V., Nikolskaia, O. A., Gladysheva, A. S., Zhigmanovskiy, I. V., Ruchkin, M. V., Merkuljev, A. V., Thomsen, K. J.",
+    year: 2022,
+    venue: "Boreas 51, 402–425",
+    doi: "10.1111/bor.12558",
+  },
+  {
+    title: "Lake Yamal, an ice-dammed megalake in the West Siberian Arctic during the Late Pleistocene, ∼60–35 ka",
+    authors: "Nazarov, D. V., Nikolskaia, O. A., Zhigmanovskiy, I. V., Ruchkin, M. V., Cherezova, A. A.",
+    year: 2022,
+    venue: "Quaternary Science Reviews 289, 107614",
+    doi: "10.1016/j.quascirev.2022.107614",
+  },
+  {
+    title: "The Southeastern White Sea Coast in the Late Pleistocene (in Russian)",
+    authors: "Zaretskaya, N. E., Baranov, D. V., Ruchkin, M. V., Lugovoy, N. N.",
+    year: 2022,
+    venue: "Izvestiya RAN. Seriya Geograficheskaya 86, 898–913",
+    doi: "10.31857/S2587556622060164",
+  },
+  {
+    title: "Early Middle Weichselian in the White Sea and adjacent areas: Chronology, stratigraphy and palaeoenvironments",
+    authors: "Zaretskaya, N. E., Korsakova, O., Molodkov, A. N., Ruchkin, M. V., Baranov, D. V., Rybalko, A. E., Lugovoy, N. N., Merkuljev, A. V.",
+    year: 2022,
+    venue: "Quaternary International 632, 65–78",
+    doi: "10.1016/j.quaint.2022.05.007",
+  },
+  {
+    title: "High-resolution analysis of the Likhvin loess-paleosol sequence (the central part of the East European Plain, Russia)",
+    authors: "Panin, P. G., Filippova, K. G., Bukhonov, A. V., Karpukhina, N. V., Kalinin, P. I., Ruchkin, M. V.",
+    year: 2021,
+    venue: "Catena 205, 105445",
+    doi: "10.1016/j.catena.2021.105445",
+  },
+  {
+    title: "Cross-OSL and 14C Dating of Young Subaerial Deposits in the Sambia (Kaliningrad) Peninsula",
+    authors: "Shvarev, S. V., Zaretskaya, N. E., Ruchkin, M. V., Lugovoy, N. N., Zazovskaya, E. P., Subetto, D. A.",
+    year: 2021,
+    venue: "Doklady Earth Sciences 499, 639–642",
+    doi: "10.1134/S1028334X21080158",
+  },
+{
+title: "Pleistocene marine formations of the lower Yenissei basin, Arctic Russia: OSL age, facial and paleontological characteristics (in Russian)",
+authors: "Nazarov, D. V., Nikolskaia, O. A., Gladysheva, A. S., Zhigmanovskiy, I. V., Ruchkin, M. V., Merkuljev, A. V.",
+year: 2020,
+venue: "Regional Geology and Metallogeny 82, 16–34",
+url: "https://karpinskyinstitute.ru/ru/public/reggeology_met/content/2020/82/82_02.pdf",
+}
+,
+];
+
+// Group by year (null → "In press")
+const grouped = journals.reduce((acc, pub) => {
+  const key = pub.year ? pub.year.toString() : "In press";
+  if (!acc[key]) acc[key] = [];
+  acc[key].push(pub);
+  return acc;
+}, {} as Record<string, Pub[]>);
+
+const years = Object.keys(grouped).sort((a, b) => {
+  if (a === "In press") return -1;
+  if (b === "In press") return 1;
+  return Number(b) - Number(a);
+});
+---
+
+<BaseLayout title="Publications — Maksim Ruchkin" lang="en">
+  <section class="w-full text-white">
+    <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
+      <h1 class="text-4xl font-bold">Publications</h1>
+      <p class="mt-3 max-w-2xl text-white/80">
+        Journal articles grouped by year
+      </p>
+
+      {years.map((year) => (
+        <section class="mt-10">
+          <h2 class="text-2xl font-semibold border-b border-white/20 pb-1">
+            {year}
+          </h2>
+          <ul class="mt-4 space-y-4">
+            {grouped[year].map((p) => (
+              <li class="rounded-xl border border-white/10 bg-black/25 p-4 backdrop-blur">
+                <div class="text-sm text-white/60">{p.venue}</div>
+                <h3 class="text-base font-semibold">{p.title}</h3>
+                <div class="text-sm text-white/80">{p.authors}</div>
+                {p.doi && (
+                  <div class="mt-2">
+                    <a
+                      href={`https://doi.org/${p.doi}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="text-amber-400 hover:underline"
+                    >
+                      DOI: {p.doi}
+                    </a>
+                  </div>
+                )}
+
+                {p.url && (
+                    <div class="mt-2">
+                        <a
+                        href={p.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-amber-400 hover:underline"
+                        >
+                        Full text
+                        </a>
+                    </div>
+                    )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
