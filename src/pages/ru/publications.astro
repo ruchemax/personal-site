@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 
 type Pub = {
   title: string;
@@ -8,27 +8,27 @@ type Pub = {
   venue: string;
   doi?: string;
   url?: string;
-  type: "article" | "book" | "abstract" | "thesis";
+  type: "journal" | "book" | "abstract" | "thesis";
 };
 
-/* ---------- DATA ---------- */
-/* Journal articles */
+/* ---------- ДАННЫЕ ---------- */
+/* Статьи в журналах */
 const journals: Pub[] = [
-  { title: "The Mga Formation of the Neva Lowland (St. Petersburg region): A Review",
-    authors: "Ruchkin, M. V., Sheetov, M. V., Pleshivtseva, E. S., Ludikova, A. V., Taldenkova, E. E., Ovsepyan, Y. S., Kosintsev, P. A., Merkuliev, A. V.",
-    year: null, venue: "Stratigraphy and Geological Correlation", type: "journal" },
+  { title: "Мгинская свита Приневской низменности",
+    authors: "Ручкин М. В., Шитов М. В., Плешивцева Э. С., Лудикова А. В., Талденкова Е. Е., Овсепян Я. С., Косинцев П. А., Меркульев А. В.",
+    year: null, venue: "Стратиграфия. Геологическая корреляция", type: "journal" },
   { title: "The new key sections of the Last Interglacial transgression in the Eurasian Arctic (Eastern White Sea): paleoenvironmental reconstructions and interregional correlations",
-    authors: "Zaretskaya, N. E., Taldenkova, Е. E., Ruchkin, M. V., Ovsepyan, Y. S., Rudenko, O., Timofeeva, I. V.",
+    authors: "Zaretskaya, N. E., Taldenkova, Е. E., Ruchkin, M. V., Ovsepyan, Ya. S., Rudenko, O., Timofeeva, I. V.",
     year: null, venue: "Quaternary International", type: "journal" },
-  { title: "Glaciolacustrine sedimentary settings and the MIS2 palaeogeography of the eastern White Sea",
-    authors: "Zaretskaya, N. E., Vashkov, A. A., Baranov, D. V., Ruchkin, M. V., Nosova, O. Y., Cherezova, A. A.",
-    year: null, venue: "Geomorfologiya i Paleogeografiya", type: "journal" },
+  { title: "Озёрно-ледниковые обстановки осадконакопления и палеогеография МИС 2 в восточном Прибеломорье",
+    authors: "Зарецкая Н. Е., Вашков А. А., Баранов Д. В., Ручкин М. В., Носова О. Ю., Черезова А. А.",
+    year: null, venue: "Геоморфология и палеогеография", type: "journal" },
   { title: "Paleohydrological changes in the eastern Baltic Sea during the Middle/Late Pleistocene transition and the Last Interglacial",
     authors: "Ruchkin, M. V., Sheetov, M. V., Taldenkova, Е. E., Pushina, Z. V., Dudanova, V. I., Ovsepyan, Y. S., Konstantinov, E. A., Nosevich, E. S., Mustafin, M. A.",
     year: 2025, venue: "Quaternary Science Reviews 360, 109244", doi: "10.1016/j.quascirev.2025.109244", type: "journal" },
-  { title: "The Blake Geomagnetic Excursion Recorded in the Mikulino Interglacial Sediments of the Neva Lowland",
-    authors: "Dudanova, V. I., Veselovskiy, R. V., Ruchkin, M. V., Sheetov, M. V.",
-    year: 2024, venue: "Doklady Earth Sciences 514, 244–248", doi: "10.1134/S1028334X23602894", type: "journal" },
+  { title: "Экскурс геомагнитного поля Блейк в разрезе микулинских межледниковых отложений Приневской низменности",
+    authors: "Дуданова В. И., Веселовский Р. В., Ручкин М. В., Шитов М. В.",
+    year: 2024, venue: "Доклады Академии Наук. Науки о Земле 514, 205–210", doi: "10.31857/S2686739724020029", type: "journal" },
   { title: "Stratigraphy and OSL chronology of the Middle–Upper Pleistocene sedimentary sequence and vegetation history during Late MIS6 – MIS5e in the Neva Lowland (St. Petersburg Region, Russia)",
     authors: "Ruchkin, M. V., Nosevich, E. S., Sheetov, M. V., Brill, D.",
     year: 2024, venue: "Journal of Quaternary Science 39, 745–764", doi: "10.1002/jqs.3618", type: "journal" },
@@ -54,7 +54,7 @@ const journals: Pub[] = [
     authors: "Panin, P. G., Filippova, K. G., Bukhonov, A. V., Karpukhina, N. V., Kalinin, P. I., Ruchkin, M. V.",
     year: 2021, venue: "Catena 205, 105445", doi: "10.1016/j.catena.2021.105445", type: "journal" },
   { title: "Cross-OSL and 14C Dating of Young Subaerial Deposits in the Sambia (Kaliningrad) Peninsula",
-    authors: "Shvarev, S. V., Zaretskaya, N. E., Ruchkin, M. V., Lugovoy, N. N., Zazovskaya, E. P., Subetto, D. A.",
+    authors: "Shvarev, S. V., Zaretskaya, N. E., Ruchkin, M. V., Lugovoy, N. N., Зазовская, E. P., Subetto, D. A.",
     year: 2021, venue: "Doklady Earth Sciences 499, 639–642", doi: "10.1134/S1028334X21080158", type: "journal" },
   { title: "Pleistocene marine formations of the lower Yenissei basin, Arctic Russia: OSL age, facial and paleontological characteristics (in Russian)",
     authors: "Nazarov, D. V., Nikolskaia, O. A., Gladysheva, A. S., Zhigmanovskiy, I. V., Ruchkin, M. V., Merkuljev, A. V.",
@@ -62,94 +62,86 @@ const journals: Pub[] = [
     url: "https://karpinskyinstitute.ru/ru/public/reggeology_met/content/2020/82/82_02.pdf", type: "journal" },
 ];
 
-/* Books */
+/* Книги */
 const books: Pub[] = [
-  { title: "Essays on the Quaternary Geology of the Southern Ladoga Area and the Neva Lowland. Field Guide for Geological Excursions of the XI All-Russian Conference on Quaternary Research, September 18–20, 2025 (in Russian)",
-    authors: "Sheetov, M. V., Biske, Y. S., Bagdasaryan, T. E., Dudanova, V. I., Ruchkin, M. V., Sumareva, I. V., Shukhvostov, R. S. (Ed. Nazarov D. V.)",
-    year: 2025, venue: "St. Petersburg: LEMA", type: "book" },
-  { title: "State Geological Map of Russian Federation. Scale 1:1 000 000 (third generation). West Siberian Seria. Quadrangle R-42, Yamal Peninsula. Explanatory notes (in Russian)",
-    authors: "Shishkin, M. A., Faybusovich, Y. E., Shkarubo, S. I., Nazarov, D. V., Abakumova, L. A., Borozdina, Y. A., Voronin, A. S., Gerasicheva, A. V., Gorelina, T. E., Zavarzina, G. A., Zinchenko, A. G., Zuykova, O. N., Kostin, D. A., Lang, E. I., Likhotin, V. G., Markina, T. V., Petrov, S. Y., Petrova, M. N., Pushka, D. V., Radchenko, M. S., Rubin, L. I., Seregin, S.V., Solonina, S. F., Sychev, S. N., Tortsov, Y. I., Bazhkova, S. F., Vasilenko, E. P., Ivanova, E. I., Perlov, D. K., Ruchkin, M. V., Stepanova, A. P.",
-    year: 2015, venue: "St. Petersburg: VSEGEI", type: "book" },
+  { title: "Очеркu по геологии кватера Южного Приладожья и Приневской низменности. Путеводитель геологических экскурсий XI Всероссийской конференции по изучению четвертичного периода, 18–20 сентября 2025 г.",
+    authors: "Шитов М. В., Бискэ Ю. С., Багдасарян Т. Е., Дуданова В. И., Ручкин М. В., Сумарева И. В., Шухвостов Р. С. (ред. Назаров Д. В.)",
+    year: 2025, venue: "Санкт-Петербург: ЛЕМА", type: "book" },
+  { title: "Государственная геологическая карта Российской Федерации. Масштаб 1 : 1 000 000 (третье поколение). Серия Западно-Сибирская. Лист R-42 – п-ов Ямал. Объяснительная записка",
+    authors: "Шишкин М. А., Файбусович Я. Э., Шкарубо С. И., Назаров Д. В., Абакумова Л. А., ... , Ручкин М. В., Степанова А. П.",
+    year: 2015, venue: "Санкт-Петербург: Картографическая фабрика ВСЕГЕИ", type: "book" },
 ];
 
-/* Conference abstracts / Theses (empty for now) */
+/* Материалы конференций / Диссертации (пока пусто) */
 const abstracts: Pub[] = [];
 const theses: Pub[] = [];
 
-/* Merge all for year grouping */
+/* Объединяем для группировки по годам */
 const pubs: Pub[] = [...journals, ...books, ...abstracts, ...theses];
 
-/* Group by year: "In press" → 2025 → 2024 → ... */
+/* Группировка по годам: «В печати» → 2025 → 2024 → ... */
 const grouped = pubs.reduce((acc, p) => {
-  const key = p.year == null ? "In press" : String(p.year);
+  const key = p.year == null ? "В печати" : String(p.year);
   (acc[key] ??= []).push(p);
   return acc;
 }, {} as Record<string, Pub[]>);
 
 const years = Object.keys(grouped).sort((a, b) => {
-  if (a === "In press") return -1;
-  if (b === "In press") return 1;
+  if (a === "В печати") return -1;
+  if (b === "В печати") return 1;
   return Number(b) - Number(a);
 });
+
+// Человеко-понятные подписи типов для бейджа
+const typeLabel = (t: Pub["type"]) =>
+  t === "journal" ? "Статья"
+  : t === "book" ? "Книга"
+  : t === "abstract" ? "Тезисы"
+  : "Диссертация";
 ---
 
-<BaseLayout title="Publications — Maksim Ruchkin" lang="en">
+<BaseLayout title="Публикации — Максим Ручкин" lang="ru">
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
-      <h1 class="text-4xl font-bold">Publications</h1>
+      <h1 class="text-4xl font-bold">Публикации</h1>
 
-      <!-- Filter buttons: rounded, separate, no gaps -->
+      <!-- Кнопки фильтра: отдельные, белые, с рамкой, без зазоров; по умолчанию активны Журнальные и Книги -->
       <div id="filters" class="mt-6 flex flex-wrap space-x-0">
-        <button
-          data-type="journal"
-          class="filter-chip active rounded-md border border-white/30 bg-white px-4 py-2 text-sm font-medium text-black"
-        >
-          Journal articles
+        <button data-type="journal" class="filter-chip active rounded-md border border-white/30 bg-white px-4 py-2 text-sm font-medium text-black">
+          Статьи в журналах
         </button>
-        <button
-          data-type="book"
-          class="filter-chip active rounded-md border border-white/30 bg-white px-4 py-2 text-sm font-medium text-black"
-        >
-          Books
+        <button data-type="book" class="filter-chip active rounded-md border border-white/30 bg-white px-4 py-2 text-sm font-medium text-black">
+          Книги
         </button>
-        <button
-          data-type="abstract"
-          class="filter-chip rounded-md border border-white/30 bg-white/80 px-4 py-2 text-sm font-medium text-black/70"
-        >
-          Conference abstracts
+        <button data-type="abstract" class="filter-chip rounded-md border border-white/30 bg-white/80 px-4 py-2 text-sm font-medium text-black/70">
+          Материалы конференций
         </button>
-        <button
-          data-type="thesis"
-          class="filter-chip rounded-md border border-white/30 bg-white/80 px-4 py-2 text-sm font-medium text-black/70"
-        >
-          Theses
+        <button data-type="thesis" class="filter-chip rounded-md border border-white/30 bg-white/80 px-4 py-2 text-sm font-medium text-black/70">
+          Диссертации
         </button>
       </div>
 
-      <!-- Publications grouped by year -->
+      <!-- Публикации по годам -->
       <div id="pubs" class="mt-8 space-y-10">
         {years.map((year) => (
           <section class="year-block" data-year={year}>
             <h2 class="text-2xl font-semibold border-b border-white/20 pb-1">{year}</h2>
             <ul class="mt-4 space-y-4">
               {grouped[year]
-                // ensure rendering order: journal → book → abstract → thesis
-                .sort((a,b)=>{
+                // Порядок внутри года: статьи → книги → тезисы → диссертации
+                .sort((a,b) => {
                   const order = {journal:0, book:1, abstract:2, thesis:3} as const;
-                  return order[a.type]-order[b.type];
+                  return order[a.type] - order[b.type];
                 })
                 .map((p) => (
-                <li
-                  class="pub-item relative rounded-xl border border-white/10 bg-black/25 p-4 backdrop-blur"
-                  data-type={p.type}
-                >
-                  <!-- Type badge (top-right) -->
+                <li class="pub-item relative rounded-xl border border-white/10 bg-black/25 p-4 backdrop-blur" data-type={p.type}>
+                  <!-- Бейдж типа (справа сверху) -->
                   <span class="absolute right-3 top-3 rounded-md border border-white/20 bg-white/90 px-2 py-0.5 text-[11px] font-medium text-black">
-                    {p.type.charAt(0).toUpperCase() + p.type.slice(1)}
+                    {typeLabel(p.type)}
                   </span>
 
                   <div class="text-sm text-white/60">{p.venue}</div>
-                  <h3 class="text-base font-semibold pr-24">{/* pr to avoid overlap with badge */}{p.title}</h3>
+                  <h3 class="text-base font-semibold pr-24">{p.title}</h3>
                   <div class="text-sm text-white/80">{p.authors}</div>
 
                   <div class="mt-2 flex flex-wrap gap-4">
@@ -160,7 +152,7 @@ const years = Object.keys(grouped).sort((a, b) => {
                     )}
                     {p.url && (
                       <a href={p.url} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
-                        Full text
+                        Полный текст
                       </a>
                     )}
                   </div>
@@ -173,9 +165,8 @@ const years = Object.keys(grouped).sort((a, b) => {
     </div>
   </section>
 
-  <!-- Client-side filter logic -->
+  <!-- Логика фильтрации на клиенте -->
   <script is:inline>
-    // ordered chips: journal → book → abstract → thesis
     const chips = Array.from(document.querySelectorAll(".filter-chip"));
     const items = Array.from(document.querySelectorAll(".pub-item"));
     const yearBlocks = Array.from(document.querySelectorAll(".year-block"));
@@ -184,14 +175,11 @@ const years = Object.keys(grouped).sort((a, b) => {
       const activeTypes = new Set(
         chips.filter(c => c.classList.contains("active")).map(c => c.dataset.type)
       );
-
-      // show/hide items by type
+      // показать/скрыть элементы по типу
       items.forEach(li => {
-        const t = li.dataset.type;
-        li.style.display = activeTypes.has(t) ? "" : "none";
+        li.style.display = activeTypes.has(li.dataset.type) ? "" : "none";
       });
-
-      // hide empty years
+      // скрыть пустые годы
       yearBlocks.forEach(sec => {
         const visible = Array.from(sec.querySelectorAll(".pub-item"))
           .some(li => li.style.display !== "none");
@@ -201,34 +189,20 @@ const years = Object.keys(grouped).sort((a, b) => {
 
     function paintChips() {
       chips.forEach(c => {
-        const isActive = c.classList.contains("active");
-        // active: solid white, dark text, normal opacity
-        if (isActive) {
-          c.style.backgroundColor = "white";
-          c.style.color = "black";
-          c.style.opacity = "1";
-          c.style.fontWeight = "600";
-        } else {
-          // inactive: still white but semi-transparent
-          c.style.backgroundColor = "rgba(255,255,255,0.8)";
-          c.style.color = "rgba(0,0,0,0.7)";
-          c.style.opacity = "0.6";
-          c.style.fontWeight = "500";
-        }
+        const on = c.classList.contains("active");
+        c.style.backgroundColor = on ? "white" : "rgba(255,255,255,0.9)";
+        c.style.color = on ? "black" : "rgba(0,0,0,0.7)";
+        c.style.opacity = on ? "1" : "0.7";
+        c.style.fontWeight = on ? "600" : "500";
       });
     }
 
-    chips.forEach(chip => {
-      chip.addEventListener("click", () => {
-        chip.classList.toggle("active");
+    chips.forEach(c => c.addEventListener("click", () => {
+      c.classList.toggle("active");
+      applyFilter(); paintChips();
+    }));
 
-        // keep at least one chip active? — по ТЗ не требовалось; убрал автодобавление
-        applyFilter();
-        paintChips();
-      });
-    });
-
-    // initial render: only journal + book active (так задано в разметке)
+    // старт: активны «Статьи» и «Книги»
     applyFilter();
     paintChips();
   </script>
