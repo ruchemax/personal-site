@@ -1,0 +1,108 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Контакты — Максим Ручкин" lang="ru">
+  <section class="w-full text-white">
+    <div class="mx-auto w-full max-w-[800px] px-6 py-16">
+      <h1 class="mb-8 text-3xl font-bold">Свяжитесь со мной</h1>
+
+      <!-- Блок статуса -->
+      <div id="form-status" class="mb-4 hidden rounded-md border border-white/20 px-4 py-3 text-sm"></div>
+
+      <form id="contact-form" method="POST" action="/api/contacts" class="space-y-4" novalidate>
+        <!-- Имя -->
+        <div>
+          <label for="name" class="mb-1 block text-sm">Ваше имя</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            autocomplete="name"
+            class="w-full rounded-md border border-white/20 bg-black/30 backdrop-blur px-3 py-2 text-white"
+          />
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="mb-1 block text-sm">Ваш email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            class="w-full rounded-md border border-white/20 bg-black/30 backdrop-blur px-3 py-2 text-white"
+          />
+        </div>
+
+        <!-- Тема -->
+        <div>
+          <label for="subject" class="mb-1 block text-sm">Тема</label>
+          <input
+            id="subject"
+            name="subject"
+            type="text"
+            required
+            class="w-full rounded-md border border-white/20 bg-black/30 backdrop-blur px-3 py-2 text-white"
+          />
+        </div>
+
+        <!-- Сообщение -->
+        <div>
+          <label for="message" class="mb-1 block text-sm">Сообщение</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="10"
+            required
+            class="w-full rounded-md border border-white/20 bg-black/30 backdrop-blur px-3 py-2 text-white"
+          ></textarea>
+        </div>
+
+        <!-- Отправка -->
+        <button
+          type="submit"
+          class="rounded-md bg-amber-500 px-6 py-2 font-semibold text-slate-950 hover:bg-amber-400"
+        >
+          Отправить
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Отправка через fetch и красивый статус -->
+  <script is:inline>
+    const form = document.getElementById('contact-form');
+    const statusBox = document.getElementById('form-status');
+
+    function paintStatus(text, ok = true) {
+      statusBox.classList.remove('hidden');
+      statusBox.textContent = text;
+      statusBox.className =
+        'mb-4 rounded-md border px-4 py-3 text-sm ' +
+        (ok
+          ? 'border-emerald-400/30 bg-emerald-500/20 text-emerald-100'
+          : 'border-red-400/30 bg-red-500/20 text-red-100');
+    }
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      paintStatus('Отправка…', true);
+
+      try {
+        const res = await fetch(form.action, { method: 'POST', body: new FormData(form) });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data?.success) {
+          paintStatus('Сообщение отправлено. Спасибо!', true);
+          form.reset();
+        } else {
+          paintStatus('Не удалось отправить. Попробуйте позже.', false);
+        }
+      } catch {
+        paintStatus('Сетевая ошибка. Проверьте подключение и попробуйте ещё раз.', false);
+      }
+    });
+  </script>
+</BaseLayout>

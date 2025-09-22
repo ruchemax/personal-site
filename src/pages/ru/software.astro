@@ -9,7 +9,7 @@ const { lang = "ru" } = Astro.props;
     <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
       <h1 class="text-4xl font-bold">Программы</h1>
       <p class="mt-3 text-white/80 max-w-2xl">
-        Программы и скрипты, которые я поддерживаю
+        Приложения и скрипты, которые я поддерживаю
       </p>
 
       <!-- Cards -->
@@ -34,26 +34,29 @@ const { lang = "ru" } = Astro.props;
 
           <!-- Citation -->
           <div class="mt-4 text-xs text-white/70">
-            Вы можете использовать программу бесплатно, однако, пожалуйста, указывайте ссылку на этот сайт:<br />
-            Ручкин М.В., <i>Balta v1.0</i>. Доступно на:
+            Программа распространяется бесплатно; при использовании, пожалуйста, указывайте следующую ссылку:<br />
+            <br />
+            Ручкин М.В. (2025) <i>Balta v1.0</i>. Приложение для обработки данных гранулометрического анализа и построения графиков. Доступно на:
             <a
-              href="https://www.maksimruchkin.org/ru/software"
+              href="https://www.maxruchkin.org/software"
               target="_blank"
               rel="noopener noreferrer"
               class="text-amber-400 hover:underline"
             >
-              https://www.maksimruchkin.org/ru/software
+              https://www.maxruchkin.org/software
             </a>
           </div>
         </article>
       </div>
 
       <!-- Contact -->
-      <div class="mt-12 text-sm text-white/80">
-        Есть вопросы или пожелания? Напишите мне через
-        <a href="/ru/contact" class="text-amber-400 hover:underline">
-          Контакты
-        </a>
+      <div class="mt-4 text-xs text-white/70">
+        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[500px]">
+          Обнаружили ошибку? Есть вопросы или пожелания?
+          <a href="/ru/contacts" class="text-amber-400 hover:underline">
+            Напишите мне
+          </a>
+        </article>
       </div>
     </div>
   </section>

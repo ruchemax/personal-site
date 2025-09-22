@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro"; // путь проверь
+
+const { lang = "ru" } = Astro.props;
+
+// фиксируем дату публикации
+const publishedAt = new Date("2025-09-22").toLocaleDateString("ru-RU", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<BaseLayout title="Карта земельных владений — Максим Ручкин" lang={lang}>
+  <section class="w-full text-white">
+    <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
+      <h1 class="text-3xl font-bold">
+        Карта земельных владений в волости Череповец (1626/27 г.)
+      </h1>
+        <p class="mt-2 text-sm text-white/75"> Карта составлена по данным писцовой книги Белозерского уезда письма и меры Никиты Шеховского и подьячего Максима Козлова 1626/27 г. 
+        Копия XVIII в. за скрепой секретаря Ильи Феоктистова и справами подканцеляристов Петра Цветкова и Ивана Михайлова (РГАДА Ф.1209 Оп.1 Д.591)</p>
+
+      <!-- Карта -->
+      <div class="mt-10 rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur">
+        <!-- Вставь сюда свою карту -->
+        <img
+          src="/maps/cherepovets-1626.jpg"
+          alt="Карта земельных владений Череповецкой волости (1626/27)"
+          class="w-full rounded-lg"
+        />
+        <!-- Пример для iframe: 
+        <iframe src="https://example.com/map-viewer" class="w-full h-[600px] rounded-lg"></iframe>
+        -->
+      </div>
+
+      <!-- Теги -->
+      <div class="mt-6 flex flex-wrap gap-2 text-xs">
+        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Белозерский уезд</span>
+        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Надпорожский стан</span>
+        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Череповская волость</span>
+      </div>
+
+      <!-- Навигация назад -->
+      <div class="mt-10">
+        <a
+          href="/ru/hobby"
+          class="inline-block rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-sm text-white/80 hover:bg-white/10"
+        >
+          ← Назад к хобби
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

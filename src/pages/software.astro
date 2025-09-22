@@ -9,7 +9,7 @@ const { lang = "en" } = Astro.props;
     <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
       <h1 class="text-4xl font-bold">Software</h1>
       <p class="mt-3 text-white/80 max-w-2xl">
-         Programs and scripts I maintain
+         Applications and scripts I maintain
       </p>
 
       <!-- Cards -->
@@ -18,7 +18,7 @@ const { lang = "en" } = Astro.props;
         <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[470px]">
           <h2 class="text-xl font-semibold">Balta</h2>
           <p class="mt-2 text-sm text-white/75">
-            Application for grain size distribution data processing and the construction of plots.
+            Application for grain size distribution data processing and the construction of plots
           </p>
 
           <!-- Download button -->
@@ -34,26 +34,29 @@ const { lang = "en" } = Astro.props;
 
           <!-- Citation -->
           <div class="mt-4 text-xs text-white/70">
-            The software is free to use; please cite this website as a reference:<br />
-            Ruchkin M.V., <i>Balta v1.0</i>. Available at:
+            The software is free to use; when using it, please cite this website as a reference:<br />
+            <br />
+            Ruchkin M. V. (2025) <i>Balta v1.0</i>. Application for grain size distribution data processing and the construction of plots Available at:
             <a
-              href="https://www.maksimruchkin.org/software"
+              href="https://www.maxruchkin.org/software"
               target="_blank"
               rel="noopener noreferrer"
               class="text-amber-400 hover:underline"
             >
-              https://www.maksimruchkin.org/software
+              https://www.maxruchkin.org/software
             </a>
           </div>
         </article>
       </div>
 
       <!-- Contact -->
-      <div class="mt-12 text-sm text-white/80">
-        <p>
-          Have questions or feature requests? Write to me via
-          <a href={lang === "ru" ? "/ru/contact" : "/contact"} class="text-amber-400 hover:underline">Contacts</a>.
-        </p>
+      <div class="mt-4 text-xs text-white/70">
+        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[470px]">
+          Have found a bug? Have questions or feature requests?
+          <a href="/contacts" class="text-amber-400 hover:underline">
+            Write to me
+          </a>
+        </article>
       </div>
     </div>
   </section>
