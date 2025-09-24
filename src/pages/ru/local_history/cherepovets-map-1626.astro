@@ -1,0 +1,183 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const { lang = "ru" } = Astro.props;
+
+const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
+  day: "numeric",
+  month: "long",
+  year: "numeric",
+});
+---
+
+<BaseLayout title="Карта земельных владений — Максим Ручкин" lang={lang}>
+  <section class="w-full text-white">
+    <div class="mx-auto w-full max-w-[1200px] px-6 pt-4 pb-12">
+      <p class="text-xs text-white/60">Опубликовано: {publishedAt}</p>
+
+      <h1 class="text-3xl font-bold">Карта земельных владений в волости Череповец (1626/27 г.)</h1>
+
+      <!-- Теги -->
+      <div class="mt-3 flex flex-wrap gap-2 text-xs">
+        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Белозерский уезд</span>
+        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Надпорожский стан</span>
+        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Череповская волость</span>
+      </div>
+
+      <p class="mt-2 text-sm text-white/75">
+        Карта составлена по данным писцовой книги Белозерского уезда письма и меры Никиты Шеховского и подьячего Максима Козлова 1626/27 г.
+        Копия XVIII в. за скрепой секретаря Ильи Феоктистова и справами подканцеляристов Петра Цветкова и Ивана Михайлова (РГАДА Ф.1209 Оп.1 Д.591).<br /><br />
+        В качестве подложки использованы топографические карты Госгисцентра масштаба 1:50 000 и 1:25 000.
+      </p>
+
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+
+      <div id="viewer" class="relative mt-4">
+        <div id="map-card" class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur">
+          <div id="ratio" class="relative">
+            <div id="frame" class="absolute inset-0 border border-white/20 rounded-none overflow-hidden">
+              <div id="map" class="absolute"></div>
+              
+              <!-- Zoom controls -->
+              <div class="absolute top-2 left-2 z-[1000] flex gap-1">
+                <button id="btn-zoom-in"  type="button" class="rounded-md border border-white/20 bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10" aria-label="Приблизить">+</button>
+                <button id="btn-zoom-out" type="button" class="rounded-md border border-white/20 bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10" aria-label="Отдалить">−</button>
+              </div>
+
+              <!-- Fullscreen button -->
+              <button id="btn-fullscreen" type="button"
+                class="absolute top-2 right-2 z-[1000] rounded-md border border-white/20 bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10"
+                title="Развернуть на весь экран" aria-label="Развернуть на весь экран">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" class="inline-block align-[-2px]">
+                  <path d="M7 3H3v4M3 3l6 6M17 3h4v4M21 3l-6 6M7 21H3v-4M3 21l6-6M17 21h4v-4M21 21l-6-6"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Download button -->
+        <div class="mt-4 flex justify-start">
+          <a href="/maps/cherepovets-1626.jpg" download="cherepovets-1626.jpg"
+             class="inline-block rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-amber-400">
+            Скачать карту (JPG)
+          </a>
+        </div>
+      </div>
+
+      <style>
+        #frame, #map, .leaflet-container { border-radius: 0 !important; background: transparent !important; }
+        #ratio { min-height: 50vh; }
+        .leaflet-control-attribution { display: none !important; }
+
+        #viewer:fullscreen { width: 100vw; height: 100vh; background: rgba(0,0,0,0.25); }
+        #viewer:fullscreen #map-card { position: absolute; inset: 16px; }
+        #viewer:fullscreen #ratio { height: 100%; }
+        #viewer:fullscreen #frame { position: absolute; inset: 0; }
+        #viewer:fullscreen .mt-4 { display: none; }
+      </style>
+
+      <!-- Leaflet JS -->
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+      <script is:inline>
+        document.addEventListener('DOMContentLoaded', () => {
+          const imgUrl   = "/maps/cherepovets-1626.jpg";
+          const viewer   = document.getElementById('viewer');
+          const ratioBox = document.getElementById('ratio');
+          const frame    = document.getElementById('frame');
+          const mapEl    = document.getElementById('map');
+
+          const btnPlus  = document.getElementById('btn-zoom-in');
+          const btnMinus = document.getElementById('btn-zoom-out');
+          const btnFS    = document.getElementById('btn-fullscreen');
+
+          const applyMapInsetsToBorder = () => {
+            const cs = getComputedStyle(frame);
+            const t = parseFloat(cs.borderTopWidth)    || 0;
+            const r = parseFloat(cs.borderRightWidth)  || 0;
+            const b = parseFloat(cs.borderBottomWidth) || 0;
+            const l = parseFloat(cs.borderLeftWidth)   || 0;
+            mapEl.style.top    = t + 'px';
+            mapEl.style.right  = r + 'px';
+            mapEl.style.bottom = b + 'px';
+            mapEl.style.left   = l + 'px';
+          };
+
+          const img = new Image();
+          img.src = imgUrl;
+
+          img.onload = () => {
+            const w = img.naturalWidth;
+            const h = img.naturalHeight;
+
+            const ratioPercent = (h / w) * 100;
+            ratioBox.style.paddingTop = ratioPercent + '%';
+
+            applyMapInsetsToBorder();
+
+            const map = L.map(mapEl, {
+              crs: L.CRS.Simple,
+              zoomControl: false,
+              minZoom: -5,
+              maxZoom:  5,
+              zoomSnap: 0,
+              wheelPxPerZoomLevel: 120,
+              attributionControl: false,
+              inertia: false,
+              worldCopyJump: false,
+              maxBoundsViscosity: 1.0
+            });
+
+            const bounds = [[0,0],[h,w]];
+            L.imageOverlay(imgUrl, bounds).addTo(map);
+
+            const fitExact = () => {
+              const zoom = map.getBoundsZoom(bounds, true);
+              map.setView([h/2, w/2], zoom, { animate:false });
+              map.setMaxBounds(bounds);
+            };
+
+            fitExact();
+
+            map.dragging.enable();
+            map.scrollWheelZoom.enable();
+            map.touchZoom.enable();
+            map.doubleClickZoom.enable();
+
+            btnPlus.addEventListener('click',  () => map.zoomIn());
+            btnMinus.addEventListener('click', () => map.zoomOut());
+
+            const isFS = () => document.fullscreenElement === viewer || document.webkitFullscreenElement === viewer;
+            const reqFS = () => { if (viewer.requestFullscreen) viewer.requestFullscreen(); else if (viewer.webkitRequestFullscreen) viewer.webkitRequestFullscreen(); };
+            const exitFS= () => { if (document.exitFullscreen) document.exitFullscreen(); else if (document.webkitExitFullscreen) document.webkitExitFullscreen(); };
+
+            const reflow = () => {
+              applyMapInsetsToBorder();
+              map.invalidateSize({ animate:false });
+              fitExact();
+            };
+
+            btnFS.addEventListener('click', () => { if (!isFS()) reqFS(); else exitFS(); });
+
+            window.addEventListener('resize', reflow);
+            document.addEventListener('fullscreenchange', reflow);
+            document.addEventListener('webkitfullscreenchange', reflow);
+          };
+
+          img.onerror = () => {
+            frame.innerHTML = '<div style="padding:1rem;color:#fca5a5;">Не удалось загрузить файл карты: ' + imgUrl + '</div>';
+          };
+        });
+      </script>
+
+      <!-- Back navigation -->
+      <div class="mt-10">
+        <a href="/ru/local_history" class="inline-block rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-sm text-white/80 hover:bg-white/10">
+          ← Назад к «Краеведение и генеалогия»
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
