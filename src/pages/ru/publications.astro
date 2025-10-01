@@ -7,7 +7,11 @@ type Pub = {
   year?: number | null;   // null => In press
   venue: string;
   doi?: string;
+  doiRu?: string;  // Russian version DOI
+  doiEn?: string;  // English version DOI
   url?: string;
+  urlRu?: string;  // Russian version URL
+  urlEn?: string;  // English version URL
   type: "journal" | "book" | "abstract" | "thesis";
 };
 
@@ -28,16 +32,16 @@ const journals: Pub[] = [
     year: 2025, venue: "Quaternary Science Reviews 360, 109244", doi: "10.1016/j.quascirev.2025.109244", type: "journal" },
   { title: "Экскурс геомагнитного поля Блейк в разрезе микулинских межледниковых отложений Приневской низменности",
     authors: "Дуданова В. И., Веселовский Р. В., Ручкин М. В., Шитов М. В.",
-    year: 2024, venue: "Доклады Академии Наук. Науки о Земле 514, 205–210", doi: "10.31857/S2686739724020029", type: "journal" },
+    year: 2024, venue: "Доклады Академии Наук. Науки о Земле 514, 205–210", doiRu: "10.31857/S2686739724020029", doiEn: "10.1134/S1028334X23602894", type: "journal" },
   { title: "Stratigraphy and OSL chronology of the Middle–Upper Pleistocene sedimentary sequence and vegetation history during Late MIS6 – MIS5e in the Neva Lowland (St. Petersburg Region, Russia)",
     authors: "Ruchkin M. V., Nosevich E. S., Sheetov M. V., Brill D.",
     year: 2024, venue: "Journal of Quaternary Science 39, 745–764", doi: "10.1002/jqs.3618", type: "journal" },
   { title: "К проблеме воздействия Азасского ледникового щита на формирование подпрудных озер в неоплейстоцене Тувы на примере Верхнехаральского палеоозера",
     authors: "Новиков И. С., Назаров Д. В., Михаревич М. В., Гладышева А. С., Ручкин М. В., Предников С. Г.",
-    year: 2023, venue: "Геология и геофизика 64, 720–734", doi: "10.15372/GiG2022146", type: "journal" },
+    year: 2023, venue: "Геология и геофизика 64, 720–734", doiRu: "10.15372/GiG2022146", doiEn: "10.2113/RGG20224494", type: "journal" },
   { title: "Первые данные о палеогеографических обстановках и хронологии последнего межледниковья на Зимнем берегу Белого моря",
     authors: "Зарецкая Н. Е., Талденкова Е. Е., Овсепян Я. С., Ручкин М. В., Баранов Д. В., Руденко О. В., Степанова А. Ю.",
-    year: 2023, venue: "Доклады Академии Наук. Науки о Земле 512, 313–319", doi: "10.31857/S2686739723601308", type: "journal" },
+    year: 2023, venue: "Доклады Академии Наук. Науки о Земле 512, 313–319", doiRu: "10.31857/S2686739723601308", doiEn: "10.1134/S1028334X23601360", type: "journal" },
   { title: "Evidence for the intrusion of marine Atlantic waters into the West Siberian Arctic during the Middle Pleistocene",
     authors: "Nazarov D. V., Nikolskaia O. A., Gladysheva A. S., Zhigmanovskiy I. V., Ruchkin M. V., Merkuljev A. V., Thomsen K. J.",
     year: 2022, venue: "Boreas 51, 402–425", doi: "10.1111/bor.12558", type: "journal" },
@@ -55,7 +59,7 @@ const journals: Pub[] = [
     year: 2021, venue: "Catena 205, 105445", doi: "10.1016/j.catena.2021.105445", type: "journal" },
   { title: "Перекрестное ОСЛ- и 14С- датирование молодых субаэральных отложений Самбийского (Калининградского) полуострова",
     authors: "Шварёв С. В., Зарецкая Н. Е., Ручкин М. В., Луговой Н. Н., Зазовская Е. П., Субетто Д. А.",
-    year: 2021, venue: "Доклады Академии Наук. Науки о Земле 499, 133-137", doi: "10.31857/S2686739721080156", type: "journal" },
+    year: 2021, venue: "Доклады Академии Наук. Науки о Земле 499, 133-137", doiRu: "10.31857/S2686739721080156", doiEn: "10.1134/S1028334X21080158", type: "journal" },
   { title: "Плейстоценовые морские толщи бассейна нижнего Енисея: ОСЛ-возраст, фациальная и палеонтологическая характеристики",
     authors: "Назаров Д. В., Никольская О. А., Гладышева А. С., Жигмановский И. В., Ручкин М. В., Меркульев А. В.",
     year: 2020, venue: "Региональная геология и металлогения 82, 16–34",
@@ -72,9 +76,16 @@ const books: Pub[] = [
     year: 2015, venue: "Санкт-Петербург: Картографическая фабрика ВСЕГЕИ", type: "book" },
 ];
 
-/* Материалы конференций / Диссертации (пока пусто) */
+/* Материалы конференций / Диссертации */
 const abstracts: Pub[] = [];
-const theses: Pub[] = [];
+const theses: Pub[] = [
+  { title: "Хронология и условия формирования мгинской морской межледниковой толщи в Приневской низменности",
+    authors: "Ручкин М. В.",
+    year: 2024, venue: "Диссертация на соискание учёной степени кандидата географических наук. СПбГУ", 
+    urlRu: "https://disser.spbu.ru/files/2024/disser_ruchkin_maksim.pdf", 
+    urlEn: "https://disser.spbu.ru/files/2024/disser_en_ruchkin_maksim.pdf", 
+    type: "thesis" },
+];
 
 /* Объединяем для группировки по годам */
 const pubs: Pub[] = [...journals, ...books, ...abstracts, ...theses];
@@ -150,10 +161,42 @@ const typeLabel = (t: Pub["type"]) =>
                         DOI: {p.doi}
                       </a>
                     )}
+                    {p.doiRu && (
+                      <span>
+                        <span class="text-white">RUS </span>
+                        <a href={`https://doi.org/${p.doiRu}`} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
+                          DOI: {p.doiRu}
+                        </a>
+                      </span>
+                    )}
+                    {p.doiEn && (
+                      <span>
+                        <span class="text-white">ENG </span>
+                        <a href={`https://doi.org/${p.doiEn}`} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
+                          DOI: {p.doiEn}
+                        </a>
+                      </span>
+                    )}
                     {p.url && (
                       <a href={p.url} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
                         PDF
                       </a>
+                    )}
+                    {p.urlRu && (
+                      <span>
+                        <span class="text-white">RUS </span>
+                        <a href={p.urlRu} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
+                          PDF
+                        </a>
+                      </span>
+                    )}
+                    {p.urlEn && (
+                      <span>
+                        <span class="text-white">ENG </span>
+                        <a href={p.urlEn} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
+                          PDF
+                        </a>
+                      </span>
                     )}
                   </div>
                 </li>

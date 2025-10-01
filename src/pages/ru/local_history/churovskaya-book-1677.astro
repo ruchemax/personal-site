@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../../layouts/BaseLayout.astro";
+import LocalHistoryLayout from "../../../layouts/LocalHistoryLayout.astro";
 
 const { lang = "ru" } = Astro.props;
 
@@ -10,138 +10,206 @@ const publishedAt = new Date("2024-09-22").toLocaleDateString("ru-RU", {
 });
 ---
 
-<BaseLayout title="Переписная книга Чуровской волости — Максим Ручкин" lang={lang}>
+<LocalHistoryLayout title="Переписная книга Чуровской волости — Максим Ручкин" lang={lang}>
   <section class="w-full text-white">
-    <div class="mx-auto w-full max-w-[1200px] px-6 pt-4 pb-12">
-      <p class="text-xs text-white/60">Опубликовано: {publishedAt}</p>
+    <div class="mx-auto w-full max-w-[1000px] px-6 pt-4 pb-12">
+      <!-- Весь контент на фоне бумаги -->
+      <div class="paper-old shadow-2xl">
+          <div class="relative z-10">
+            <p class="text-xs text-gray-600 mb-4">Опубликовано: {publishedAt}</p>
 
-      <h1 class="text-3xl font-bold mb-2">Переписная книга Чуровской волости (1677/78 г.)</h1>
+            <h1 class="text-2xl font-bold mb-2 text-slate-800">Переписная книга Чуровской волости (1677-79 гг.)</h1>
 
-      <!-- Теги -->
-      <div class="mt-3 flex flex-wrap gap-2 text-xs">
-        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Белозерский уезд</span>
-        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Надпорожский стан</span>
-        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Чуровская волость</span>
-      </div>
+            <!-- Теги -->
+            <div class="mt-3 flex flex-wrap gap-2 text-xs mb-6">
+              <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Белозерский уезд</span>
+              <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Надпорожский стан</span>
+              <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Чуровская волость</span>
+            </div>
 
-      <!-- Контент страницы -->
-      <div class="mt-8 space-y-6">
-        <!-- Содержание -->
-        <div class="rounded-2xl border border-white/10 bg-slate-800/50 p-6 shadow-lg backdrop-blur">
-          <h2 class="text-xl font-semibold mb-4">Содержание</h2>
-          
-          <div class="space-y-2 text-sm">
-            <div><a href="#vysokoe" class="text-amber-300 hover:text-amber-300">Деревня Высокое</a></div>
-            <div><a href="#myshkino" class="text-amber-300 hover:text-amber-300">Деревня Мышкино на ручие на Меглиевском</a></div>
-            <div><a href="#lyskovo" class="text-amber-300 hover:text-amber-300">Деревня Лысково на речке на Пустой на Чюровке</a></div>
-            <div><a href="#rublevo" class="text-amber-300 hover:text-amber-300">Деревня Рублево на речке на Пустой Чюровке</a></div>
+            <!-- Описание книги -->
+            <div class="space-y-3 text-sm text-slate-800 leading-relaxed mb-8">
+              <p>
+                Переписная книга Белозерского уезда переписи стольника Федора Ивановича Потемкина и подьячего Федора Бирелева 1677–1679 гг.
+                Подлинник за скрепами Ф.И. Потемкина и Ф. Бирилева. Начало (РГАДА Ф.1209 Оп.1 Д.12757).
+              </p>
+            </div>
+
+            <!-- Содержание -->
+            <div class="mb-8 pb-6 border-b border-amber-800/30">
+              <h2 class="text-xl font-semibold mb-4 text-slate-800">Содержание</h2>
+              <div class="space-y-2 text-sm">
+                <div><a href="#vysokoe" class="text-amber-700 underline">Деревня Высокое</a></div>
+                <div><a href="#myshkino" class="text-amber-700 underline">Деревня Мышкино на ручие на Меглиевском</a></div>
+                <div><a href="#lyskovo" class="text-amber-700 underline">Деревня Лысково на речке на Пустой на Чюровке</a></div>
+                <div><a href="#rublevo" class="text-amber-700 underline">Деревня Рублево на речке на Пустой Чюровке</a></div>
+              </div>
+            </div>
+
+            <div class="space-y-6 text-base leading-tight">
+              <div class="space-y-4">
+                <p class="text-gray-600 text-base italic mb-2">(л. 358)</p>
+
+                <div class="space-y-3">
+                  <p class="text-base leading-tight">
+                    В Чюровской же волости великого господина Святейшаго Иоакима Патриарха Московского и Всеа Росии домовая
+                    вотчина а в ней погост а на погосте церковь Рожества Пресвятой Богородицы а другая церковь Николая Чюдотворца на церковной земли.
+                  </p>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <p class="text-gray-600 text-base italic mb-2">(л. 360об.)</p>
+
+                <div class="space-y-3">
+                  <h3 id="vysokoe" class="text-lg font-medium">
+                    <span class="text-amber-700">Деревня Высокое</span>, а в ней крестьяне:
+                  </h3>
+
+                  <div class="space-y-1 pl-4">
+                    <p>Во дворе крестьянин <span class="font-bold italic">Якушко Ильин</span> з детми с <span class="font-bold italic">Степкою</span> да з <span class="font-bold italic">Гришкою</span> да с <span class="font-bold italic">Мишкою</span>.</p>
+
+                    <p>Двор пуст у крестьянина <span class="font-bold italic">Микифорка Савельева</span>, а он <span class="font-bold italic">Микифорко</span> переведен той же вотчины Чюровские волости в деревню Малинуху в 7183 [1674/75] году.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Артюшка Ильин</span>.</p>
+
+                    <p>Во дворе бобыль <span class="font-bold italic">Пиминко Софронов</span> з братом родным с <span class="font-bold italic">Сидорком Софроновым</span>.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Игнашка Максимов</span> с сыном с <span class="font-bold italic">Феоктистком</span>.</p>
+
+                    <p>Во дворе бобылка вдова <span class="font-bold italic">Каптелинка Родкина</span> жена <span class="font-bold italic">Игнатьева</span> с сыном с <span class="font-bold italic">Трошкою Родионовым</span>.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Матюшка Евтихиев</span>, а у него дети <span class="font-bold italic">Варфоломейко</span> да <span class="font-bold italic">Ондрюшко</span> тринатцати лет.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Петрушка Сидоров</span> з братьями родными с <span class="font-bold italic">Стенкою</span> да с <span class="font-bold italic">Кондрашкою Сидоровыми</span>.</p>
+
+                    <p>Во дворе бобыль <span class="font-bold italic">Антипка Фомин</span>.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <p class="text-gray-600 text-base italic mb-2">(л. 363об.)</p>
+
+                <div class="space-y-3">
+                  <h3 id="myshkino" class="text-lg font-medium">
+                    <span class="text-amber-700">Деревня Мышкино на ручие на Меглиевском</span>, а в ней крестьяне:
+                  </h3>
+
+                  <div class="space-y-1 pl-4">
+                    <p>Во дворе крестьянин <span class="font-bold italic">Игнашка Ермолаев</span> с сыном с <span class="font-bold italic">Мишкою</span>. У <span class="font-bold italic">Мишки</span> сын <span class="font-bold italic">Петрушка</span> тринатцати лет.</p>
+
+                    <p>Во дворе бобыль <span class="font-bold italic">Тихонко Дмитриев</span>.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Харитонко Ермолаев</span> с детми с <span class="font-bold italic">Ермушкою</span> да с <span class="font-bold italic">Кондрашкою</span>.</p>
+
+                    <p>Во дворе бобыль <span class="font-bold italic">Гришка Васильев</span>.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Самушка Григориев</span>, у него сын <span class="font-bold italic">Малафейко</span>. У <span class="font-bold italic">Малафейка</span> сын <span class="font-bold italic">Куземка</span> семи лет.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Микитка Амбросимов</span>.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Ивашко Андреев</span>. У него подсоседники <span class="font-bold italic">Селиванко Софронов</span> да <span class="font-bold italic">Елисейко Филипов</span>.</p>
+
+                    <p>Во дворе бобыль <span class="font-bold italic">Матюшка Обросимов</span> з детьми с <span class="font-bold italic">Якимкою</span>, с <span class="font-bold italic">Демкою</span> да с <span class="font-bold italic">Савкою</span>.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="space-y-3">
+                  <h3 id="lyskovo" class="text-lg font-medium">
+                    <span class="text-amber-700">Деревня Лысково на речке на Пустой на Чюровке</span>, а в ней крестьяне:
+                  </h3>
+
+                  <div class="space-y-1 pl-4">
+                    <p>Во дворе крестьянин <span class="font-bold italic">Ивашко Клементьев</span> с сыном <span class="font-bold italic">Якушком</span>. У <span class="font-bold italic">Якушки</span> сын <span class="font-bold italic">Петрушка</span>.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Степка Иванов</span>, у него сын <span class="font-bold italic">Филка</span> семи лет.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Федка Филипов</span> з братом родным <span class="text-gray-600 text-base italic mb-2">(л. 364)</span> з <span class="font-bold italic">Захарком Филиповым</span>. У <span class="font-bold italic">Федки</span> сын <span class="font-bold italic">Фролко</span> шести лет.</p>
+
+                    <p>Во дворе бобыль <span class="font-bold italic">Тихонко Иванов</span>. У него сын <span class="font-bold italic">Ивашко</span> шести лет.</p>
+
+                    <p>Во дворе вдова бобылка <span class="font-bold italic">Аленка Ферапонтова</span> жена <span class="font-bold italic">Ларионова</span>. У нее дети <span class="font-bold italic">Еремка</span> да <span class="font-bold italic">Евдокимко Ферапонтовы</span>. А он <span class="font-bold italic">Ферапонтко</span> взят в даточные в первой збор.</p>
+
+                    <p>Двор пуст у крестьянина <span class="font-bold italic">Перфилейка Григориева</span>, а он <span class="font-bold italic">Перфилейко</span> умре в 7177 [1668/69] году, а жены и детей после нево не осталось.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="space-y-3">
+                  <h3 id="rublevo" class="text-lg font-medium">
+                    <span class="text-amber-700">Деревня Рублево на речке на Пустой Чюровке</span>, а в ней крестьяне:
+                  </h3>
+
+                  <div class="space-y-1 pl-4">
+                    <p>Во дворе крестьянин <span class="font-bold italic">Петрушка Григориев</span> с сыном <span class="font-bold italic">Алешкою</span>.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Матюшка Тимофеев</span> с детьми с <span class="font-bold italic">Сенкою</span> да с <span class="font-bold italic">Митькою</span>.</p>
+
+                    <p>Во дворе бобыль <span class="font-bold italic">Васка Григориев</span>.</p>
+
+                    <p>Во дворе крестьянин <span class="font-bold italic">Пронка Карпов</span> з братом родным с <span class="font-bold italic">Перфилейком Карповым</span>.</p>
+
+                    <p>Во дворе бобыль <span class="font-bold italic">Никитка Лазарев</span> з детьми с <span class="font-bold italic">Ывашком</span> да с <span class="font-bold italic">Митькою</span>.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-
-        <!-- Транскрипция документа -->
-        <div class="rounded-2xl border border-white/10 bg-slate-800/50 p-6 shadow-lg backdrop-blur">
-          <div class="space-y-6 text-base text-white leading-tight">
-            <div class="space-y-4">
-              <p class="text-gray-400 text-base italic mb-2">(л. 360об.)</p>
-              
-              <div class="space-y-3">
-                <h3 id="vysokoe" class="text-lg font-medium text-white"><span class="text-amber-300">Деревня Высокое</span>, а в ней крестьяне:</h3>
-                
-                <div class="space-y-1 pl-4">
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Якушко Ильин</span> з детми с <span class="text-amber-200 italic">Степкою</span> да з <span class="text-amber-200 italic">Гришкою</span> да с <span class="text-amber-200 italic">Мишкою</span>.</p>
-                  
-                  <p>Двор пуст у крестьянина <span class="text-amber-200 italic">Микифорка Савельева</span>, а он <span class="text-amber-200 italic">Микифорко</span> переведен той же вотчины <span class="text-amber-300">Чюровские волости</span> в <span class="text-amber-300">деревню Малинуху</span> <span class="text-blue-300 font-semibold">в 7183 (1674/75) году</span>.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Артюшка Ильин</span>.</p>
-                  
-                  <p>Во дворе бобыль <span class="text-amber-200 italic">Пиминко Софронов</span> з братом родным с <span class="text-amber-200 italic">Сидорком Софроновым</span>.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Игнашка Максимов</span> с сыном с <span class="text-amber-200 italic">Феоктистком</span>.</p>
-                  
-                  <p>Во дворе бобылка вдова <span class="text-amber-200 italic">Каптелинка Родкина</span> жена <span class="text-amber-200 italic">Игнатьева</span> с сыном с <span class="text-amber-200 italic">Трошкою Родионовым</span>.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Матюшка Евтихиев</span>, а у него дети <span class="text-amber-200 italic">Варфоломейко</span> да <span class="text-amber-200 italic">Ондрюшко</span> тринатцати лет.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Петрушка Сидоров</span> з братьями родными с <span class="text-amber-200 italic">Стенкою</span> да с <span class="text-amber-200 italic">Кондрашкою Сидоровыми</span>.</p>
-                  
-                  <p>Во дворе бобыль <span class="text-amber-200 italic">Антипка Фомин</span>.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="space-y-4">
-              <p class="text-gray-400 text-base italic mb-2">(л. 363об.)</p>
-              
-              <div class="space-y-3">
-                <h3 id="myshkino" class="text-lg font-medium text-white"><span class="text-amber-300">Деревня Мышкино на ручие на Меглиевском</span>, а в ней крестьяне:</h3>
-                
-                <div class="space-y-1 pl-4">
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Игнашка Ермолаев</span> с сыном с <span class="text-amber-200 italic">Мишкою</span>. У <span class="text-amber-200 italic">Мишки</span> сын <span class="text-amber-200 italic">Петрушка</span> тринатцати лет.</p>
-                  
-                  <p>Во дворе бобыль <span class="text-amber-200 italic">Тихонко Дмитриев</span>.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Харитонко Ермолаев</span> с детми с <span class="text-amber-200 italic">Ермушкою</span> да с <span class="text-amber-200 italic">Кондрашкою</span>.</p>
-                  
-                  <p>Во дворе бобыль <span class="text-amber-200 italic">Гришка Васильев</span>.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Самушка Григориев</span>, у него сын <span class="text-amber-200 italic">Малафейко</span>. У <span class="text-amber-200 italic">Малафейка</span> сын <span class="text-amber-200 italic">Куземка</span> семи лет.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Микитка Амбросимов</span>.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Ивашко Андреев</span>. У него подсоседники <span class="text-amber-200 italic">Селиванко Софронов</span> да <span class="text-amber-200 italic">Елисейко Филипов</span>.</p>
-                  
-                  <p>Во дворе бобыль <span class="text-amber-200 italic">Матюшка Обросимов</span> з детьми с <span class="text-amber-200 italic">Якимкою</span>, с <span class="text-amber-200 italic">Демкою</span> да с <span class="text-amber-200 italic">Савкою</span>.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="space-y-4">
-              <div class="space-y-3">
-                <h3 id="lyskovo" class="text-lg font-medium text-white"><span class="text-amber-300">Деревня Лысково на речке на Пустой на Чюровке</span>, а в ней крестьяне:</h3>
-                
-                <div class="space-y-1 pl-4">
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Ивашко Клементьев</span> с сыном <span class="text-amber-200 italic">Якушком</span>. У <span class="text-amber-200 italic">Якушки</span> сын <span class="text-amber-200 italic">Петрушка</span>.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Степка Иванов</span>, у него сын <span class="text-amber-200 italic">Филка</span> семи лет.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Федка Филипов</span> з братом родным <span class="text-gray-400 text-base italic mb-2">(л. 364)</span> з <span class="text-amber-200 italic">Захарком Филиповым</span>. У <span class="text-amber-200 italic">Федки</span> сын <span class="text-amber-200 italic">Фролко</span> шести лет.</p>
-                  
-                  <p>Во дворе бобыль <span class="text-amber-200 italic">Тихонко Иванов</span>. У него сын <span class="text-amber-200 italic">Ивашко</span> шести лет.</p>
-                  
-                  <p>Во дворе вдова бобылка <span class="text-amber-200 italic">Аленка Ферапонтова</span> жена <span class="text-amber-200 italic">Ларионова</span>. У нее дети <span class="text-amber-200 italic">Еремка</span> да <span class="text-amber-200 italic">Евдокимко Ферапонтовы</span>. А он <span class="text-amber-200 italic">Ферапонтко</span> взят в даточные в первой збор.</p>
-                  
-                  <p>Двор пуст у крестьянина <span class="text-amber-200 italic">Перфилейка Григориева</span>, а он <span class="text-amber-200 italic">Перфилейко</span> умре <span class="text-blue-300 font-semibold">в 7177 (1668/69) году</span>, а жены и детей после нево не осталось.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="space-y-4">
-              <div class="space-y-3">
-                <h3 id="rublevo" class="text-lg font-medium text-white"><span class="text-amber-300">Деревня Рублево на речке на Пустой Чюровке</span>, а в ней крестьяне:</h3>
-                
-                <div class="space-y-1 pl-4">
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Петрушка Григориев</span> с сыном <span class="text-amber-200 italic">Алешкою</span>.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Матюшка Тимофеев</span> с детьми с <span class="text-amber-200 italic">Сенкою</span> да с <span class="text-amber-200 italic">Митькою</span>.</p>
-                  
-                  <p>Во дворе бобыль <span class="text-amber-200 italic">Васка Григориев</span>.</p>
-                  
-                  <p>Во дворе крестьянин <span class="text-amber-200 italic">Пронка Карпов</span> з братом родным с <span class="text-amber-200 italic">Перфилейком Карповым</span>.</p>
-                  
-                  <p>Во дворе бобыль <span class="text-amber-200 italic">Никитка Лазарев</span> з детьми с <span class="text-amber-200 italic">Ывашком</span> да с <span class="text-amber-200 italic">Митькою</span>.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </div><!-- /paper -->
       </div>
 
       <!-- Back navigation -->
       <div class="mt-10">
         <a href="/ru/local_history" class="inline-block rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-sm text-white/80 hover:bg-white/10">
-          ← Назад к «Краеведение и генеалогия»
+          ← Назад к «Краеведение»
         </a>
       </div>
     </div>
   </section>
-</BaseLayout>
+
+   <style>
+     /* ---------- Пергамент «как на образце» ---------- */
+     .paper-old{
+       position: relative;
+       color:#2a1e14;
+       padding: 2rem;
+       border-radius: 0;
+       overflow: hidden;
+
+       /* базовый тон */
+       background-color: #f3e4c9;
+
+       /* Паттерн из файла */
+       background-image: url('/images/textures/old-paper.png');
+       background-size: auto;
+       background-position: center;
+       background-repeat: repeat;
+
+       /* объём и «запылённость» */
+       box-shadow:
+         0 20px 40px rgba(0,0,0,.35),
+         inset 0 0 140px rgba(0,0,0,.22),
+         inset 0 0 24px rgba(0,0,0,.12);
+
+       /* лёгкая коррекция тона/контраста */
+       filter: saturate(1.05) contrast(1.02);
+     }
+
+     /* Светлый слой поверх паттерна для осветления */
+     .paper-old::before{
+       content:"";
+       position:absolute; inset:0; pointer-events:none;
+       background: rgba(255,255,255,0.6);
+       mix-blend-mode: screen;
+     }
+
+     /* Внутри «бумаги» белый текст перекрасим в тёмный при необходимости */
+     .paper-old .text-white, .paper-old .text-white * { color:#2a1e14 !important; }
+
+     @media (min-width:768px){ .paper-old{ padding:2.5rem; } }
+   </style>
+</LocalHistoryLayout>

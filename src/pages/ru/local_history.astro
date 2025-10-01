@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import LocalHistoryLayout from "../../layouts/LocalHistoryLayout.astro";
 
 const { lang = "ru" } = Astro.props;
 
@@ -17,12 +17,19 @@ const publishedBook = new Date("2025-09-22").toLocaleDateString("ru-RU", {
 });
 ---
 
-<BaseLayout title="Краеведение и генеалогия — Максим Ручкин" lang={lang}>
+<LocalHistoryLayout title="Краеведение — Максим Ручкин" lang={lang}>
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1200px] px-6 py-14">
-      <h1 class="text-3xl font-bold">Краеведение и генеалогия</h1>
+      <h1 class="text-3xl font-bold">Краеведение</h1>
 
-      <div class="mt-10 space-y-6">
+      <!-- Описание раздела -->
+      <div class="mt-6 space-y-4 text-sm text-white/90 leading-relaxed text-justify">
+        <p>
+          Раздел посвящен истории Череповецкого края. Здесь я выкладываю набранные мной архивные документы и составленные на их основе карты.
+        </p>
+      </div>
+
+      <div class="mt-6 space-y-6">
         <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur">
 
           <div class="space-y-4">
@@ -66,6 +73,6 @@ const publishedBook = new Date("2025-09-22").toLocaleDateString("ru-RU", {
       </div>
     </div>
   </section>
-</BaseLayout>
+</LocalHistoryLayout>
 
 

@@ -7,7 +7,11 @@ type Pub = {
   year?: number | null;   // null => In press
   venue: string;
   doi?: string;
+  doiRu?: string;  // Russian version DOI
+  doiEn?: string;  // English version DOI
   url?: string;
+  urlRu?: string;  // Russian version URL
+  urlEn?: string;  // English version URL
   type: "article" | "book" | "abstract" | "thesis";
 };
 
@@ -16,50 +20,50 @@ type Pub = {
 const journals: Pub[] = [
   { title: "The Mga Formation of the Neva Lowland (St. Petersburg region): A Review",
     authors: "Ruchkin, M. V., Sheetov, M. V., Pleshivtseva, E. S., Ludikova, A. V., Taldenkova, E. E., Ovsepyan, Ya. S., Kosintsev, P. A., Merkuliev, A. V.",
-    year: null, venue: "Stratigraphy and Geological Correlation", type: "journal" },
+    year: null, venue: "Stratigraphy and Geological Correlation", type: "article" },
   { title: "The new key sections of the Last Interglacial transgression in the Eurasian Arctic (Eastern White Sea): paleoenvironmental reconstructions and interregional correlations",
     authors: "Zaretskaya, N. E., Taldenkova, Е. E., Ruchkin, M. V., Ovsepyan, Ya. S., Rudenko, O. V., Timofeeva, I. V.",
-    year: null, venue: "Quaternary International", type: "journal" },
+    year: null, venue: "Quaternary International", type: "article" },
   { title: "Glaciolacustrine sedimentary settings and the MIS2 palaeogeography of the eastern White Sea",
     authors: "Zaretskaya, N. E., Vashkov, A. A., Baranov, D. V., Ruchkin, M. V., Nosova, O. Yu., Cherezova, A. A.",
-    year: null, venue: "Geomorfologiya i Paleogeografiya", type: "journal" },
+    year: null, venue: "Geomorfologiya i Paleogeografiya", type: "article" },
   { title: "Paleohydrological changes in the eastern Baltic Sea during the Middle/Late Pleistocene transition and the Last Interglacial",
     authors: "Ruchkin, M. V., Sheetov, M. V., Taldenkova, Е. E., Pushina, Z. V., Dudanova, V. I., Ovsepyan, Ya. S., Konstantinov, E. A., Nosevich, E. S., Mustafin, M. A.",
-    year: 2025, venue: "Quaternary Science Reviews 360, 109244", doi: "10.1016/j.quascirev.2025.109244", type: "journal" },
+    year: 2025, venue: "Quaternary Science Reviews 360, 109244", doi: "10.1016/j.quascirev.2025.109244", type: "article" },
   { title: "The Blake geomagnetic excursion recorded in the Mikulino Interglacial sediments of the Neva Lowland",
     authors: "Dudanova, V. I., Veselovskiy, R. V., Ruchkin, M. V., Sheetov, M. V.",
-    year: 2024, venue: "Doklady Earth Sciences 514, 244–248", doi: "10.1134/S1028334X23602894", type: "journal" },
+    year: 2024, venue: "Doklady Earth Sciences 514, 244–248", doiEn: "10.1134/S1028334X23602894", doiRu: "10.31857/S2686739724020029", type: "article" },
   { title: "Stratigraphy and OSL chronology of the Middle–Upper Pleistocene sedimentary sequence and vegetation history during Late MIS6 – MIS5e in the Neva Lowland (St. Petersburg Region, Russia)",
     authors: "Ruchkin, M. V., Nosevich, E. S., Sheetov, M. V., Brill, D.",
-    year: 2024, venue: "Journal of Quaternary Science 39, 745–764", doi: "10.1002/jqs.3618", type: "journal" },
+    year: 2024, venue: "Journal of Quaternary Science 39, 745–764", doi: "10.1002/jqs.3618", type: "article" },
   { title: "The Azas ice sheet and its role in the formation of Late Pleistocene ice-dammed lakes in southern Siberia: case study of Upper Kharal paleolake",
     authors: "Novikov, I. S., Nazarov, D. V., Mikharevich, M. V., Gladysheva, A. S., Ruchkin, M. V., Prudnikov, S. G.",
-    year: 2023, venue: "Geology and Geophysics 64, 595–606", doi: "10.2113/RGG20224494", type: "journal" },
+    year: 2023, venue: "Geology and Geophysics 64, 595–606", doiEn: "10.2113/RGG20224494", doiRu: "10.15372/GiG2022146", type: "article" },
   { title: "First data on the paleogeographical settings and chronology of the Last Interglacial on the Zimnii Coast of the White Sea",
     authors: "Zaretskaya, N. E., Taldenkova, Е. E., Ovsepyan, Ya. S., Ruchkin, M. V., Baranov, D. V., Rudenko, O. V., Stepanova, A. Yu.",
-    year: 2023, venue: "Doklady Earth Sciences 512, 1059–1064", doi: "10.1134/S1028334X23601360", type: "journal" },
+    year: 2023, venue: "Doklady Earth Sciences 512, 1059–1064", doiEn: "10.1134/S1028334X23601360", doiRu: "10.31857/S2686739723601308", type: "article" },
   { title: "Evidence for the intrusion of marine Atlantic waters into the West Siberian Arctic during the Middle Pleistocene",
     authors: "Nazarov, D. V., Nikolskaia, O. A., Gladysheva, A. S., Zhigmanovskiy, I. V., Ruchkin, M. V., Merkuljev, A. V., Thomsen, K. J.",
-    year: 2022, venue: "Boreas 51, 402–425", doi: "10.1111/bor.12558", type: "journal" },
+    year: 2022, venue: "Boreas 51, 402–425", doi: "10.1111/bor.12558", type: "article" },
   { title: "Lake Yamal, an ice-dammed megalake in the West Siberian Arctic during the Late Pleistocene, ∼60–35 ka",
     authors: "Nazarov, D. V., Nikolskaia, O. A., Zhigmanovskiy, I. V., Ruchkin, M. V., Cherezova, A. A.",
-    year: 2022, venue: "Quaternary Science Reviews 289, 107614", doi: "10.1016/j.quascirev.2022.107614", type: "journal" },
+    year: 2022, venue: "Quaternary Science Reviews 289, 107614", doi: "10.1016/j.quascirev.2022.107614", type: "article" },
   { title: "The southeastern White Sea coast in the Late Pleistocene (in Russian)",
     authors: "Zaretskaya, N. E., Baranov, D. V., Ruchkin, M. V., Lugovoy, N. N.",
-    year: 2022, venue: "Izvestiya RAN. Seriya Geograficheskaya 86, 898–913", doi: "10.31857/S2587556622060164", type: "journal" },
+    year: 2022, venue: "Izvestiya RAN. Seriya Geograficheskaya 86, 898–913", doi: "10.31857/S2587556622060164", type: "article" },
   { title: "Early Middle Weichselian in the White Sea and adjacent areas: Chronology, stratigraphy and palaeoenvironments",
     authors: "Zaretskaya, N. E., Korsakova, O. P., Molodkov, A. N., Ruchkin, M. V., Baranov, D. V., Rybalko, A. E., Lugovoy, N. N., Merkuljev, A. V.",
-    year: 2022, venue: "Quaternary International 632, 65–78", doi: "10.1016/j.quaint.2022.05.007", type: "journal" },
+    year: 2022, venue: "Quaternary International 632, 65–78", doi: "10.1016/j.quaint.2022.05.007", type: "article" },
   { title: "High-resolution analysis of the Likhvin loess–paleosol sequence (the central part of the East European Plain, Russia)",
     authors: "Panin, P. G., Filippova, K. G., Bukhonov, A. V., Karpukhina, N. V., Kalinin, P. I., Ruchkin, M. V.",
-    year: 2021, venue: "Catena 205, 105445", doi: "10.1016/j.catena.2021.105445", type: "journal" },
+    year: 2021, venue: "Catena 205, 105445", doi: "10.1016/j.catena.2021.105445", type: "article" },
   { title: "Cross-OSL and 14C dating of young subaerial peposits in the Sambia (Kaliningrad) Peninsula",
     authors: "Shvarev, S. V., Zaretskaya, N. E., Ruchkin, M. V., Lugovoy, N. N., Zazovskaya, E. P., Subetto, D. A.",
-    year: 2021, venue: "Doklady Earth Sciences 499, 639–642", doi: "10.1134/S1028334X21080158", type: "journal" },
+    year: 2021, venue: "Doklady Earth Sciences 499, 639–642", doiEn: "10.1134/S1028334X21080158", doiRu: "10.31857/S2686739721080156", type: "article" },
   { title: "Pleistocene marine formations of the lower Yenissei basin, Arctic Russia: OSL age, facial and paleontological characteristics (in Russian)",
     authors: "Nazarov, D. V., Nikolskaia, O. A., Gladysheva, A. S., Zhigmanovskiy, I. V., Ruchkin, M. V., Merkuljev, A. V.",
     year: 2020, venue: "Regional Geology and Metallogeny 82, 16–34",
-    url: "https://karpinskyinstitute.ru/ru/public/reggeology_met/content/2020/82/82_02.pdf", type: "journal" },
+    url: "https://karpinskyinstitute.ru/ru/public/reggeology_met/content/2020/82/82_02.pdf", type: "article" },
 ];
 
 /* Books */
@@ -72,9 +76,16 @@ const books: Pub[] = [
     year: 2015, venue: "St. Petersburg: VSEGEI", type: "book" },
 ];
 
-/* Conference abstracts / Theses (empty for now) */
+/* Conference abstracts / Theses */
 const abstracts: Pub[] = [];
-const theses: Pub[] = [];
+const theses: Pub[] = [
+  { title: "Chronology and deposition conditions of the Mga marine interglacial formation in the Neva Lowland",
+    authors: "Ruchkin, M. V.",
+    year: 2024, venue: "Thesis for the Candidate Degree in Geography. St. Petersburg University", 
+    urlRu: "https://disser.spbu.ru/files/2024/disser_ruchkin_maksim.pdf", 
+    urlEn: "https://disser.spbu.ru/files/2024/disser_en_ruchkin_maksim.pdf", 
+    type: "thesis" },
+];
 
 /* Merge all for year grouping */
 const pubs: Pub[] = [...journals, ...books, ...abstracts, ...theses];
@@ -101,7 +112,7 @@ const years = Object.keys(grouped).sort((a, b) => {
       <!-- Filter buttons: rounded, separate, no gaps -->
       <div id="filters" class="mt-6 flex flex-wrap space-x-0">
         <button
-          data-type="journal"
+          data-type="article"
           class="filter-chip active rounded-md border border-white/30 bg-white px-4 py-2 text-sm font-medium text-black"
         >
           Journal articles
@@ -133,9 +144,9 @@ const years = Object.keys(grouped).sort((a, b) => {
             <h2 class="text-2xl font-semibold border-b border-white/20 pb-1">{year}</h2>
             <ul class="mt-4 space-y-4">
               {grouped[year]
-                // ensure rendering order: journal → book → abstract → thesis
+                // ensure rendering order: article → book → abstract → thesis
                 .sort((a,b)=>{
-                  const order = {journal:0, book:1, abstract:2, thesis:3} as const;
+                  const order = {article:0, book:1, abstract:2, thesis:3} as const;
                   return order[a.type]-order[b.type];
                 })
                 .map((p) => (
@@ -158,10 +169,42 @@ const years = Object.keys(grouped).sort((a, b) => {
                         DOI: {p.doi}
                       </a>
                     )}
+                    {p.doiRu && (
+                      <span>
+                        <span class="text-white">RUS </span>
+                        <a href={`https://doi.org/${p.doiRu}`} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
+                          DOI: {p.doiRu}
+                        </a>
+                      </span>
+                    )}
+                    {p.doiEn && (
+                      <span>
+                        <span class="text-white">ENG </span>
+                        <a href={`https://doi.org/${p.doiEn}`} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
+                          DOI: {p.doiEn}
+                        </a>
+                      </span>
+                    )}
                     {p.url && (
                       <a href={p.url} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
                         PDF
                       </a>
+                    )}
+                    {p.urlRu && (
+                      <span>
+                        <span class="text-white">RUS </span>
+                        <a href={p.urlRu} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
+                          PDF
+                        </a>
+                      </span>
+                    )}
+                    {p.urlEn && (
+                      <span>
+                        <span class="text-white">ENG </span>
+                        <a href={p.urlEn} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
+                          PDF
+                        </a>
+                      </span>
                     )}
                   </div>
                 </li>

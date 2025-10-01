@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../../layouts/BaseLayout.astro";
+import LocalHistoryLayout from "../../../layouts/LocalHistoryLayout.astro";
 
 const { lang = "ru" } = Astro.props;
 
@@ -10,61 +10,826 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
 });
 ---
 
-<BaseLayout title="Карта земельных владений — Максим Ручкин" lang={lang}>
+<LocalHistoryLayout title="Карта земельных владений — Максим Ручкин" lang={lang}>
   <section class="w-full text-white">
-    <div class="mx-auto w-full max-w-[1200px] px-6 pt-4 pb-12">
-      <p class="text-xs text-white/60">Опубликовано: {publishedAt}</p>
+    <div class="mx-auto w-full max-w-[1000px] px-6 pt-4 pb-12">
+      <!-- Весь контент на фоне бумаги -->
+      <div class="paper-old shadow-2xl">
+        <div class="relative z-10">
+          <p class="text-xs text-gray-600 mb-4">Опубликовано: {publishedAt}</p>
 
-      <h1 class="text-3xl font-bold">Карта земельных владений в волости Череповец (1626/27 г.)</h1>
+          <h1 class="text-2xl font-bold mb-2 text-slate-800">Карта земельных владений в волости Череповец (1626/27 г.)</h1>
 
-      <!-- Теги -->
-      <div class="mt-3 flex flex-wrap gap-2 text-xs">
-        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Белозерский уезд</span>
-        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Надпорожский стан</span>
-        <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-300">Череповская волость</span>
-      </div>
+          <!-- Теги -->
+          <div class="mt-3 flex flex-wrap gap-2 text-xs mb-6">
+            <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Белозерский уезд</span>
+            <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Надпорожский стан</span>
+            <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Череповская волость</span>
+          </div>
 
-      <p class="mt-2 text-sm text-white/75">
-        Карта составлена по данным писцовой книги Белозерского уезда письма и меры Никиты Шеховского и подьячего Максима Козлова 1626/27 г.
-        Копия XVIII в. за скрепой секретаря Ильи Феоктистова и справами подканцеляристов Петра Цветкова и Ивана Михайлова (РГАДА Ф.1209 Оп.1 Д.591).<br /><br />
-        В качестве подложки использованы топографические карты Госгисцентра масштаба 1:50 000 и 1:25 000.
-      </p>
+          <p class="mb-8 text-sm text-slate-800 leading-relaxed">
+            Карта составлена по данным писцовой книги Белозерского уезда письма и меры Никиты Шеховского и подьячего Максима Козлова 1626/27 г.
+            Копия XVIII в. за скрепой секретаря Ильи Феоктистова и справами подканцеляристов Петра Цветкова и Ивана Михайлова (РГАДА Ф.1209 Оп.1 Д.591).
+          </p>
 
-      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+          <p class="mb-8 text-sm text-slate-800 leading-relaxed">
+            Вы можете помочь с определением местоположения населённых пунктов и пустошей, существовавших в Череповской волости в 1626/27 г. 
+            Ниже карты находится таблица с указанием размещённых и не размещённых на карте объектов. Если Вам известно местоположение 
+            какого-то из неразмещённых объектов или Вы нашли ошибку, напишите мне через 
+            <a href="/ru/contacts" class="text-amber-700 hover:text-amber-800 underline">форму обратной связи</a>. Я внесу изменения в 
+            карту, как только смогу.
+          </p>
 
-      <div id="viewer" class="relative mt-4">
-        <div id="map-card" class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur">
-          <div id="ratio" class="relative">
-            <div id="frame" class="absolute inset-0 border border-white/20 rounded-none overflow-hidden">
-              <div id="map" class="absolute"></div>
-              
-              <!-- Zoom controls -->
-              <div class="absolute top-2 left-2 z-[1000] flex gap-1">
-                <button id="btn-zoom-in"  type="button" class="rounded-md border border-white/20 bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10" aria-label="Приблизить">+</button>
-                <button id="btn-zoom-out" type="button" class="rounded-md border border-white/20 bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10" aria-label="Отдалить">−</button>
+          <!-- Карта -->
+          <div class="mb-8">
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+
+            <div id="viewer" class="relative">
+              <div id="ratio" class="relative">
+                    <div id="frame" class="absolute inset-0 border border-black rounded-none overflow-hidden">
+                    <div id="map" class="absolute"></div>
+                    
+                    <!-- Zoom controls -->
+                    <div class="absolute top-2 left-2 z-[1000] flex gap-1">
+                      <button id="btn-zoom-in"  type="button" class="rounded-md border border-black bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10" aria-label="Приблизить">+</button>
+                      <button id="btn-zoom-out" type="button" class="rounded-md border border-black bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10" aria-label="Отдалить">−</button>
+                    </div>
+
+                    <!-- Fullscreen button -->
+                    <button id="btn-fullscreen" type="button"
+                      class="absolute top-2 right-2 z-[1000] rounded-md border border-black bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10"
+                      title="Развернуть на весь экран" aria-label="Развернуть на весь экран">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" class="inline-block align-[-2px]">
+                        <path d="M7 3H3v4M3 3l6 6M17 3h4v4M21 3l-6 6M7 21H3v-4M3 21l6-6M17 21h4v-4M21 21l-6-6"
+                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+              <!-- Download button -->
+              <div class="mt-4 flex justify-start">
+                <a href="/maps/cherepovets-1626.jpg" download="cherepovets-1626.jpg"
+                   class="inline-block rounded-lg bg-amber-500/20 px-4 py-2 text-sm font-semibold text-amber-700 hover:bg-amber-500/30">
+                  Скачать карту (JPG)
+                </a>
               </div>
-
-              <!-- Fullscreen button -->
-              <button id="btn-fullscreen" type="button"
-                class="absolute top-2 right-2 z-[1000] rounded-md border border-white/20 bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10"
-                title="Развернуть на весь экран" aria-label="Развернуть на весь экран">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" class="inline-block align-[-2px]">
-                  <path d="M7 3H3v4M3 3l6 6M17 3h4v4M21 3l-6 6M7 21H3v-4M3 21l6-6M17 21h4v-4M21 21l-6-6"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </button>
             </div>
           </div>
-        </div>
 
-        <!-- Download button -->
-        <div class="mt-4 flex justify-start">
-          <a href="/maps/cherepovets-1626.jpg" download="cherepovets-1626.jpg"
-             class="inline-block rounded-lg bg-amber-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-amber-400">
-            Скачать карту (JPG)
-          </a>
+          <!-- Таблица владельцев и локализации -->
+          <div class="mt-8">
+        
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm border-collapse">
+            <thead>
+              <tr class="text-slate-800">
+                <th class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Владелец</th>
+                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Локализованные</th>
+                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Нелокализованные</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Заголовок волости -->
+              <tr class="bg-white/5">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 149)</span> Волость Череповец, а в ней за разными помещики</td>
+              </tr>
+              
+              <!-- Первая группа - Полукет Елизарьев сын Теметцкой -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="6">№78 За Полуектом Елизарьевым сыном Теметцким</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Урывково а в ней двор помещиков</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Ившино</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">деревня Макарьино</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">пустошь Паршино</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">пустошь Пулово</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">пустошь что был починок Деревятин</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь что был починок Дорогин</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Вторая группа - Алексей Михайлов сын Панфилов -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="7">№79 За Алексеем Михайловым сыном Панфилова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">отца ево поместье полпустоши что была деревня Рождественская на реке на Шексне а другая половина той пустоши в церковной земле</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">деревня Кононовская пуста</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">деревня Негодяево пуста</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">деревня Фроловская а в ней двор помещиков</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">деревня Киргады пуста а другая половина той деревни за Юрьем Оксентьевым</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">пустошь Горка</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Медвежей Бор</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Третья группа - Матвей Константинов сын Поливанов -->
+              <tr class="bg-white/10 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="9">№80 За Матвеем Константиновым сыном Поливанова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Федора Семенова сына Козлова деревня Алексеевская пуста</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Осюнинская</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">деревня что было село Захарьевская пуста</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">пустошь Белково</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">деревня Курилова пуста</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">пустошь Губинская</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">полдеревни Парфенова а другая половина той деревни за Хотеном Худошиным</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">в Турховской кулиге деревня Климовская а в ней два двора помещикова</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">полселца Федоровскаго пустошь а другая половина того селца за Григорьем Булгаковым</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">пустошь Старина Петроклинская тож</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">пустошь Микитинская</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь что была деревня Петракова</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Четвертая группа - Хотен Васильев сын Худошин -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="8">№81 За Хотеном Васильевым сыном Худошина</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Романа Иванова сына Решетова полселца Дуракова а другая половина того селца за Иваном Косецким</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">селцо Коровинское Маленкинское тож а в нем два двора помещиковы</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Парфеновы Горы пуста</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">полпустоши Заякошье а другая половина той пустоши церковная земля</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Веретея</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Давыдовская</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Лукинская</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Афонинская</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Пятая группа - Иван Дмитриев сын Косецкий -->
+              <tr class="bg-white/10">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№82 За Иваном Дмитревым сыном Косецким</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Гритино Болшое пуста</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">полселца Дуракова</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Гритино Меншое пуста</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Бурлукин</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">два жеребья селца Никольскаго а третей жеребей того селца за Тимофеем Масловым а в нем на ивановы жеребьи двор помещиков </td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь что был починок Москва</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Раменка</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь что был починок Воробьев</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Шестая группа - Андрей Пантелеев сын Екушкин -->
+              <tr class="bg-white/10">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№83 За Андреем Пантелеевым сыном Екушкина</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Иваном Кузминым сыном Орловым деревня Баскова а Баскакова тож пуста</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Шевырево</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Ванютино</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь что был починок Кутузов</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">село Борисово на реке на Шексне а в селе на государеве земле церковь Преображения Спасова</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Федякино</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Лапан</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">деревня Цылинская на реке на Шексне а в ней двор помещиков</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Седьмая группа - Федор Дмитриев сын Косецкий -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">№84 За Федором Дмитриевым сыном Косецким</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Перфильем Васильевым сыном Волженским две трети деревни Новоселки пусто а треть той же деревни за Ондреем Макаровым</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Федюнино</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">деревня Юрьева пуста</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Восьмая группа - Иван Иванов сын Юрлов -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№85 За Иваном Ивановым сыном Юрловым</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что была наперед того за дядею ево за Олексеем Михайловым сыном Юрлова деревня Полуева</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Цыкова</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Болсунова</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">полпустоши что был починок Югин а другая половина той пустоши за Тимофеем Масловым</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Девятая группа - Федор Семенов сын Козлов -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="8">№86 За Федором Семеновым сыном Козлова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Матвея Поливанова пустошь что была деревня Кавилское а Калинское тож</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь что была деревня Воиново пуста</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь что была деревня Солмановское</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Хорошее</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Ивашево</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Шихово</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Тунга</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">полпустоши Лашуковы а другая половина той пустоши в порожие землях</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Десятая группа - Тимофей Родионов сын Маслов -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№87 За Тимофеем Родионовым сыном Маслова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">треть селца Никольскаго а две трети того селца за Иваном Косецким</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">полпустоши Цыкова а другая половина той пустоши за Иваном Юрловым</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Москвина</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">полпустоши Юдиной [Югиной] а другая половина той пустоши за Иваном Юрловым</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Одиннадцатая группа - Лаврентий Елисеев сын Бурков и Семен Позняков -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2">№88 За Лаврентьем Елисеевым сыном Буркова да Семеном Позняковым</td>
+                <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2">деревня Дементьева пуста</td>
+                <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Двенадцатая группа - Юрий Иванов сын Оксентьев -->
+              <tr class="bg-white/10 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2">№89 За Юрьем Ивановым сыном Оксентьева</td>
+                <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2">полдеревни Киргады пуста а другая половина той деревни за Алексеем Панфиловым</td>
+                <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Тринадцатая группа - Волынец Матвеев сын Скабеев -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">№90 За Волынецом Матвеевым сыном Скабеева</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Анголова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Богданом Федоровым сыном Унковским пустошь Путробой</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">в Турховской кулиге деревня Левонтьева</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Четырнадцатая группа - Илья Матвеев сын Скабеев -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">№91 За Ильею Матвеевым сыном Скабеевом</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Пустыня пуста</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Сергеевская</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Пятнадцатая группа - Федор Васильев сын Худошин -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№92 За Федором Васильевым сыном Худошина</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Дмитрием Григорьевым сыном Пашнеева да за дочерью за ево за девкою за Ориною деревня Шакишино пуста</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь что была деревня Климово</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Воронина а в ней двор помещиков</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Шепелева</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Якушева</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Шестнадцатая группа - Абрам Некрасов -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№93 За Абрамом Некрасовым</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Киселева</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Лустина Гора</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Ватогина [Ватагина] а в ней двор помещиков</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Карлуш Семенов</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Карлуш Пупулин</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Семнадцатая группа - Федор Афонасьев сын Глебов -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№94 За иноземцом за Федором Афонасьевым сыном Глебова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь что было село Коштовское а в нем две церкви пустых Николая Чудотворца да Жен Мироносиц згнили</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Загорье</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Прислон</td>
+                <td class="border border-r-2 border-black px-3 py-2">нива Репище</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Букино</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Букино</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Аврамьево</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Заголовок вотчинников -->
+              <tr class="bg-white/5">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(с. 171)</span> В той же волости за вотчинники что им дано за московское осадное королевичева приход</td>
+              </tr>
+
+              <!-- Восемнадцатая группа - Григорий Кузьмин сын Булгаков -->
+              <tr class="bg-white/10">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№95 За Григорьем Кузьминым сыном Булгакова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Тапсама а в ней двор вотчинников</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Болота</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Бусовская а Бутковская тож пуста</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Хорошеи</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">полпустоши что была половина селца Федоровскаго а другая половина того селца за Матвеем Поливановым</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">деревня что был починок Шишлеев</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Заголовок помещика -->
+              <tr class="bg-white/5">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(с. 172об.)</span> В той же волости за помещиком</td>
+              </tr>
+
+              <!-- Девятнадцатая группа - Андрей Макаров -->
+              <tr class="bg-white/10 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№96 За можаитином за Ондреем Макаровым</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Ивачева</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что была наперед за Степаном Онисимовым сыном Пашнеева деревня Семеновская пуста</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Лодыгино</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь что была деревня пустая Фрязиново</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">что было напред того за Федором Василевым сыном Волжанскаго треть деревни Новоселки а две трети той деревни за Федором Косецким</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Князчина Малая</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Мокроусово</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Хлюстово</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Лапаткино</td>
+              </tr>
+
+              <!-- Заголовок порозжих земель -->
+              <tr class="bg-white/5">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 174)</span> Да в той же волости в порозжие землях</td>
+              </tr>
+
+              <!-- Порозжие земли -->
+              <tr class="bg-white/10 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2">Порозжие земли</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">полупустоши Лошаковы а другая половина той пустоши за Федором Козловым</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Заголовок церковных земель -->
+              <tr class="bg-white/5">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 174)</span> Церковные земли</td>
+              </tr>
+
+              <!-- Церковные земли -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2">Церковные земли</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">Да в той же волости полупустоши что была деревня Рождественская на реке на Шексне а в ней церковь Рождество Христово да другая церковь Николы Чудотворца обвалилась</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Заголовок монастырских владений -->
+              <tr class="bg-white/5">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 431)</span> №229 Вотчина Великого Государя Святеишаго Патриарха Филорета Никитича Московского и Всеа Руссии в Череповской волости</td>
+              </tr>
+
+              <!-- Двенадцатая группа - монастырские владения -->
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="51">Воскресенский монастырь<br/>(Патриаршая вотчина)</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">монастырь обшей а в нем храм был настоящей Воскресения Господа Бога и Спаса нашего Исуса Христа и в розоренья сожгли литовские люди да церковь Живоначалныя Троицы да в пределе Сергей Чюдотворец древянное строенье мирское</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">по реке по Шексне сто копен лесу пашенного Черного болота на две версты</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">за монастырем слоботка</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Борок Кузнецов</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">монастырская пожня за рекою за Шексною Подлуковцов против Суды реки</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Ескина</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">другая [пожня] на той же стороне Шексны реки против Кошьмы реки урочища Чипороса</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Климовская</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">сенные покосы по Кономе реке</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Семенково</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">озерко Колманское а у него поставлена изба для приезду монастырские люди</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Внукова</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">село Федосьево а в нем церковь Преподобнаго Феодосия обшему житию начальника да Офанасия Александрейскаго студенои клетцкии а другая церковь Страстотерпьца Христова Георгия теплои с трапезою</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Денисово</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">поперег на версту того ж села Федосьева деревьня Двор Матурина</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Лихачевская</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Матенга</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Гришинская</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Блиново</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Жиделева</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Молота</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Дальнея</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">село Ильинское а в нем церковь Архангела Михаила вверх клетцки поставленново а другая церковь была Ильи Пророка згорела в 122 [1613/14] году поставление мирское</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Внукова</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Милятино</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Гришинская</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Борок Решьной</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь что была деревня Боран</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Матырино Болшое</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Остинская</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Сермолт на реке на Агорбе</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Дьяконская а Околинская тож</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Останова [Онтонова]</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Солманская</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Носовская Насоновская тож</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Паздирина</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Микитинская пуста</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Большой Двор</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Горка</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Шелаева</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Шубацкое Малое</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Обухово</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Кичина</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Шубацкое Болшое</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Новцо</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Данское пуста</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Короблева</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Ладыгина</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Лопухино на ручье</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Еремеева на ручье</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Слобеева</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Гульбина</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Курцова на реке на Коште</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Оскенова [Оксенова]</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Нефедьева</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Михаилова на ручье</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Горка Честикова</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Погорелка на ручье на Казимере</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Олексина</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Новоселки</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Подоль</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Кроминская Воскресенского монастыря а в нем двор монастырскои скотеи</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Маслова</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b border-black px-3 py-2">в Чюди ж в патриаржеской волости погост на государеве земле а на погосте церковь Рождество Пречистые Богородицы, другая теплая церковь с трапезою Парасковьеи нарицаемыя Пятьницы обе ветхи</td>
+                <td class="border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-l border-r-2 border-b border-black px-3 py-2">отхожая нива меж митрополичьи земли Подрушневою и Подребинною пустошьми</td>
+                <td class="border-l border-r-2 border-b border-black px-3 py-2"></td>
+              </tr>
+
+              <!-- Заголовок митрополичьей вотчины -->
+              <tr class="bg-white/5">
+                <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 456об.)</span> №233 Вотчина Ростовского митрополита в Череповце село Богородицкое на речке на Шексне в ней церковь Успение Пречистые Богородицы древяннои верьх шатров... ... да в селце двор митрополита Ростовского</td>
+              </tr>
+
+              <!-- Четвертая группа - Вотчина Ростовского митрополита -->
+              <tr class="bg-white/10">
+                <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2" rowspan="19">Вотчина Ростовского митрополита </td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Горка</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Бесекова</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Панкино а Палкино тож</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Другая Фроловская</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Фроловская</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Радки</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Угол</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Пронина Горка</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Жадихово в Залесье</td>
+                <td class="border border-r-2 border-black px-3 py-2">на речке Суде пожня Полища</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Сандалова</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Плоское</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Починок</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Емишево</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня что была пустошь Коромолница</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Лемья</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь что была деревня Волкова пустая</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Круглой Бор</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Ганина</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">село что была деревня Шугобоцкое а в нем церковь Николы Чюдотворца верх клецки</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">под погостом Шогубоцкое [Шугобоцкое]</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Лаптева</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Потребине</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Трушнева</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
+
 
       <style>
         #frame, #map, .leaflet-container { border-radius: 0 !important; background: transparent !important; }
@@ -72,10 +837,11 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
         .leaflet-control-attribution { display: none !important; }
 
         #viewer:fullscreen { width: 100vw; height: 100vh; background: rgba(0,0,0,0.25); }
-        #viewer:fullscreen #map-card { position: absolute; inset: 16px; }
+        #viewer:fullscreen #ratio { position: absolute; inset: 16px; }
         #viewer:fullscreen #ratio { height: 100%; }
         #viewer:fullscreen #frame { position: absolute; inset: 0; }
         #viewer:fullscreen .mt-4 { display: none; }
+
       </style>
 
       <!-- Leaflet JS -->
@@ -172,12 +938,56 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
         });
       </script>
 
-      <!-- Back navigation -->
-      <div class="mt-10">
-        <a href="/ru/local_history" class="inline-block rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-sm text-white/80 hover:bg-white/10">
-          ← Назад к «Краеведение и генеалогия»
-        </a>
+          <!-- Back navigation -->
+          <div class="mt-10">
+            <a href="/ru/local_history" class="inline-block rounded-lg border border-amber-800/30 bg-amber-100/50 px-4 py-2 text-sm text-slate-800 hover:bg-amber-200/50">
+              ← Назад к «Краеведение»
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </section>
-</BaseLayout>
+
+  <style>
+    /* ---------- Пергамент «как на образце» ---------- */
+    .paper-old{
+      position: relative;
+      color:#2a1e14;
+      padding: 2rem;
+      border-radius: 0;
+      overflow: hidden;
+
+      /* базовый тон */
+      background-color: #f3e4c9;
+
+      /* Паттерн из файла */
+      background-image: url('/images/textures/old-paper.png');
+      background-size: auto;
+      background-position: center;
+      background-repeat: repeat;
+
+      /* объём и «запылённость» */
+      box-shadow:
+        0 20px 40px rgba(0,0,0,.35),
+        inset 0 0 140px rgba(0,0,0,.22),
+        inset 0 0 24px rgba(0,0,0,.12);
+
+      /* лёгкая коррекция тона/контраста */
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    /* Светлый слой поверх паттерна для осветления */
+    .paper-old::before{
+      content:"";
+      position:absolute; inset:0; pointer-events:none;
+      background: rgba(255,255,255,0.6);
+      mix-blend-mode: screen;
+    }
+
+    /* Внутри «бумаги» белый текст перекрасим в тёмный при необходимости */
+    .paper-old .text-white, .paper-old .text-white * { color:#2a1e14 !important; }
+
+    @media (min-width:768px){ .paper-old{ padding:2.5rem; } }
+  </style>
+</LocalHistoryLayout>

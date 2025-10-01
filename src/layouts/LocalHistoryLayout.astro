@@ -1,0 +1,96 @@
+---
+const {
+  title = "Maksim Ruchkin",
+  description = "Personal site",
+  lang = "en", // "en" | "ru"
+} = Astro.props;
+
+import "../styles/globals.css";
+
+// меню для EN/RU
+const menuEn = [
+  { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
+  { href: "/publications", label: "Publications" },
+  { href: "/software", label: "Software" },
+  { href: "/ru/local_history", label: "Local history" },
+  { href: "/contacts", label: "Contacts" },
+];
+const menuRu = [
+  { href: "/ru", label: "Главная" },
+  { href: "/ru/projects", label: "Проекты" },
+  { href: "/ru/publications", label: "Публикации" },
+  { href: "/ru/software", label: "Программы" },
+  { href: "/ru/local_history", label: "Краеведение" },
+  { href: "/ru/contacts", label: "Контакты" },
+];
+const menu = lang === "ru" ? menuRu : menuEn;
+
+// текущий путь и локализованные ссылки для переключателя
+const path = Astro.url.pathname;              // напр. "/software" или "/ru/software" или "/"
+const hrefRU = path.startsWith("/ru")
+  ? path                                     // уже RU
+  : (path === "/" ? "/ru" : `/ru${path}`);   // тот же путь с префиксом /ru
+const hrefEN = path.startsWith("/ru")
+  ? (path.slice(3) || "/")                   // убираем "/ru"
+  : (path || "/");                           // уже EN
+---
+
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.ico" />
+  </head>
+
+  <body
+    class="m-0 flex min-h-screen flex-col text-white bg-fixed bg-cover bg-center bg-no-repeat"
+    style="
+      background-image:
+        linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+        url('/local-history-bg.jpg');
+      background-color:#0b1220;
+    "
+  >
+    <header class="sticky top-0 z-40 border-b border-white/10 bg-black/40 backdrop-blur">
+      <nav class="mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between px-4">
+        <a href={lang === "ru" ? "/ru" : "/"} class="flex items-center gap-2">
+          <img src="/logo.svg" alt="Logo MR" class="h-8 w-8" />
+          <span class="font-semibold text-white">Maksim Ruchkin</span>
+        </a>
+
+        <ul class="hidden items-center gap-8 text-sm md:flex">
+          {menu.map((item) => (
+            <li>
+              <a class="text-white/85 hover:text-amber-400" href={item.href}>{item.label}</a>
+            </li>
+          ))}
+        </ul>
+
+        <!-- Переключатель языка: ведёт на тот же путь -->
+        <div class="flex gap-2">
+          <a
+            href={hrefRU}
+            class={`rounded-md border border-white/20 px-3 py-1 text-xs
+              ${lang === 'ru' ? 'bg-amber-500 text-slate-950 font-semibold' : 'text-white/80 hover:bg-white/10'}`}
+          >RU</a>
+          <a
+            href={hrefEN}
+            class={`rounded-md border border-white/20 px-3 py-1 text-xs
+              ${lang === 'en' ? 'bg-amber-500 text-slate-950 font-semibold' : 'text-white/80 hover:bg-white/10'}`}
+          >EN</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="flex-1">
+      <slot />
+    </main>
+
+    <footer class="border-t border-white/10 p-4 text-sm text-white/70 text-left">
+      © {new Date().getFullYear()} Maksim Ruchkin
+    </footer>
+  </body>
+</html>
