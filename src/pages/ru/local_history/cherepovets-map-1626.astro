@@ -27,17 +27,16 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
             <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Череповская волость</span>
           </div>
 
-          <p class="mb-8 text-sm text-slate-800 leading-relaxed">
+          <p class="mb-8 text-sm text-slate-800 leading-relaxed text-justify">
             Карта составлена по данным писцовой книги Белозерского уезда письма и меры Никиты Шеховского и подьячего Максима Козлова 1626/27 г.
             Копия XVIII в. за скрепой секретаря Ильи Феоктистова и справами подканцеляристов Петра Цветкова и Ивана Михайлова (РГАДА Ф.1209 Оп.1 Д.591).
           </p>
 
-          <p class="mb-8 text-sm text-slate-800 leading-relaxed">
+          <p class="mb-8 text-sm text-slate-800 leading-relaxed text-justify">
             Вы можете помочь с определением местоположения населённых пунктов и пустошей, существовавших в Череповской волости в 1626/27 г. 
             Ниже карты находится таблица с указанием размещённых и не размещённых на карте объектов. Если Вам известно местоположение 
-            какого-то из неразмещённых объектов или Вы нашли ошибку, напишите мне через 
-            <a href="/ru/contacts" class="text-amber-700 hover:text-amber-800 underline">форму обратной связи</a>. Я внесу изменения в 
-            карту, как только смогу.
+            какого-то из неразмещённых объектов или Вы нашли ошибку на карте, напишите мне через 
+            <a href="/ru/contacts" class="text-amber-700 hover:text-amber-800 underline">форму обратной связи</a>.
           </p>
 
           <!-- Карта -->
@@ -85,8 +84,8 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
             <thead>
               <tr class="text-slate-800">
                 <th class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Владелец</th>
-                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Локализованные</th>
-                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Нелокализованные</th>
+                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Размещённые</th>
+                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Неразмещённые</th>
               </tr>
             </thead>
             <tbody>
