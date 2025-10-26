@@ -1,8 +1,5 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  darkMode: 'class',
-  theme: {
-    extend: {},
-  },
-  plugins: [],
-};
+import { defineConfig } from '@tailwindcss/vite'
+
+export default defineConfig({
+  // Tailwind CSS v4 configuration
+})
