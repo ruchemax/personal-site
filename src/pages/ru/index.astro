@@ -4,70 +4,273 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 <BaseLayout title="Максим Ручкин — Персональный сайт" lang="ru">
   <!-- Русский контент -->
 
-  <!-- Прозрачная секция -->
+  <!-- Прозрачная секция: НИКАКИХ фоновых цветов, только контент -->
   <section class="relative w-full text-white">
-    <div class="mx-auto grid w-full max-w-[1200px] grid-cols-1 gap-10 px-6 py-16 md:grid-cols-2 md:items-center">
+    <div class="mx-auto w-full max-w-[800px] px-6 py-16">
 
-      <!-- ЛЕВЫЙ столбец: фото -->
-      <div class="relative mx-auto w-72">
+      <!-- Верхняя секция: фото + приветствие -->
+      <div class="grid grid-cols-1 gap-10 md:grid-cols-3 md:items-start mb-10">
         <!-- Фото -->
-        <div class="aspect-square w-72 overflow-hidden rounded-full border-4 border-amber-500 shadow-2xl">
-          <img src="/portrait.jpg" alt="Портрет Максима" class="h-full w-full object-cover" />
+        <div class="relative w-40 flex flex-col justify-start items-center">
+          <!-- Фото в круге с серым кантом -->
+          <div class="aspect-square w-56 overflow-hidden rounded-full border-4 border-gray-400 shadow-2xl mt-16">
+            <img src="/portrait.jpg" alt="Портрет Максима" class="h-full w-full object-cover brightness-90" />
+          </div>
+
+          <!-- Кнопка More Information - точно под центром фотографии -->
+          <div class="mt-4 flex justify-center">
+            <button id="moreInfoBtn" class="min-w-[120px] text-center rounded-xl bg-gray-400 px-6 py-3 font-semibold text-black hover:bg-gray-200">
+              Смотреть CV
+            </button>
+          </div>
         </div>
 
-        <!-- Кнопка -->
-        <div class="mt-8 flex flex-wrap justify-center gap-4">
-          <a href="/cv.pdf"
-            class="min-w-[180px] text-center rounded-xl bg-amber-500 px-6 py-3 font-semibold text-slate-950 hover:bg-amber-400">
-            Скачать CV
-          </a>
-        </div>
-      </div>
+        <!-- Приветствие и данные -->
+        <div class="max-w-none md:col-span-2">
+          <!-- Заголовок -->
+          <h1 class="mt-4 text-4xl font-bold leading-tight md:text-4xl">
+            Привет! Меня зовут Максим Ручкин
+          </h1>
 
-      <!-- ПРАВЫЙ столбец -->
-      <div>
-        <!-- Заголовок -->
-        <h1 class="mt-4 text-3xl font-bold leading-tight md:text-3xl">
-          Привет, меня зовут Максим Ручкин
-        </h1>
+          <!-- Подзаголовок -->
+          <h2 class="mt-4 text-xl font-semibold leading-tight">
+            Кандидат географических наук, исследователь четвертичного периода
+          </h2>
 
-        <!-- Подзаголовок -->
-        <h2 class="mt-4 text-xl font-semibold leading-tight">
-          Кандидат географических наук, исследователь четвертичного периода
-        </h2>
+          <!-- Описание -->
+          <p class="mt-4 text-white/80">
+            Мои научные интересы включают четвертичную геологию и палеогеографию Северной Европы, с особым акцентом на люминесцентное датирование. 
+            В настоящее время я изучаю последнее межледниковье в восточной Балтике и позднеледниковую-голоценовую историю Шверинского озера в Германии. 
+            На этом сайте вы найдёте описания проектов, в которых я принимал участие, ссылки на мои публикации, разработанные мной программы, 
+            а также материалы по истории Череповецкого края, которой я занимаюсь в качестве хобби.
+          </p>
 
-        <!-- Описание -->
-        <p class="mt-4 max-w-xl text-white/80">
-          Мои научные интересы включают четвертичную геологию и палеогеографию Северной Европы, с особым акцентом на люминесцентное датирование. В настоящее время я изучаю 
-          последнее межледниковье в восточной Балтике и позднеледниковую-голоценовую историю Шверинского озера в Германии. На этом сайте вы найдёте описания проектов, в которых 
-          я принимал участие, ссылки на мои публикации, разработанные мной программы, а также материалы по краеведению (Череповецкий уезд) и генеалогии, которыми я занимаюсь в качестве хобби.
-        </p>
-
-        <!-- Профили -->
-        <div class="mt-10 space-y-2 text-sm text-white/70">
-          <div class="flex flex-wrap gap-4">
-            <a href="https://www.scopus.com/authid/detail.uri?authorId=57223977950" target="_blank" rel="noopener noreferrer">
-              <img src="/icons/scopus.svg" alt="Scopus" class="h-6 w-18 transition hover:opacity-80" />
-            </a>
-            <a href="https://www.webofscience.com/wos/author/record/ITT-5857-2023" target="_blank" rel="noopener noreferrer">
-              <img src="/icons/wos.png" alt="Web of Science" class="h-6 w-18 transition hover:opacity-80" />
-            </a>
-            <a href="https://www.researchgate.net/profile/Maksim_Ruchkin" target="_blank" rel="noopener noreferrer">
-              <img src="/icons/researchgate.png" alt="ResearchGate" class="h-6 w-18 transition hover:opacity-80" />
-            </a>
-            <a href="https://scholar.google.com/citations?user=sCTHWVwAAAAJ&hl=ru" target="_blank" rel="noopener noreferrer">
-              <img src="/icons/scholar.png" alt="Google Scholar" class="h-6 w-18 transition hover:opacity-80" />
-            </a>
-            <a href="https://elibrary.ru/author_items.asp?authorid=1089388&show_refs=1" target="_blank" rel="noopener noreferrer">
-              <img src="/icons/elibrary.png" alt="eLIBRARY" class="h-6 w-18 transition hover:opacity-80" />
-            </a>
-            <a href="https://orcid.org/0009-0003-4896-0203" target="_blank" rel="noopener noreferrer">
-              <img src="/icons/orcid.png" alt="ORCID" class="h-6 w-18 transition hover:opacity-80" />
-            </a>
+          <!-- Профили (иконки) -->
+          <div class="mt-10 space-y-2 text-sm text-white/70">
+            <div class="flex flex-wrap gap-4">
+              <a href="https://www.scopus.com/authid/detail.uri?authorId=57223977950" target="_blank" rel="noopener noreferrer">
+                <img src="/icons/scopus.svg" alt="Scopus" class="h-6 w-18 transition hover:opacity-80" />
+              </a>
+              <a href="https://www.webofscience.com/wos/author/record/ITT-5857-2023" target="_blank" rel="noopener noreferrer">
+                <img src="/icons/wos.png" alt="Web of Science" class="h-6 w-18 transition hover:opacity-80" />
+              </a>
+              <a href="https://www.researchgate.net/profile/Maksim_Ruchkin" target="_blank" rel="noopener noreferrer">
+                <img src="/icons/researchgate.png" alt="ResearchGate" class="h-6 w-18 transition hover:opacity-80" />
+              </a>
+              <a href="https://scholar.google.com/citations?user=sCTHWVwAAAAJ&hl=ru" target="_blank" rel="noopener noreferrer">
+                <img src="/icons/scholar.png" alt="Google Scholar" class="h-6 w-18 transition hover:opacity-80" />
+              </a>
+              <a href="https://elibrary.ru/author_items.asp?authorid=1089388&show_refs=1" target="_blank" rel="noopener noreferrer">
+                <img src="/icons/elibrary.png" alt="eLIBRARY" class="h-6 w-18 transition hover:opacity-80" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
 
     </div>
   </section>
+
+
+  <!-- Modal -->
+  <div id="cvModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+    <div class="rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto" style="background-color: #f3e4c9; background-image: url('/images/textures/old-paper.png'); background-size: auto; background-position: center; background-repeat: repeat; position: relative;">
+      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.6); pointer-events: none; border-radius: 1rem; z-index: 0;"></div>
+      <div class="p-6" style="position: relative; z-index: 1;">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">Максим Ручкин – CV</h2>
+          <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+        </div>
+        
+        <!-- ОПЫТ РАБОТЫ -->
+        <div class="mb-8">
+          <h3 class="text-xl font-bold mb-4 text-gray-800">ОПЫТ РАБОТЫ</h3>
+          <div class="space-y-4">
+            <!-- University of Greifswald -->
+            <div class="border-b border-gray-200 pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Грайфсвальдский университет, Институт географии и геологии, Кафедра физической географии</h4>
+                  <p class="text-gray-600">Грайфсвальд, Германия</p>
+                  <p class="text-black font-medium">Постдокторант</p>
+                </div>
+                <span class="text-black font-medium">[ 2024 – н.в. ]</span>
+              </div>
+            </div>
+
+            <!-- Freiberg Instruments -->
+            <div class="border-b border-gray-200 pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Freiberg Instruments</h4>
+                  <p class="text-gray-600">Фрайберг, Германия</p>
+                  <p class="text-black font-medium">Инженер</p>
+                </div>
+                <span class="text-black font-medium">[ 2022 – 2023 ]</span>
+              </div>
+            </div>
+
+            <!-- University of Cologne -->
+            <div class="border-b border-gray-200 pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Кёльнский университет, Институт географии, Кёльнская люминесцентная лаборатория</h4>
+                  <p class="text-gray-600">Кёльн, Германия</p>
+                  <p class="text-black font-medium">Приглашённый исследователь</p>
+                </div>
+                <span class="text-black font-medium">[ 2021 – 2022 ]</span>
+              </div>
+            </div>
+
+            <!-- Aarhus University -->
+            <div class="border-b border-gray-200 pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Орхусский университет, Скандинавская лаборатория люминесцентного датирования</h4>
+                  <p class="text-gray-600">Роскилле, Дания</p>
+                  <p class="text-black font-medium">Приглашённый исследователь</p>
+                </div>
+                <span class="text-black font-medium">[ 2020 – 2021 ]</span>
+              </div>
+            </div>
+
+            <!-- Russian Geological Research Institute -->
+            <div class="border-b border-gray-200 pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Всероссийский научно-исследовательский геологический институт, Лаборатория ОСЛ</h4>
+                  <p class="text-gray-600">Санкт-Петербург, Россия</p>
+                  <p class="text-black font-medium">Инженер</p>
+                </div>
+                <span class="text-black font-medium">[ 2017 – 2022 ]</span>
+              </div>
+            </div>
+
+            <!-- Russian Geological Research Institute (earlier) -->
+            <div class="pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Всероссийский научно-исследовательский геологический институт</h4>
+                  <p class="text-gray-600">Санкт-Петербург, Россия</p>
+                  <p class="text-black font-medium">Техник-геолог</p>
+                </div>
+                <span class="text-black font-medium">[ 2013 – 2015 ]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ОБРАЗОВАНИЕ -->
+        <div class="mb-8">
+          <h3 class="text-xl font-bold mb-4 text-gray-800">ОБРАЗОВАНИЕ</h3>
+          <div class="space-y-4">
+            <!-- PhD in Geography -->
+            <div class="border-b border-gray-200 pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Кандидат географических наук</h4>
+                  <p class="text-gray-600">Санкт-Петербургский государственный университет, Институт наук о Земле</p>
+                  <p class="text-gray-500 text-sm">Санкт-Петербург, Россия</p>
+                </div>
+                <span class="text-black font-medium">[ 2019 – 2024 ]</span>
+              </div>
+            </div>
+
+            <!-- Master's Degree -->
+            <div class="border-b border-gray-200 pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Магистр геологии</h4>
+                  <p class="text-gray-600">Санкт-Петербургский государственный университет, Институт наук о Земле</p>
+                  <p class="text-gray-500 text-sm">Санкт-Петербург, Россия</p>
+                </div>
+                <span class="text-black font-medium">[ 2017 – 2019 ]</span>
+              </div>
+            </div>
+
+            <!-- Bachelor's Degree -->
+            <div class="pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Бакалавр географии</h4>
+                  <p class="text-gray-600">Санкт-Петербургский государственный университет, Институт наук о Земле</p>
+                  <p class="text-gray-500 text-sm">Санкт-Петербург, Россия</p>
+                </div>
+                <span class="text-black font-medium">[ 2011 – 2015 ]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- СТИПЕНДИИ -->
+        <div class="mb-8">
+          <h3 class="text-xl font-bold mb-4 text-gray-800">СТИПЕНДИИ</h3>
+          <div class="space-y-4">
+            <!-- DAAD Scholarship -->
+            <div class="border-b border-gray-200 pb-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h4 class="font-semibold text-gray-800">Германская служба академических обменов (DAAD) и Санкт-Петербургский государственный университет</h4>
+                  <p class="text-gray-600">Шестимесячная стипендия по программе "Дмитрий Менделеев"</p>
+                </div>
+                <span class="text-black font-medium">[ 2021 ]</span>
+              </div>
+            </div>
+
+            <!-- Danish Government Scholarship -->
+            <div class="pb-4">
+              <div class="flex justify-between items-start">
+                <div class="flex-1 pr-4">
+                  <h4 class="font-semibold text-gray-800">Правительство Дании</h4>
+                  <p class="text-gray-600">Шестимесячная стипендия по программе культурных соглашений между Данией и Россией</p>
+                </div>
+                <span class="text-black font-medium flex-shrink-0">[ 2020 ]</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ЯЗЫКОВЫЕ НАВЫКИ -->
+        <div class="mb-12">
+          <h3 class="text-xl font-bold mb-4 text-gray-800">ЯЗЫКОВЫЕ НАВЫКИ</h3>
+          <p class="text-gray-800 mb-4">
+            <span class="font-semibold">Русский:</span> родной | 
+            <span class="font-semibold">Английский:</span> свободный | 
+            <span class="font-semibold">Немецкий:</span> базовый
+          </p>
+        </div>
+
+        <!-- ХОББИ -->
+        <div class="mb-8">
+          <h3 class="text-xl font-bold mb-4 text-gray-800">ХОББИ</h3>
+          <p class="text-gray-800 mb-4">
+            Разработка программного обеспечения | Генеалогия | История Череповецкого края
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const moreInfoBtn = document.getElementById('moreInfoBtn');
+      const modal = document.getElementById('cvModal');
+      const closeModal = document.getElementById('closeModal');
+      
+      moreInfoBtn.addEventListener('click', function() {
+        modal.classList.remove('hidden');
+      });
+
+      closeModal.addEventListener('click', function() {
+        modal.classList.add('hidden');
+      });
+
+      // Close modal when clicking outside
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+        }
+      });
+    });
+  </script>
 </BaseLayout>

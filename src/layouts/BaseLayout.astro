@@ -34,6 +34,9 @@ const hrefRU = path.startsWith("/ru")
 const hrefEN = path.startsWith("/ru")
   ? (path.slice(3) || "/")                   // убираем "/ru"
   : (path || "/");                           // уже EN
+
+// Определяем язык на основе пути и сохраненных предпочтений
+const currentLang = path.startsWith("/ru") ? "ru" : "en";
 ---
 
 <html lang={lang} class="scroll-smooth">
@@ -92,5 +95,88 @@ const hrefEN = path.startsWith("/ru")
     <footer class="border-t border-white/10 p-4 text-sm text-white/70 text-left">
       © {new Date().getFullYear()} Maksim Ruchkin
     </footer>
+
+    <script>
+      // Управление языком и сохранение предпочтений
+      document.addEventListener('DOMContentLoaded', function() {
+        // Сохранение выбранного языка в localStorage
+        const langLinks = document.querySelectorAll('a[href*="/ru"], a[href="/"]');
+        
+        langLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            console.log('BaseLayout - Клик по переключателю языка:', href);
+            
+            // НЕ меняем язык при переходе на краеведение
+            if (href.includes('/local_history')) {
+              console.log('BaseLayout - Переход на краеведение - НЕ меняем язык');
+              return; // Не устанавливаем язык, просто переходим
+            }
+            
+            if (href.startsWith('/ru')) {
+              localStorage.setItem('preferredLanguage', 'ru');
+              console.log('BaseLayout - Установлен русский язык');
+            } else {
+              localStorage.setItem('preferredLanguage', 'en');
+              console.log('BaseLayout - Установлен английский язык');
+            }
+            
+            console.log('BaseLayout - localStorage после клика:', localStorage.getItem('preferredLanguage'));
+          });
+        });
+
+        // Проверка сохраненного языка при загрузке страницы
+        const savedLang = localStorage.getItem('preferredLanguage');
+        const currentPath = window.location.pathname;
+        
+        // ОТЛАДКА: выводим информацию о языке
+        console.log('BaseLayout - Текущий путь:', currentPath);
+        console.log('BaseLayout - Сохраненный язык:', savedLang);
+        
+        // Если пользователь переходит с краеведения на другую страницу
+        // и у него сохранен английский язык, перенаправляем на английскую версию
+        if (savedLang === 'en' && currentPath.startsWith('/ru/') && !currentPath.includes('/local_history')) {
+          console.log('BaseLayout - Перенаправляем на английскую версию:', currentPath.replace('/ru', '') || '/');
+          // Перенаправляем на английскую версию страницы
+          const englishPath = currentPath.replace('/ru', '') || '/';
+          window.location.href = englishPath;
+        }
+
+        // Обработка кликов по ссылкам в меню
+        const menuLinks = document.querySelectorAll('nav a[href]');
+        menuLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            const savedLang = localStorage.getItem('preferredLanguage');
+            
+            console.log('BaseLayout - Клик по ссылке в меню:', href);
+            console.log('BaseLayout - Сохраненный язык при клике:', savedLang);
+            
+            // Устанавливаем язык в зависимости от того, на какую страницу переходим
+            if (href.startsWith('/ru/') && !href.includes('/local_history')) {
+              // Переход на русскую страницу (кроме краеведения) - устанавливаем русский язык
+              localStorage.setItem('preferredLanguage', 'ru');
+              console.log('BaseLayout - Установлен русский язык при переходе на русскую страницу');
+            } else if (!href.startsWith('/ru/')) {
+              // Переход на английскую страницу - устанавливаем английский язык
+              localStorage.setItem('preferredLanguage', 'en');
+              console.log('BaseLayout - Установлен английский язык при переходе на английскую страницу');
+            }
+            
+            // Если пользователь с английской версии кликает на ссылку, ведущую на русскую страницу
+            // (кроме краеведения), перенаправляем на английскую версию
+            if (savedLang === 'en' && href.startsWith('/ru/') && !href.includes('/local_history')) {
+              console.log('BaseLayout - Перенаправляем с русской на английскую версию');
+              e.preventDefault();
+              const englishPath = href.replace('/ru', '') || '/';
+              console.log('BaseLayout - Новый путь:', englishPath);
+              window.location.href = englishPath;
+            } else {
+              console.log('BaseLayout - Переход разрешен');
+            }
+          });
+        });
+      });
+    </script>
   </body>
 </html>

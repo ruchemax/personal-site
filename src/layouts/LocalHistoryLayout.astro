@@ -2,7 +2,7 @@
 const {
   title = "Maksim Ruchkin",
   description = "Personal site",
-  lang = "en", // "en" | "ru"
+  lang = "ru", // "en" | "ru" - по умолчанию русский для краеведения
 } = Astro.props;
 
 import "../styles/globals.css";
@@ -24,7 +24,8 @@ const menuRu = [
   { href: "/ru/local_history", label: "Краеведение" },
   { href: "/ru/contacts", label: "Контакты" },
 ];
-const menu = lang === "ru" ? menuRu : menuEn;
+// По умолчанию используем русское меню, но на клиенте оно будет обновлено
+const menu = menuRu;
 
 // текущий путь и локализованные ссылки для переключателя
 const path = Astro.url.pathname;              // напр. "/software" или "/ru/software" или "/"
@@ -34,6 +35,9 @@ const hrefRU = path.startsWith("/ru")
 const hrefEN = path.startsWith("/ru")
   ? (path.slice(3) || "/")                   // убираем "/ru"
   : (path || "/");                           // уже EN
+
+// Определяем язык на основе пути и сохраненных предпочтений
+const currentLang = path.startsWith("/ru") ? "ru" : "en";
 ---
 
 <html lang={lang} class="scroll-smooth">
@@ -61,27 +65,13 @@ const hrefEN = path.startsWith("/ru")
           <span class="font-semibold text-white">Maksim Ruchkin</span>
         </a>
 
-        <ul class="hidden items-center gap-8 text-sm md:flex">
+        <ul class="flex items-center gap-8 text-sm mx-auto">
           {menu.map((item) => (
             <li>
               <a class="text-white/85 hover:text-amber-400" href={item.href}>{item.label}</a>
             </li>
           ))}
         </ul>
-
-        <!-- Переключатель языка: ведёт на тот же путь -->
-        <div class="flex gap-2">
-          <a
-            href={hrefRU}
-            class={`rounded-md border border-white/20 px-3 py-1 text-xs
-              ${lang === 'ru' ? 'bg-amber-500 text-slate-950 font-semibold' : 'text-white/80 hover:bg-white/10'}`}
-          >RU</a>
-          <a
-            href={hrefEN}
-            class={`rounded-md border border-white/20 px-3 py-1 text-xs
-              ${lang === 'en' ? 'bg-amber-500 text-slate-950 font-semibold' : 'text-white/80 hover:bg-white/10'}`}
-          >EN</a>
-        </div>
       </nav>
     </header>
 
@@ -92,5 +82,46 @@ const hrefEN = path.startsWith("/ru")
     <footer class="border-t border-white/10 p-4 text-sm text-white/70 text-left">
       © {new Date().getFullYear()} Maksim Ruchkin
     </footer>
+
+    <script>
+      // Простое сохранение языка при загрузке страницы краеведения
+      document.addEventListener('DOMContentLoaded', function() {
+        const currentPath = window.location.pathname;
+        const currentLang = localStorage.getItem('preferredLanguage');
+        
+        // ОТЛАДКА: выводим информацию о языке
+        console.log('LocalHistoryLayout - Текущий путь:', currentPath);
+        console.log('LocalHistoryLayout - Сохраненный язык ДО:', currentLang);
+        console.log('LocalHistoryLayout - localStorage содержимое ДО:', localStorage);
+        
+        // При загрузке страницы краеведения НЕ меняем предпочтение пользователя
+        // Просто сохраняем текущий язык (если он уже был установлен)
+        if (!currentLang) {
+          // Если язык не был установлен ранее, устанавливаем русский по умолчанию
+          localStorage.setItem('preferredLanguage', 'ru');
+          console.log('LocalHistoryLayout - Установлен русский по умолчанию');
+        } else {
+          console.log('LocalHistoryLayout - Язык уже был установлен:', currentLang);
+        }
+        
+        // Обновляем ссылки в меню на основе сохраненного языка
+        const savedLang = localStorage.getItem('preferredLanguage');
+        const menuLinks = document.querySelectorAll('nav a[href]');
+        
+        menuLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (savedLang === 'en' && href.startsWith('/ru/') && !href.includes('/local_history')) {
+            // Заменяем русские ссылки на английские
+            const englishHref = href.replace('/ru', '') || '/';
+            link.setAttribute('href', englishHref);
+            console.log('LocalHistoryLayout - Обновлена ссылка:', href, '->', englishHref);
+          }
+        });
+        
+        // ОТЛАДКА: выводим финальное состояние
+        console.log('LocalHistoryLayout - Сохраненный язык ПОСЛЕ:', localStorage.getItem('preferredLanguage'));
+        console.log('LocalHistoryLayout - localStorage содержимое ПОСЛЕ:', localStorage);
+      });
+    </script>
   </body>
 </html>

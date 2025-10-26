@@ -1,0 +1,73 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const { lang = "en" } = Astro.props;
+---
+
+<BaseLayout title="Projects — Maksim Ruchkin" lang={lang}>
+  <section class="w-full text-white">
+    <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
+      <h1 class="text-3xl font-bold">Projects</h1>
+
+      <!-- Cards -->
+      <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+        <!-- Project 3 -->
+        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <p class="text-base text-white/75 mb-2">
+            2024–2025
+          </p>
+          <h2 class="text-xl font-semibold">Late Pleistocene to Holocene climate variations and anthropogenic changes in the North German Plain inferred from lake and peat sediments from Schweriner See</h2>
+            <p class="mt-2 text-sm text-white">
+              <span class="text-amber-300">Role:</span> Postdoctoral Researcher | <span class="text-amber-300">Funded by:</span> German Research Foundation (DFG) | <span class="text-amber-300">Type:</span> Grant | <span class="text-amber-300">Head:</span> Prof. Dr. Torsten Haberzettl
+            </p>
+
+        </article>
+
+        <!-- Project 2 -->
+        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <p class="text-base text-white/75 mb-2">
+            2021–2022
+          </p>
+          <h2 class="text-xl font-semibold">High-resolution dating of the Eemian marine deposits at the Sverdlov Factory section</h2>
+              <p class="mt-2 text-sm text-white">
+                <span class="text-amber-300">Role:</span> PhD Student | <span class="text-amber-300">Funded by:</span> German Academic Exchange Service (DAAD) and Saint Petersburg University | <span class="text-amber-300">Type:</span> Scholarship | <span class="text-amber-300">Supervisors:</span> Prof. Dr. Vladislav Kuznetsov and Prof. Dr. Tony Reimann</span>
+              </p>
+              <p class="mt-2 text-sm text-white">
+                <span class="text-amber-300">Publications:</span><br>
+                <a href="https://doi.org/10.1002/jqs.3618" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin, M. V., Nosevich, E. S., Sheetov, M. V., & Brill, D. (2024). Stratigraphy and OSL chronology of the Middle–Upper Pleistocene sedimentary sequence and vegetation history during Late MIS6 – MIS5e in the Neva Lowland (St. Petersburg Region, Russia). Journal of Quaternary Science, 39, 745–764. https://doi.org/10.1002/jqs.3618</a>
+              </p>
+              <p class="mt-2 text-sm text-white">
+                <a href="https://doi.org/10.1016/j.quascirev.2025.109244" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin, M. V., Sheetov, M. V., Taldenkova, Е. E., Pushina, Z. V., Dudanova, V. I., Ovsepyan, Ya. S., Konstantinov, E. A., Nosevich, E. S., & Mustafin, M. A. (2025). Paleohydrological changes in the eastern Baltic Sea during the Middle/Late Pleistocene transition and the Last Interglacial. Quaternary Science Reviews, 360, 109244. https://doi.org/10.1016/j.quascirev.2025.109244</a>
+              </p>
+
+        </article>
+
+        <!-- Project 1 -->
+        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <p class="text-base text-white/75 mb-2">
+            2020–2021
+          </p>
+          <h2 class="text-xl font-semibold">Late Quaternary history of the Siberian Arctic and adjacent areas</h2>
+              <p class="mt-2 text-sm text-white">
+                <span class="text-amber-300">Role:</span> PhD Student | <span class="text-amber-300">Funded by:</span> Danish Government | <span class="text-amber-300">Type:</span> Scholarship | <span class="text-amber-300">Supervisors:</span> Dr. Dmitry Nazarov and Prof. Dr. Andrew Murray
+              </p>
+              <p class="mt-2 text-sm text-white">
+                <span class="text-amber-300">Publications:</span><br>
+                <a href="https://doi.org/10.1111/bor.12558" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Nazarov, D. V., Nikolskaia, O. A., Gladysheva, A. S., Zhigmanovskiy, I. V., Ruchkin, M. V., Merkuljev, A. V., & Thomsen, K. J. (2022). Evidence for the intrusion of marine Atlantic waters into the West Siberian Arctic during the Middle Pleistocene. Boreas, 51, 402–425. https://doi.org/10.1111/bor.12558</a>
+              </p>
+
+        </article>
+      </div>
+
+      <!-- Contact -->
+      <div class="mt-4 text-sm text-white">
+        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          Interested in collaboration or have questions?
+          <a href="/contacts" class="text-amber-300 hover:underline">
+            Get in touch
+          </a>
+        </article>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

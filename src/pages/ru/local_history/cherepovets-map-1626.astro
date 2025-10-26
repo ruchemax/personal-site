@@ -49,14 +49,15 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                     <div id="map" class="absolute"></div>
                     
                     <!-- Zoom controls -->
-                    <div class="absolute top-2 left-2 z-[1000] flex gap-1">
-                      <button id="btn-zoom-in"  type="button" class="rounded-md border border-black bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10" aria-label="Приблизить">+</button>
-                      <button id="btn-zoom-out" type="button" class="rounded-md border border-black bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10" aria-label="Отдалить">−</button>
+                    <div class="absolute top-1/2 left-2 z-[1000] flex flex-col gap-1 -translate-y-1/2">
+                      <button id="btn-zoom-in"  type="button" class="w-10 h-10 rounded-md border border-black bg-black/30 text-sm text-white/90 hover:bg-white/10 flex items-center justify-center" aria-label="Приблизить">+</button>
+                      <button id="btn-zoom-out" type="button" class="w-10 h-10 rounded-md border border-black bg-black/30 text-sm text-white/90 hover:bg-white/10 flex items-center justify-center" aria-label="Отдалить">−</button>
+                      <button id="btn-reset" type="button" class="w-10 h-10 rounded-md border border-black bg-black/30 text-sm text-white/90 hover:bg-white/10 flex items-center justify-center" aria-label="Сбросить масштаб">⌂</button>
                     </div>
 
                     <!-- Fullscreen button -->
                     <button id="btn-fullscreen" type="button"
-                      class="absolute top-2 right-2 z-[1000] rounded-md border border-black bg-black/30 px-3 py-2 text-sm text-white/90 hover:bg-white/10"
+                      class="absolute top-2 right-2 z-[1000] w-10 h-10 rounded-md border border-black bg-black/30 text-sm text-white/90 hover:bg-white/10 flex items-center justify-center"
                       title="Развернуть на весь экран" aria-label="Развернуть на весь экран">
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" class="inline-block align-[-2px]">
                         <path d="M7 3H3v4M3 3l6 6M17 3h4v4M21 3l-6 6M7 21H3v-4M3 21l6-6M17 21h4v-4M21 21l-6-6"
@@ -80,12 +81,12 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
           <div class="mt-8">
         
         <div class="overflow-x-auto">
-          <table class="w-full text-sm border-collapse">
+          <table class="w-full text-sm border-collapse" style="table-layout: fixed;">
             <thead>
               <tr class="text-slate-800">
-                <th class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Владелец</th>
-                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Размещённые</th>
-                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base">Неразмещённые</th>
+                <th class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base" style="width: 25%;">Владелец</th>
+                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base" style="width: 40%;">Размещённые</th>
+                <th class="border-t-2 border-r-2 border-b border-black px-3 py-2 text-left font-medium text-base" style="width: 35%;">Неразмещённые</th>
               </tr>
             </thead>
             <tbody>
@@ -97,7 +98,7 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               <!-- Первая группа - Полукет Елизарьев сын Теметцкой -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="6">№78 За Полуектом Елизарьевым сыном Теметцким</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Урывково а в ней двор помещиков</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Урывково, а в ней двор помещиков</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Ившино</td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -113,18 +114,18 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border-r-2 border-b border-black px-3 py-2">пустошь что был починок Деревятин</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">пустошь, что был починок Деревятин</td>
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь что был починок Дорогин</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь, что был починок Дорогин</td>
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
               <!-- Вторая группа - Алексей Михайлов сын Панфилов -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="7">№79 За Алексеем Михайловым сыном Панфилова</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">отца ево поместье полпустоши что была деревня Рождественская на реке на Шексне а другая половина той пустоши в церковной земле</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">отца ево поместье полпустоши, что была деревня Рождественская на реке на Шексне а другая половина той пустоши в церковной земле</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -136,11 +137,11 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border-r-2 border-b border-black px-3 py-2">деревня Фроловская а в ней двор помещиков</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">деревня Фроловская, а в ней двор помещиков</td>
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border-r-2 border-b border-black px-3 py-2">деревня Киргады пуста а другая половина той деревни за Юрьем Оксентьевым</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">полдеревни Киргады, а другая половина той деревни за Юрием Оксентьевым</td>
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -155,11 +156,11 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               <!-- Третья группа - Матвей Константинов сын Поливанов -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="9">№80 За Матвеем Константиновым сыном Поливанова</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Федора Семенова сына Козлова деревня Алексеевская пуста</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Федора Семенова сына Козлова, деревня Алексеевская пуста</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Осюнинская</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border-r-2 border-b border-black px-3 py-2">деревня что было село Захарьевская пуста</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">деревня, что было село Захарьевская пуста</td>
                 <td class="border-r-2 border-b border-black px-3 py-2">пустошь Белково</td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -167,15 +168,15 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2">пустошь Губинская</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border-r-2 border-b border-black px-3 py-2">полдеревни Парфенова а другая половина той деревни за Хотеном Худошиным</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">полдеревни Парфенова, а другая половина той деревни за Хотеном Худошиным</td>
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border-r-2 border-b border-black px-3 py-2">в Турховской кулиге деревня Климовская а в ней два двора помещикова</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">в Турховской кулиге деревня Климовская, а в ней два двора помещикова</td>
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border-r-2 border-b border-black px-3 py-2">полселца Федоровскаго пустошь а другая половина того селца за Григорьем Булгаковым</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">полселца Федоровскаго пустошь, а другая половина того селца за Григорьем Булгаковым</td>
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -194,65 +195,69 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               <!-- Четвертая группа - Хотен Васильев сын Худошин -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="8">№81 За Хотеном Васильевым сыном Худошина</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Романа Иванова сына Решетова полселца Дуракова а другая половина того селца за Иваном Косецким</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Романа Иванова сына Решетова, полселца Дуракова, а другая половина того селца за Иваном Косецким</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">селцо Коровинское Маленкинское тож а в нем два двора помещиковы</td>
+                <td class="border border-r-2 border-black px-3 py-2">селцо Коровинское, Маленкинское тож, а в нем два двора помещиковы</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Парфеновы Горы пуста</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Парфеновы Горы пуста, а другая половина той деревни за Матфеем Поливановым</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">полпустоши Заякошье, а другая половина той пустоши церковная земля</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">полпустоши Заякошье а другая половина той пустоши церковная земля</td>
-                <td class="border border-r-2 border-black px-3 py-2"></td>
-              </tr>
-              <tr class="bg-white/10 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Веретея</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
-              <tr class="bg-white/5 owner-group">
+              <tr class="bg-white/10 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Давыдовская</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
-              <tr class="bg-white/10 owner-group">
+              <tr class="bg-white/5 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Лукинская</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
-              <tr class="bg-white/5 owner-group">
-                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Афонинская</td>
-                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Афонинская</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
 
               <!-- Пятая группа - Иван Дмитриев сын Косецкий -->
               <tr class="bg-white/10">
-                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№82 За Иваном Дмитревым сыном Косецким</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Гритино Болшое пуста</td>
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="6">№82 За Иваном Дмитревым сыном Косецким</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">полселца Дуракова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Бурлукин</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Гритино Болшое пуста</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь, что был починок Москва</td>
               </tr>
               <tr class="bg-white/5 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">деревня Гритино Меншое пуста</td>
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Бурлукин</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">два жеребья селца Никольскаго а третей жеребей того селца за Тимофеем Масловым а в нем на ивановы жеребьи двор помещиков </td>
-                <td class="border border-r-2 border-black px-3 py-2">пустошь что был починок Москва</td>
+                <td class="border border-r-2 border-black px-3 py-2">два жеребья селца Никольскаго, а третей жеребей того селца за Тимофеем Масловым, а в нем на ивановы жеребьи двор помещиков </td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Раменка</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь что был починок Воробьев</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь, что был починок Воробьев</td>
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
               <!-- Шестая группа - Андрей Пантелеев сын Екушкин -->
               <tr class="bg-white/10">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№83 За Андреем Пантелеевым сыном Екушкина</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Иваном Кузминым сыном Орловым деревня Баскова а Баскакова тож пуста</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Иваном Кузминым сыном Орловым, деревня Баскова а Баскакова тож пуста</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Шевырево</td>
               </tr>
               <tr class="bg-white/5 owner-group">
@@ -260,22 +265,22 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2">пустошь что был починок Кутузов</td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">село Борисово на реке на Шексне а в селе на государеве земле церковь Преображения Спасова</td>
+                <td class="border border-r-2 border-black px-3 py-2">село Борисово на реке на Шексне, а в селе на государеве земле церковь Преображения Спасова</td>
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Федякино</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Лапан</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Лапач</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border-r-2 border-b-2 border-black px-3 py-2">деревня Цылинская на реке на Шексне а в ней двор помещиков</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">деревня Цылинская на реке на Шексне, а в ней двор помещиков</td>
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
               <!-- Седьмая группа - Федор Дмитриев сын Косецкий -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">№84 За Федором Дмитриевым сыном Косецким</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Перфильем Васильевым сыном Волженским две трети деревни Новоселки пусто а треть той же деревни за Ондреем Макаровым</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Перфильем Васильевым сыном Волженским, две трети деревни Новоселки пусто а треть той же деревни за Ондреем Макаровым</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Федюнино</td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -285,31 +290,27 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
 
               <!-- Восьмая группа - Иван Иванов сын Юрлов -->
               <tr class="bg-white/5 owner-group">
-                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№85 За Иваном Ивановым сыном Юрловым</td>
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="3">№85 За Иваном Ивановым сыном Юрловым</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что была наперед того за дядею ево за Олексеем Михайловым сыном Юрлова деревня Полуева</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">полпустоши, что был починок Югин, а другая половина той пустоши за Тимофеем Масловым</td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Цыкова</td>
+                <td class="border border-r-2 border-black px-3 py-2">полдеревни Цыкова, а другая половина той деревни за Тимофеем Масловым</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Болсунова</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
-              <tr class="bg-white/10 owner-group">
-                <td class="border-r-2 border-b-2 border-black px-3 py-2">полпустоши что был починок Югин а другая половина той пустоши за Тимофеем Масловым</td>
-                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
-              </tr>
 
               <!-- Девятая группа - Федор Семенов сын Козлов -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="8">№86 За Федором Семеновым сыном Козлова</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Матвея Поливанова пустошь что была деревня Кавилское а Калинское тож</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Матвея Поливанов, пустошь, что была деревня Кавилское, а Калинское тож</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">пустошь что была деревня Воиново пуста</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь, что была деревня Войново пуста</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
@@ -333,27 +334,23 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border-r-2 border-b-2 border-black px-3 py-2">полпустоши Лашуковы а другая половина той пустоши в порожие землях</td>
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">полпустоши Лашуковы, а другая половина той пустоши в порозжие землях</td>
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
               <!-- Десятая группа - Тимофей Родионов сын Маслов -->
               <tr class="bg-white/5 owner-group">
-                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№87 За Тимофеем Родионовым сыном Маслова</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">треть селца Никольскаго а две трети того селца за Иваном Косецким</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="3">№87 За Тимофеем Родионовым сыном Маслова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">треть селца Никольскаго, а две трети того селца за Иваном Косецким</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">полпустоши Юдиной [Югиной], а другая половина той пустоши за Иваном Юрловым</td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">полпустоши Цыкова а другая половина той пустоши за Иваном Юрловым</td>
+                <td class="border border-r-2 border-black px-3 py-2">полпустоши Цыкова, а другая половина той пустоши за Иваном Юрловым</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Москвина</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
-              </tr>
-              <tr class="bg-white/10 owner-group">
-                <td class="border-r-2 border-b-2 border-black px-3 py-2">полпустоши Юдиной [Югиной] а другая половина той пустоши за Иваном Юрловым</td>
-                <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
               <!-- Одиннадцатая группа - Лаврентий Елисеев сын Бурков и Семен Позняков -->
@@ -366,15 +363,15 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               <!-- Двенадцатая группа - Юрий Иванов сын Оксентьев -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2">№89 За Юрьем Ивановым сыном Оксентьева</td>
-                <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2">полдеревни Киргады пуста а другая половина той деревни за Алексеем Панфиловым</td>
+                <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2">полдеревни Киргады пуста, а другая половина той деревни за Алексеем Панфиловым</td>
                 <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
               <!-- Тринадцатая группа - Волынец Матвеев сын Скабеев -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">№90 За Волынецом Матвеевым сыном Скабеева</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Анголова</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Богданом Федоровым сыном Унковским пустошь Путробой</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Анголова [Янголова]</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Богданом Федоровым сыном Унковским, пустошь Путробой</td>
               </tr>
               <tr class="bg-white/10 owner-group">
                 <td class="border-r-2 border-b-2 border-black px-3 py-2">в Турховской кулиге деревня Левонтьева</td>
@@ -395,11 +392,11 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               <!-- Пятнадцатая группа - Федор Васильев сын Худошин -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№92 За Федором Васильевым сыном Худошина</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Дмитрием Григорьевым сыном Пашнеева да за дочерью за ево за девкою за Ориною деревня Шакишино пуста</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Дмитрием Григорьевым сыном Пашнеева да за дочерью за ево за девкою за Ориною, деревня Шакшино пуста</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь что была деревня Климово</td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Воронина а в ней двор помещиков</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Воронина, а в ней двор помещиков</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
@@ -418,7 +415,7 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Лустина Гора</td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Ватогина [Ватагина] а в ней двор помещиков</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Ватогина [Ватагина], а в ней двор помещиков</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
@@ -433,7 +430,7 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               <!-- Семнадцатая группа - Федор Афонасьев сын Глебов -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№94 За иноземцом за Федором Афонасьевым сыном Глебова</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь что было село Коштовское а в нем две церкви пустых Николая Чудотворца да Жен Мироносиц згнили</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь что было село Коштовское, а в нем две церкви пустых Николая Чудотворца да Жен Мироносиц згнили</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Загорье</td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -460,20 +457,24 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
 
               <!-- Восемнадцатая группа - Григорий Кузьмин сын Булгаков -->
               <tr class="bg-white/10">
-                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№95 За Григорьем Кузьминым сыном Булгакова</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Тапсама а в ней двор вотчинников</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Болота</td>
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№95 За Григорьем Кузминым сыном Булгакова</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Тапсама, а в ней двор вотчинников</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Хорошей</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Бусовская а Бутковская тож пуста</td>
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Хорошеи</td>
-              </tr>
-              <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">полпустоши что была половина селца Федоровскаго а другая половина того селца за Матвеем Поливановым</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Бусовская, а Бутковская тож пуста</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border-r-2 border-b-2 border-black px-3 py-2">деревня что был починок Шишлеев</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Болота</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">полпустоши что была половина селца Федоровскаго, а другая половина того селца за Матвеем Поливановым</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">деревня, что был починок Нокшишлеев [Шишлеев]</td>
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
@@ -484,25 +485,29 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
 
               <!-- Девятнадцатая группа - Андрей Макаров -->
               <tr class="bg-white/10 owner-group">
-                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№96 За можаитином за Ондреем Макаровым</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Ивачева</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что была наперед за Степаном Онисимовым сыном Пашнеева деревня Семеновская пуста</td>
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="6">№96 За можаитином за Ондреем Макаровым</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что была наперед за Степаном Онисимовым сыном Пашнеева, деревня Семеновская пуста</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь, что была деревня пустая Фрязиново</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Лодыгино</td>
-                <td class="border border-r-2 border-black px-3 py-2">пустошь что была деревня пустая Фрязиново</td>
-              </tr>
-              <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">что было напред того за Федором Василевым сыном Волжанскаго треть деревни Новоселки а две трети той деревни за Федором Косецким</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Ивачева</td>
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Князчина Малая</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Мокроусово</td>
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Хлюстово</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Лапаткино</td>
               </tr>
               <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Лодыгино</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">что было напред того за Федором Василевым сыном Волжанскаго, треть деревни Новоселки, а две трети той деревни за Федором Косецким</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Мокроусово</td>
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
-                <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Лапаткино</td>
               </tr>
 
               <!-- Заголовок порозжих земель -->
@@ -513,7 +518,7 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               <!-- Порозжие земли -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2">Порозжие земли</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">полупустоши Лошаковы а другая половина той пустоши за Федором Козловым</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">полупустоши Лошаковы [Лашуковы], а другая половина той пустоши за Федором Козловым</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
@@ -525,99 +530,105 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               <!-- Церковные земли -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2">Церковные земли</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">Да в той же волости полупустоши что была деревня Рождественская на реке на Шексне а в ней церковь Рождество Христово да другая церковь Николы Чудотворца обвалилась</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">Да в той же волости полупустоши, что была деревня Рождественская на реке на Шексне, а в ней церковь Рождество Христово, да другая церковь Николы Чудотворца обвалилась</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
               <!-- Заголовок монастырских владений -->
               <tr class="bg-white/5">
-                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 431)</span> №229 Вотчина Великого Государя Святеишаго Патриарха Филорета Никитича Московского и Всеа Руссии в Череповской волости</td>
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3">
+                  <span class="text-gray-400 italic font-normal">(л. 431)</span> Вотчина Великого Государя Святейшаго Патриарха Филорета Никитича 
+                  Московского и Всеа Руссии в Череповской волости</td>
               </tr>
 
               <!-- Двенадцатая группа - монастырские владения -->
               <tr class="bg-white/5 owner-group">
-                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="51">Воскресенский монастырь<br/>(Патриаршая вотчина)</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">монастырь обшей а в нем храм был настоящей Воскресения Господа Бога и Спаса нашего Исуса Христа и в розоренья сожгли литовские люди да церковь Живоначалныя Троицы да в пределе Сергей Чюдотворец древянное строенье мирское</td>
-                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">по реке по Шексне сто копен лесу пашенного Черного болота на две версты</td>
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="6">№229 Монастырь обшей, а в нем храм был настоящей Воскресения Господа Бога и Спаса нашего 
+                  Исуса Христа, и в розоренья сожгли литовские люди, да церковь Живоначальныя Троицы да в пределе Сергей Чюдотворец древянное строенье 
+                  мирское</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">за монастырем слоботка</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">за монастырем слоботка</td>
-                <td class="border border-r-2 border-black px-3 py-2">деревня Борок Кузнецов</td>
+                <td class="border border-r-2 border-black px-3 py-2">монастырская пожня за рекою за Шексною Подлуковцов против Суды реки</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">монастырская пожня за рекою за Шексною Подлуковцов против Суды реки</td>
+                <td class="border border-r-2 border-black px-3 py-2">другая [пожня] на той же стороне Шексны реки, против Кошьмы [Кошты] реки, урочища Чипороса</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">сенные покосы по Кономе реке</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">озерко Колманское, а у него поставлена изба для приезду монастырские люди</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">сенные покосы по речке по Колмаске [Колмаксе] лесом заросли</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              
+              <!-- Заголовок села Федосьево -->              
+              <tr class="bg-white/5 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="44">№230 Село Федосьево, а в нем церковь Преподобнаго Феодосия обшему 
+                  житию начальника да Офанасия Александрейскаго студенои клетцкии, а другая церковь Страстотерпьца Христова Георгия теплои с 
+                  трапезою</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">по реке по Шексне сто копен лесу пашенного Черного болота на две версты, а поперег на версту</td>
+                <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Борок Кузнецов</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Матенга</td>
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Ескина</td>
               </tr>
-              <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">другая [пожня] на той же стороне Шексны реки против Кошьмы реки урочища Чипороса</td>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Блиново</td>
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Климовская</td>
               </tr>
-              <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">сенные покосы по Кономе реке</td>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Молота</td>
                 <td class="border border-r-2 border-black px-3 py-2">деревня Семенково</td>
               </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">село Ильинское, а в нем церковь Архангела Михаила вверх клетцки поставленново,
+                  а другая церковь была Ильи Пророка згорела в 122 [1613/14] году, поставление мирское</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Жиделева</td>
+              </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">озерко Колманское а у него поставлена изба для приезду монастырские люди</td>
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Внукова</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Милятино</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Дальнея</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">село Федосьево а в нем церковь Преподобнаго Феодосия обшему житию начальника да Офанасия Александрейскаго студенои клетцкии а другая церковь Страстотерпьца Христова Георгия теплои с трапезою</td>
-                <td class="border border-r-2 border-black px-3 py-2">деревня Денисово</td>
-              </tr>
-              <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">поперег на версту того ж села Федосьева деревьня Двор Матурина</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Борок Решьной</td>
                 <td class="border border-r-2 border-black px-3 py-2">деревня Лихачевская</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Матенга</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Матырино [Матурино] Болшое</td>
                 <td class="border border-r-2 border-black px-3 py-2">деревня Гришинская</td>
-              </tr>
-              <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Блиново</td>
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Жиделева</td>
-              </tr>
-              <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Молота</td>
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Дальнея</td>
-              </tr>
-              <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">село Ильинское а в нем церковь Архангела Михаила вверх клетцки поставленново а другая церковь была Ильи Пророка згорела в 122 [1613/14] году поставление мирское</td>
-                <td class="border border-r-2 border-black px-3 py-2">пустошь Внукова</td>
-              </tr>
-              <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Милятино</td>
-                <td class="border border-r-2 border-black px-3 py-2">деревня Гришинская</td>
-              </tr>
-              <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Борок Решьной</td>
-                <td class="border border-r-2 border-black px-3 py-2">пустошь что была деревня Боран</td>
-              </tr>
-              <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Матырино Болшое</td>
-                <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Остинская</td>
-                <td class="border border-r-2 border-black px-3 py-2"></td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Денисово</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Сермолт на реке на Агорбе</td>
-                <td class="border border-r-2 border-black px-3 py-2"></td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Сермолт на реке на Агорбе [Ягорбе]</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Внукова</td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Дьяконская а Околинская тож</td>
-                <td class="border border-r-2 border-black px-3 py-2"></td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Дьяконская, а Околинская тож</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь, что была деревня Боран</td>
               </tr>
               <tr class="bg-white/5 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Останова [Онтонова]</td>
-                <td class="border border-r-2 border-black px-3 py-2"></td>
+                <td class="border border-r-2 border-black px-3 py-2">села Федосьева деревня Двор Матурина</td>
               </tr>
               <tr class="bg-white/10 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">деревня Солманская</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Носовская Насоновская тож</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Носовская, Насоновская тож</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -701,7 +712,7 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Михаилова на ручье</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Михайлова на ручье</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -721,11 +732,11 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Подоль</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Подол</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Кроминская Воскресенского монастыря а в нем двор монастырскои скотеи</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Кроминская Воскресенского монастыря, а в нем двор монастырской скотей</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -733,7 +744,7 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border-r-2 border-b border-black px-3 py-2">в Чюди ж в патриаржеской волости погост на государеве земле а на погосте церковь Рождество Пречистые Богородицы, другая теплая церковь с трапезою Парасковьеи нарицаемыя Пятьницы обе ветхи</td>
+                <td class="border-r-2 border-b border-black px-3 py-2">в Чюди ж в патриаржеской волости погост на государеве земле, а на погосте церковь Рождество Пречистые Богородицы, другая теплая церковь с трапезою Парасковьеи нарицаемыя Пятьницы, обе ветхи</td>
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -743,17 +754,20 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
 
               <!-- Заголовок митрополичьей вотчины -->
               <tr class="bg-white/5">
-                <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 456об.)</span> №233 Вотчина Ростовского митрополита в Череповце село Богородицкое на речке на Шексне в ней церковь Успение Пречистые Богородицы древяннои верьх шатров... ... да в селце двор митрополита Ростовского</td>
+                <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2 text-base font-medium" colspan="3">
+                  <span class="text-gray-400 italic font-normal">(л. 456об.)</span> Вотчина Ростовского митрополита в Череповце 
+                  </td>
               </tr>
 
               <!-- Четвертая группа - Вотчина Ростовского митрополита -->
               <tr class="bg-white/10">
-                <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2" rowspan="19">Вотчина Ростовского митрополита </td>
+                <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2" rowspan="21">№233 Село Богородицкое на речке на Шексне, 
+                  а в нем церковь Успение Пречистые Богородицы древяннои верьх шатров... ...да в селце двор митрополита Ростовского</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Горка</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Бесекова</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Панкино а Палкино тож</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Панкин, а Палкино тож</td>
                 <td class="border border-r-2 border-black px-3 py-2">деревня Другая Фроловская</td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -762,10 +776,10 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               </tr>
               <tr class="bg-white/5 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">деревня Угол</td>
-                <td class="border border-r-2 border-black px-3 py-2">деревня Пронина Горка</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Анисимова</td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня Жадихово в Залесье</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня Жадихово [Жидихово] в Залесье</td>
                 <td class="border border-r-2 border-black px-3 py-2">на речке Суде пожня Полища</td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -780,12 +794,21 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Починок</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">деревня Пронина Горка</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-black px-3 py-2">пустошь Пята на реке на Шексне</td>
+                <td class="border border-r-2 border-black px-3 py-2"></td>
+              </tr>
               <tr class="bg-white/5 owner-group">
                 <td class="border border-r-2 border-black px-3 py-2">пустошь Емишево</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">деревня что была пустошь Коромолница</td>
+                <td class="border border-r-2 border-black px-3 py-2">деревня, что была пустошь Коромольница</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
@@ -793,7 +816,7 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">пустошь что была деревня Волкова пустая</td>
+                <td class="border border-r-2 border-black px-3 py-2">пустошь, что была деревня Волкова пустая</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
@@ -805,7 +828,7 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/10 owner-group">
-                <td class="border border-r-2 border-black px-3 py-2">село что была деревня Шугобоцкое а в нем церковь Николы Чюдотворца верх клецки</td>
+                <td class="border border-r-2 border-black px-3 py-2">село, что была деревня Шугобоцкое, а в нем церковь Николы Чюдотворца верх клецки</td>
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               <tr class="bg-white/5 owner-group">
@@ -824,6 +847,54 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2">пустошь Трушнева</td>
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
+
+              <!-- Заголовок монастыря Воронина пустыня -->
+              <tr class="bg-white/5">
+                <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3">
+                  <span class="text-gray-400 italic font-normal">(л. 659об.)</span> Монастырь Воронина Пустыня
+                </td>
+              </tr>
+
+              <!-- Группа монастыря Воронина пустыня -->
+              <tr class="bg-white/10 owner-group">
+                <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2" rowspan="13">№240 Монастырь Воронина Пустыня, а в нем
+                  место церковное был храм Богоявление Господа Бога и Спаса нашего Иисуса Христа, храм погорел во 133-м [1624/25] году, да в пределе
+                  Николы Чудотворца да теплая церковь Успения Пречистыя Богородицы, а в них церковное строенье мирское да на колокольнице пять колоколов
+                  обвалилась, святые ворота згорели.
+                </td>
+                <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2">монастырской дворец коровей</td>
+                <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2">пустошь, что был починок Тросник</td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2">деревня Рослино, Середник тож</td>
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь Над...е, а Глупое тож</td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь, что был починок Холм</td>
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь Плоское</td>
+              </tr>
+            </tr>
+            <tr class="bg-white/10 owner-group">
+              <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь, что был починок Костин</td>
+              <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь Поддубка</td>
+            </tr>
+          </tr>
+          <tr class="bg-white/10 owner-group">
+            <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь, что был починок Дор</td>
+            <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь Воробьево</td>
+          </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь Заозерье, Надозерье тож</td>
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/10 owner-group">
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь Сосновская</td>
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
+              <tr class="bg-white/5 owner-group">
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2">пустошь Горка</td>
+                <td class="border border-r-2 border-b-2 border-black px-3 py-2"></td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -835,11 +906,70 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
         #ratio { min-height: 50vh; }
         .leaflet-control-attribution { display: none !important; }
 
-        #viewer:fullscreen { width: 100vw; height: 100vh; background: rgba(0,0,0,0.25); }
-        #viewer:fullscreen #ratio { position: absolute; inset: 16px; }
-        #viewer:fullscreen #ratio { height: 100%; }
-        #viewer:fullscreen #frame { position: absolute; inset: 0; }
+        #viewer:fullscreen { 
+          width: 100vw; 
+          height: 100vh; 
+          background: rgba(0,0,0,0.25);
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 9999;
+          overflow: visible;
+        }
+        #viewer:fullscreen #ratio { 
+          position: absolute; 
+          inset: 16px;
+          width: calc(100% - 32px);
+          height: calc(100% - 32px);
+          overflow: visible;
+        }
+        #viewer:fullscreen #frame { 
+          position: absolute; 
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+        }
+        #viewer:fullscreen #map { 
+          overflow: visible;
+        }
+        #viewer:fullscreen .leaflet-container { 
+          overflow: visible;
+        }
         #viewer:fullscreen .mt-4 { display: none; }
+        
+        /* Улучшенная поддержка полноэкранного режима для WebKit */
+        #viewer:-webkit-full-screen { 
+          width: 100vw; 
+          height: 100vh; 
+          background: rgba(0,0,0,0.25);
+          position: fixed;
+          top: 0;
+          left: 0;
+          z-index: 9999;
+          overflow: visible;
+        }
+        #viewer:-webkit-full-screen #ratio { 
+          position: absolute; 
+          inset: 16px;
+          width: calc(100% - 32px);
+          height: calc(100% - 32px);
+          overflow: visible;
+        }
+        #viewer:-webkit-full-screen #frame { 
+          position: absolute; 
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          overflow: visible;
+        }
+        #viewer:-webkit-full-screen #map { 
+          overflow: visible;
+        }
+        #viewer:-webkit-full-screen .leaflet-container { 
+          overflow: visible;
+        }
+        #viewer:-webkit-full-screen .mt-4 { display: none; }
 
       </style>
 
@@ -856,6 +986,7 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
 
           const btnPlus  = document.getElementById('btn-zoom-in');
           const btnMinus = document.getElementById('btn-zoom-out');
+          const btnReset = document.getElementById('btn-reset');
           const btnFS    = document.getElementById('btn-fullscreen');
 
           const applyMapInsetsToBorder = () => {
@@ -892,16 +1023,30 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
               attributionControl: false,
               inertia: false,
               worldCopyJump: false,
-              maxBoundsViscosity: 1.0
+              maxBoundsViscosity: 1.0,
+              // Улучшенные настройки для прокрутки
+              preferCanvas: false,
+              fadeAnimation: false,
+              zoomAnimation: false
             });
 
             const bounds = [[0,0],[h,w]];
             L.imageOverlay(imgUrl, bounds).addTo(map);
 
-            const fitExact = () => {
-              const zoom = map.getBoundsZoom(bounds, true);
-              map.setView([h/2, w/2], zoom, { animate:false });
-              map.setMaxBounds(bounds);
+            const fitExact = (isFullscreen = false) => {
+              // Небольшая задержка для корректного расчета размеров
+              setTimeout(() => {
+                const zoom = map.getBoundsZoom(bounds, true);
+                map.setView([h/2, w/2], zoom, { animate:false });
+                
+                // В полноэкранном режиме разрешаем прокрутку за пределы изображения
+                if (isFullscreen) {
+                  // Убираем ограничения границ в полноэкранном режиме
+                  map.setMaxBounds(null);
+                } else {
+                  map.setMaxBounds(bounds);
+                }
+              }, 10);
             };
 
             fitExact();
@@ -913,6 +1058,10 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
 
             btnPlus.addEventListener('click',  () => map.zoomIn());
             btnMinus.addEventListener('click', () => map.zoomOut());
+            btnReset.addEventListener('click', () => {
+              const isFullscreen = isFS();
+              fitExact(isFullscreen);
+            });
 
             const isFS = () => document.fullscreenElement === viewer || document.webkitFullscreenElement === viewer;
             const reqFS = () => { if (viewer.requestFullscreen) viewer.requestFullscreen(); else if (viewer.webkitRequestFullscreen) viewer.webkitRequestFullscreen(); };
@@ -920,15 +1069,50 @@ const publishedAt = new Date("2025-09-23").toLocaleDateString("ru-RU", {
 
             const reflow = () => {
               applyMapInsetsToBorder();
-              map.invalidateSize({ animate:false });
-              fitExact();
+              // Увеличиваем задержку для полноэкранного режима
+              const delay = isFS() ? 100 : 10;
+              const fullscreen = isFS();
+              setTimeout(() => {
+                map.invalidateSize({ animate:false });
+                fitExact(fullscreen);
+              }, delay);
             };
 
-            btnFS.addEventListener('click', () => { if (!isFS()) reqFS(); else exitFS(); });
+            // Специальная функция для переключения полноэкранного режима
+            const toggleFullscreen = () => {
+              if (!isFS()) {
+                reqFS();
+              } else {
+                exitFS();
+              }
+            };
 
+            btnFS.addEventListener('click', toggleFullscreen);
+
+            // Обработка событий изменения размера и полноэкранного режима
             window.addEventListener('resize', reflow);
             document.addEventListener('fullscreenchange', reflow);
             document.addEventListener('webkitfullscreenchange', reflow);
+            document.addEventListener('mozfullscreenchange', reflow);
+            document.addEventListener('MSFullscreenChange', reflow);
+            
+            // Дополнительная обработка для корректной работы в полноэкранном режиме
+            document.addEventListener('fullscreenchange', () => {
+              setTimeout(() => {
+                const fullscreen = isFS();
+                map.invalidateSize({ animate: false });
+                applyMapInsetsToBorder();
+                fitExact(fullscreen);
+              }, 150);
+            });
+            document.addEventListener('webkitfullscreenchange', () => {
+              setTimeout(() => {
+                const fullscreen = isFS();
+                map.invalidateSize({ animate: false });
+                applyMapInsetsToBorder();
+                fitExact(fullscreen);
+              }, 150);
+            });
           };
 
           img.onerror = () => {
