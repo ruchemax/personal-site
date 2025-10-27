@@ -47,10 +47,18 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.ico" />
+    
+    <!-- Предзагрузка фоновых изображений -->
+    <link rel="preload" as="image" href="/images/background/main-bg.webp" />
+    <link rel="preload" as="image" href="/images/background/publications-bg.webp" />
+    <link rel="preload" as="image" href="/images/background/projects-bg.webp" />
+    <link rel="preload" as="image" href="/images/background/contacts-bg.webp" />
+    <link rel="preload" as="image" href="/images/background/software-bg.webp" />
+    <link rel="preload" as="image" href="/images/background/local-history-bg.webp" />
   </head>
 
   <body
-    class="m-0 flex min-h-screen flex-col text-white bg-fixed bg-cover bg-center bg-no-repeat"
+    class="m-0 flex min-h-screen flex-col text-white bg-fixed bg-cover bg-center bg-no-repeat opacity-0 transition-opacity duration-1000 ease-in-out"
     style="
       background-image:
         linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
@@ -121,6 +129,20 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
         // ОТЛАДКА: выводим финальное состояние
         console.log('LocalHistoryLayout - Сохраненный язык ПОСЛЕ:', localStorage.getItem('preferredLanguage'));
         console.log('LocalHistoryLayout - localStorage содержимое ПОСЛЕ:', localStorage);
+        
+        // Плавное появление фона после загрузки
+        const body = document.body;
+        const backgroundImage = new Image();
+        
+        backgroundImage.onload = function() {
+          body.style.opacity = '1';
+        };
+        
+        backgroundImage.onerror = function() {
+          body.style.opacity = '1';
+        };
+        
+        backgroundImage.src = '/images/background/local-history-bg.webp';
       });
     </script>
   </body>

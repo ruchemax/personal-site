@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+import PublicationsLayout from "../layouts/PublicationsLayout.astro";
 
 type Pub = {
   title: string;
@@ -104,7 +104,7 @@ const years = Object.keys(grouped).sort((a, b) => {
 });
 ---
 
-<BaseLayout title="Publications — Maksim Ruchkin" lang="en">
+<PublicationsLayout title="Publications — Maksim Ruchkin" lang="en">
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
       <h1 class="text-4xl font-bold">Publications</h1>
@@ -275,4 +275,4 @@ const years = Object.keys(grouped).sort((a, b) => {
     applyFilter();
     paintChips();
   </script>
-</BaseLayout>
+</PublicationsLayout>

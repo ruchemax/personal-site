@@ -1,7 +1,7 @@
 ---
 const {
-  title = "Maksim Ruchkin",
-  description = "Personal site",
+  title = "Projects — Maksim Ruchkin",
+  description = "Projects",
   lang = "en", // "en" | "ru"
 } = Astro.props;
 
@@ -27,7 +27,7 @@ const menuRu = [
 const menu = lang === "ru" ? menuRu : menuEn;
 
 // текущий путь и локализованные ссылки для переключателя
-const path = Astro.url.pathname;              // напр. "/software" или "/ru/software" или "/"
+const path = Astro.url.pathname;              // напр. "/projects" или "/ru/projects" или "/"
 const hrefRU = path.startsWith("/ru")
   ? path                                     // уже RU
   : (path === "/" ? "/ru" : `/ru${path}`);   // тот же путь с префиксом /ru
@@ -61,7 +61,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
     style="
       background-image:
         linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
-        url('/images/background/main-bg.webp');
+        url('/images/background/projects-bg.webp');
       background-color:#0b1220;
     "
   >
@@ -113,23 +113,23 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
         langLinks.forEach(link => {
           link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            console.log('BaseLayout - Клик по переключателю языка:', href);
+            console.log('ProjectsLayout - Клик по переключателю языка:', href);
             
             // НЕ меняем язык при переходе на краеведение
             if (href.includes('/local_history')) {
-              console.log('BaseLayout - Переход на краеведение - НЕ меняем язык');
+              console.log('ProjectsLayout - Переход на краеведение - НЕ меняем язык');
               return; // Не устанавливаем язык, просто переходим
             }
             
             if (href.startsWith('/ru')) {
               localStorage.setItem('preferredLanguage', 'ru');
-              console.log('BaseLayout - Установлен русский язык');
+              console.log('ProjectsLayout - Установлен русский язык');
             } else {
               localStorage.setItem('preferredLanguage', 'en');
-              console.log('BaseLayout - Установлен английский язык');
+              console.log('ProjectsLayout - Установлен английский язык');
             }
             
-            console.log('BaseLayout - localStorage после клика:', localStorage.getItem('preferredLanguage'));
+            console.log('ProjectsLayout - localStorage после клика:', localStorage.getItem('preferredLanguage'));
           });
         });
 
@@ -138,13 +138,13 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
         const currentPath = window.location.pathname;
         
         // ОТЛАДКА: выводим информацию о языке
-        console.log('BaseLayout - Текущий путь:', currentPath);
-        console.log('BaseLayout - Сохраненный язык:', savedLang);
+        console.log('ProjectsLayout - Текущий путь:', currentPath);
+        console.log('ProjectsLayout - Сохраненный язык:', savedLang);
         
         // Если пользователь переходит с краеведения на другую страницу
         // и у него сохранен английский язык, перенаправляем на английскую версию
         if (savedLang === 'en' && currentPath.startsWith('/ru/') && !currentPath.includes('/local_history')) {
-          console.log('BaseLayout - Перенаправляем на английскую версию:', currentPath.replace('/ru', '') || '/');
+          console.log('ProjectsLayout - Перенаправляем на английскую версию:', currentPath.replace('/ru', '') || '/');
           // Перенаправляем на английскую версию страницы
           const englishPath = currentPath.replace('/ru', '') || '/';
           window.location.href = englishPath;
@@ -157,30 +157,30 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
             const href = this.getAttribute('href');
             const savedLang = localStorage.getItem('preferredLanguage');
             
-            console.log('BaseLayout - Клик по ссылке в меню:', href);
-            console.log('BaseLayout - Сохраненный язык при клике:', savedLang);
+            console.log('ProjectsLayout - Клик по ссылке в меню:', href);
+            console.log('ProjectsLayout - Сохраненный язык при клике:', savedLang);
             
             // Устанавливаем язык в зависимости от того, на какую страницу переходим
             if (href.startsWith('/ru/') && !href.includes('/local_history')) {
               // Переход на русскую страницу (кроме краеведения) - устанавливаем русский язык
               localStorage.setItem('preferredLanguage', 'ru');
-              console.log('BaseLayout - Установлен русский язык при переходе на русскую страницу');
+              console.log('ProjectsLayout - Установлен русский язык при переходе на русскую страницу');
             } else if (!href.startsWith('/ru/')) {
               // Переход на английскую страницу - устанавливаем английский язык
               localStorage.setItem('preferredLanguage', 'en');
-              console.log('BaseLayout - Установлен английский язык при переходе на английскую страницу');
+              console.log('ProjectsLayout - Установлен английский язык при переходе на английскую страницу');
             }
             
             // Если пользователь с английской версии кликает на ссылку, ведущую на русскую страницу
             // (кроме краеведения), перенаправляем на английскую версию
             if (savedLang === 'en' && href.startsWith('/ru/') && !href.includes('/local_history')) {
-              console.log('BaseLayout - Перенаправляем с русской на английскую версию');
+              console.log('ProjectsLayout - Перенаправляем с русской на английскую версию');
               e.preventDefault();
               const englishPath = href.replace('/ru', '') || '/';
-              console.log('BaseLayout - Новый путь:', englishPath);
+              console.log('ProjectsLayout - Новый путь:', englishPath);
               window.location.href = englishPath;
             } else {
-              console.log('BaseLayout - Переход разрешен');
+              console.log('ProjectsLayout - Переход разрешен');
             }
           });
         });
@@ -190,17 +190,14 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
         const backgroundImage = new Image();
         
         backgroundImage.onload = function() {
-          // Плавно показываем страницу
           body.style.opacity = '1';
         };
         
         backgroundImage.onerror = function() {
-          // Если изображение не загрузилось, все равно показываем страницу
           body.style.opacity = '1';
         };
         
-        // Начинаем загрузку изображения
-        backgroundImage.src = '/images/background/main-bg.webp';
+        backgroundImage.src = '/images/background/projects-bg.webp';
       });
     </script>
   </body>

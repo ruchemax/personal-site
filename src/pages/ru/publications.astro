@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import PublicationsLayout from "../../layouts/PublicationsLayout.astro";
 
 type Pub = {
   title: string;
@@ -111,7 +111,7 @@ const typeLabel = (t: Pub["type"]) =>
   : "Диссертация";
 ---
 
-<BaseLayout title="Публикации — Максим Ручкин" lang="ru">
+<PublicationsLayout title="Публикации — Максим Ручкин" lang="ru">
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
       <h1 class="text-4xl font-bold">Публикации</h1>
@@ -249,4 +249,4 @@ const typeLabel = (t: Pub["type"]) =>
     applyFilter();
     paintChips();
   </script>
-</BaseLayout>
+</PublicationsLayout>
