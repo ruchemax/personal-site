@@ -106,7 +106,7 @@ const years = Object.keys(grouped).sort((a, b) => {
 
 <PublicationsLayout title="Publications — Maksim Ruchkin" lang="en">
   <section class="w-full text-white">
-    <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
+    <div class="mx-auto w-full max-w-[1000px] px-6 py-16">
       <h1 class="text-4xl font-bold">Publications</h1>
 
       <!-- Filter buttons: rounded, separate, no gaps -->
@@ -131,7 +131,7 @@ const years = Object.keys(grouped).sort((a, b) => {
         </button>
         <button
           data-type="thesis"
-          class="filter-chip rounded-md border border-white/30 bg-white/80 px-4 py-2 text-sm font-medium text-black/70"
+          class="filter-chip active rounded-md border border-white/30 bg-white px-4 py-2 text-sm font-medium text-black"
         >
           Theses
         </button>
@@ -151,7 +151,7 @@ const years = Object.keys(grouped).sort((a, b) => {
                 })
                 .map((p) => (
                 <li
-                  class="pub-item relative rounded-xl border border-white/10 bg-black/25 p-4 backdrop-blur"
+                  class="pub-item relative rounded-xl border border-white/10 bg-black/1 p-4 backdrop-blur"
                   data-type={p.type}
                 >
                   <!-- Type badge (top-right) -->

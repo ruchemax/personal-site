@@ -113,7 +113,7 @@ const typeLabel = (t: Pub["type"]) =>
 
 <PublicationsLayout title="Публикации — Максим Ручкин" lang="ru">
   <section class="w-full text-white">
-    <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
+    <div class="mx-auto w-full max-w-[1000px] px-6 py-16">
       <h1 class="text-4xl font-bold">Публикации</h1>
 
       <!-- Кнопки фильтра: отдельные, белые, с рамкой, без зазоров; по умолчанию активны Журнальные и Книги -->
@@ -127,7 +127,7 @@ const typeLabel = (t: Pub["type"]) =>
         <button data-type="abstract" class="filter-chip rounded-md border border-white/30 bg-white/80 px-4 py-2 text-sm font-medium text-black/70">
           Материалы конференций
         </button>
-        <button data-type="thesis" class="filter-chip rounded-md border border-white/30 bg-white/80 px-4 py-2 text-sm font-medium text-black/70">
+        <button data-type="thesis" class="filter-chip active rounded-md border border-white/30 bg-white px-4 py-2 text-sm font-medium text-black">
           Диссертации
         </button>
       </div>
@@ -145,7 +145,7 @@ const typeLabel = (t: Pub["type"]) =>
                   return order[a.type] - order[b.type];
                 })
                 .map((p) => (
-                <li class="pub-item relative rounded-xl border border-white/10 bg-black/25 p-4 backdrop-blur" data-type={p.type}>
+                <li class="pub-item relative rounded-xl border border-white/10 bg-black/1 p-4 backdrop-blur" data-type={p.type}>
                   <!-- Бейдж типа (справа сверху) -->
                   <span class="absolute right-3 top-3 rounded-md border border-white/20 bg-white/90 px-2 py-0.5 text-[11px] font-medium text-black">
                     {typeLabel(p.type)}

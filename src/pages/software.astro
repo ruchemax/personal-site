@@ -6,16 +6,13 @@ const { lang = "en" } = Astro.props;
 
 <SoftwareLayout title="Software — Maksim Ruchkin" lang={lang}>
   <section class="w-full text-white">
-    <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
+    <div class="mx-auto w-full max-w-[1000px] px-6 py-16">
       <h1 class="text-4xl font-bold">Software</h1>
-      <p class="mt-3 text-white/80 max-w-2xl">
-         Applications and scripts I maintain
-      </p>
 
       <!-- Cards -->
-      <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
         <!-- Card 1 -->
-        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[550px]">
+        <article class="rounded-2xl border border-white/10 bg-black/1 p-6 shadow-lg backdrop-blur w-full max-w-[550px]">
           <h2 class="text-2xl font-semibold">Balta</h2>
           <p class="mt-2 text-base text-white/75">
             Application for grain size distribution data processing and the construction of plots
@@ -36,7 +33,7 @@ const { lang = "en" } = Astro.props;
           <div class="mt-4 text-sm text-white/70">
             The software is free to use; when using it, please cite this website as a reference:<br />
             <br />
-            Ruchkin M. V. (2025) <i>Balta v1.0</i>. Application for grain size distribution data processing and the construction of plots Available at:
+            Ruchkin M. V. (2025) <i>Balta v1.0</i>. Application for grain size distribution data processing and the construction of plots. Available at:
             <a
               href="https://www.maxruchkin.org/software"
               target="_blank"

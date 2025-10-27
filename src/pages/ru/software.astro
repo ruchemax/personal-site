@@ -6,16 +6,13 @@ const { lang = "ru" } = Astro.props;
 
 <SoftwareLayout title="Программы — Максим Ручкин" lang={lang}>
   <section class="w-full text-white">
-    <div class="mx-auto w-full max-w-[1200px] px-6 py-16">
+    <div class="mx-auto w-full max-w-[1000px] px-6 py-16">
       <h1 class="text-4xl font-bold">Программы</h1>
-      <p class="mt-3 text-white/80 max-w-2xl">
-        Приложения и скрипты, которые я поддерживаю
-      </p>
 
       <!-- Cards -->
-      <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
         <!-- Card 1 -->
-        <article class="rounded-2xl border border-white/10 bg-black/20 p-6 shadow-lg backdrop-blur w-full max-w-[550px]">
+        <article class="rounded-2xl border border-white/10 bg-black/1 p-6 shadow-lg backdrop-blur w-full max-w-[550px]">
           <h2 class="text-2xl font-semibold">Balta</h2>
           <p class="mt-2 text-base text-white/75">
             Приложение для обработки данных гранулометрического анализа и построения графиков
