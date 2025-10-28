@@ -6,20 +6,20 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 
   <!-- Прозрачная секция: НИКАКИХ фоновых цветов, только контент -->
   <section class="relative w-full text-white">
-    <div class="mx-auto w-full max-w-[800px] px-6 py-16">
+    <div class="mx-auto w-full max-w-[850px] px-6 py-16">
 
       <!-- Верхняя секция: фото + приветствие -->
-      <div class="grid grid-cols-1 gap-10 md:grid-cols-3 md:items-start mb-10">
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-3 md:items-start mb-0">
         <!-- Фото -->
         <div class="relative w-40 flex flex-col justify-start items-center">
           <!-- Фото в круге с серым кантом -->
-          <div class="aspect-square w-56 overflow-hidden rounded-full border-4 border-gray-400 shadow-2xl mt-16">
+          <div class="w-70 h-70 overflow-hidden rounded-full border-4 border-gray-200 shadow-2xl mt-4">
             <img src="/images/portrait.webp" alt="Портрет Максима" class="h-full w-full object-cover brightness-90" />
           </div>
 
           <!-- Кнопка More Information - точно под центром фотографии -->
           <div class="mt-4 flex justify-center">
-            <button id="moreInfoBtn" class="min-w-[120px] text-center rounded-xl bg-gray-400 px-6 py-3 font-semibold text-black hover:bg-gray-200">
+            <button id="moreInfoBtn" class="min-w-[120px] text-center rounded-xl bg-gray-200 px-6 py-3 font-semibold text-black hover:bg-gray-100">
               CV
             </button>
           </div>
