@@ -11,7 +11,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <!-- Верхняя секция: фото + приветствие -->
       <div class="grid grid-cols-1 gap-5 md:grid-cols-3 md:items-start mb-0">
         <!-- Фото -->
-        <div class="relative w-40 flex flex-col justify-start items-center">
+        <div class="relative w-40 flex flex-col justify-start items-center mx-auto md:mx-0">
           <!-- Фото в круге с серым кантом -->
           <div class="w-70 h-70 overflow-hidden rounded-full border-4 border-gray-200 shadow-2xl mt-4">
             <img src="/images/portrait.webp" alt="Portrait of Maksim" class="h-full w-full object-cover brightness-90" />
@@ -257,20 +257,22 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       const modal = document.getElementById('cvModal');
       const closeModal = document.getElementById('closeModal');
       
-      moreInfoBtn.addEventListener('click', function() {
-        modal.classList.remove('hidden');
-      });
-      
-      closeModal.addEventListener('click', function() {
-        modal.classList.add('hidden');
-      });
-      
-      // Close modal when clicking outside
-      modal.addEventListener('click', function(e) {
-        if (e.target === modal) {
+      if (moreInfoBtn && modal && closeModal) {
+        moreInfoBtn.addEventListener('click', function() {
+          modal.classList.remove('hidden');
+        });
+        
+        closeModal.addEventListener('click', function() {
           modal.classList.add('hidden');
-        }
-      });
+        });
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', function(e) {
+          if (e.target === modal) {
+            modal.classList.add('hidden');
+          }
+        });
+      }
     });
   </script>
 

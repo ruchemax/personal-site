@@ -1172,5 +1172,17 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
     .paper-old .text-white, .paper-old .text-white * { color:#2a1e14 !important; }
 
     @media (min-width:768px){ .paper-old{ padding:2.5rem; } }
+
+    /* Перенос слов по слогам на мобильных устройствах для таблицы */
+    @media (max-width: 767px) {
+      table td, table th {
+        word-break: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        -ms-hyphens: auto;
+      }
+    }
   </style>
 </LocalHistoryLayout>
