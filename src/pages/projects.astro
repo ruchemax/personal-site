@@ -9,8 +9,9 @@ const { lang = "en" } = Astro.props;
     <div class="mx-auto w-full max-w-[1000px] px-6 py-16">
       <h1 class="text-3xl font-bold">Projects</h1>
 
-      <!-- Cards -->
-      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+      <!-- Funded Projects -->
+      <h2 class="mt-8 text-2xl font-semibold">Supported</h2>
+      <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1">
         <!-- Project 3 -->
         <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
           <p class="text-base text-white/75 mb-2">
@@ -28,16 +29,23 @@ const { lang = "en" } = Astro.props;
           <p class="text-base text-white/75 mb-2">
             2021–2022
           </p>
-          <h2 class="text-xl font-semibold">High-resolution dating of the Eemian marine deposits at the Sverdlov Factory section</h2>
+          <h2 class="text-xl font-semibold">High-resolution dating of the Eemian marine deposits at the Sverdlov Factory section (St. Petersburg region, Russia)</h2>
               <p class="mt-2 text-sm text-white">
                 <span class="text-amber-300">Role:</span> PhD Student | <span class="text-amber-300">Funded by:</span> German Academic Exchange Service (DAAD) and Saint Petersburg University | <span class="text-amber-300">Type:</span> Scholarship | <span class="text-amber-300">Supervisors:</span> Prof. Dr. Vladislav Kuznetsov and Prof. Dr. Tony Reimann</span>
               </p>
               <p class="mt-2 text-sm text-white">
-                <span class="text-amber-300">Publications:</span><br>
-                <a href="https://doi.org/10.1002/jqs.3618" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin, M. V., Nosevich, E. S., Sheetov, M. V., & Brill, D. (2024). Stratigraphy and OSL chronology of the Middle–Upper Pleistocene sedimentary sequence and vegetation history during Late MIS6 – MIS5e in the Neva Lowland (St. Petersburg Region, Russia). Journal of Quaternary Science, 39, 745–764. https://doi.org/10.1002/jqs.3618</a>
+                <span class="text-amber-300">Articles:</span><br>
+                <a href="https://doi.org/10.1002/jqs.3618" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">
+                  Ruchkin M. V., Nosevich E. S., Sheetov M. V., Brill D. Stratigraphy and OSL chronology of the Middle–Upper Pleistocene sedimentary 
+                  sequence and vegetation history during Late MIS6 – MIS5e in the Neva Lowland (St. Petersburg Region, Russia) // 
+                  Journal of Quaternary Science. – 2024. – Vol. 39. – P. 745–764. https://doi.org/10.1002/jqs.3618</a>
               </p>
               <p class="mt-2 text-sm text-white">
-                <a href="https://doi.org/10.1016/j.quascirev.2025.109244" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin, M. V., Sheetov, M. V., Taldenkova, Е. E., Pushina, Z. V., Dudanova, V. I., Ovsepyan, Ya. S., Konstantinov, E. A., Nosevich, E. S., & Mustafin, M. A. (2025). Paleohydrological changes in the eastern Baltic Sea during the Middle/Late Pleistocene transition and the Last Interglacial. Quaternary Science Reviews, 360, 109244. https://doi.org/10.1016/j.quascirev.2025.109244</a>
+                <a href="https://doi.org/10.1016/j.quascirev.2025.109244" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">
+                  Ruchkin M. V., Sheetov M. V., Taldenkova E. E., Pushina Z. V., Dudanova V. I., Ovsepyan Ya. S., Konstantinov E. A., 
+                  Nosevich E. S., Mustafin M. A. Paleohydrological changes in the eastern Baltic Sea during the Middle/Late Pleistocene transition 
+                  and the Last Interglacial // Quaternary Science Reviews. – 2025. – Vol. 360. – P. 109244. 
+                  https://doi.org/10.1016/j.quascirev.2025.109244</a>
               </p>
 
         </article>
@@ -52,10 +60,72 @@ const { lang = "en" } = Astro.props;
                 <span class="text-amber-300">Role:</span> PhD Student | <span class="text-amber-300">Funded by:</span> Danish Government | <span class="text-amber-300">Type:</span> Scholarship | <span class="text-amber-300">Supervisors:</span> Dr. Dmitry Nazarov and Prof. Dr. Andrew Murray
               </p>
               <p class="mt-2 text-sm text-white">
-                <span class="text-amber-300">Publications:</span><br>
-                <a href="https://doi.org/10.1111/bor.12558" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Nazarov, D. V., Nikolskaia, O. A., Gladysheva, A. S., Zhigmanovskiy, I. V., Ruchkin, M. V., Merkuljev, A. V., & Thomsen, K. J. (2022). Evidence for the intrusion of marine Atlantic waters into the West Siberian Arctic during the Middle Pleistocene. Boreas, 51, 402–425. https://doi.org/10.1111/bor.12558</a>
+                <span class="text-amber-300">Articles:</span><br>
+                <a href="https://doi.org/10.1111/bor.12558" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">
+                  Nazarov D. V., Nikolskaia O. A., Gladysheva A. S., Zhigmanovskiy I. V., Ruchkin M. V., Merkuljev A. V., Thomsen K. J. 
+                  Evidence for the intrusion of marine Atlantic waters into the West Siberian Arctic during the Middle Pleistocene // 
+                  Boreas. – 2022. – Vol. 51. – P. 402–425. https://doi.org/10.1111/bor.12558</a>
               </p>
 
+        </article>
+      </div>
+
+      <!-- Unfunded Projects -->
+      <h2 class="mt-6 text-2xl font-semibold">Other</h2>
+      <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1">
+        <!-- Unfunded Project 5 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold"><em>Balta</em> – A desktop application for grain size distribution data processing and the construction of plots</h2>
+          <p class="mt-2 text-sm text-white">
+            <a href="https://www.maxruchkin.org/software" class="text-amber-300 hover:underline" target="_blank" rel="noopener noreferrer">https://www.maxruchkin.org/software</a>
+          </p>
+        </article>
+
+        <!-- Unfunded Project 4 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold"><em>Lumen</em> – A desktop application for calculating the luminescence age of sediments</h2>
+        </article>
+
+        <!-- Unfunded Project 3 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold">The Kasplya (Zeifen) Interstadial within Termination II in the Neva Lowland (St. Petersburg region, Russia)</h2>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Collaborators:</span> Dr. Dmitry Sadokov
+          </p>
+        </article>
+
+        <!-- Unfunded Project 2 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold">MIS 3 in the Neva Lowland (St. Petersburg region, Russia)</h2>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Collaborators:</span> Dr. Mikhail Sheetov, Ekaterina Nosevich
+          </p>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Conference abstracts:</span><br>
+            <a href="https://disk.yandex.ru/i/yMzp061op0vjAg" class="text-white hover:text-amber-300 hover:underline" target="_blank" rel="noopener noreferrer">Sheetov M. V., Dudanova V. I., 
+              Ruchkin M. V. The Middle Valdai of the Prinevskaya Lowland: new data and new problems // Relief and Quaternary deposits of the Arctic, 
+              Subarctic and North-West Russia. Proceedings of the annual conference on the results of expedition research. Issue 10. St. Petersburg, 
+              2023. P. 401–404 (in Russian).</a>
+          </p>
+        </article>
+
+        <!-- Unfunded Project 1 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold">The Late Valdai (Late Weichselian) glaciation margin in the Mologa-Sheksna Lowland (Russia) and adjacent areas</h2>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Collaborators:</span> Dr. Dmitry Sadokov, Ekaterina Nosevich
+          </p>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Conference abstracts:</span><br>
+            <a href="https://doi.org/10.5281/zenodo.12749221" class="text-white hover:text-amber-300 hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin M. V., Sadokov D. O. Age and genesis of diamictons in the Mologa-Sheksna Lowland and adjacent areas // XXI Congress of the International 
+            Union for Quaternary Research, July 14th – 20th 2023, Sapienza University of Rome, Italy: Abstract Book. – 2023. – P. 2456–2456. 
+            https://doi.org/10.5281/zenodo.12749221</a>
+          </p>
+          <p class="mt-2 text-sm text-white">
+            <a href="https://disk.yandex.ru/i/8z3HESddg1P3Hg" class="text-white hover:text-amber-300 hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin M. V., Sadokov D. O. The Late Valdai glaciation margin in the Mologa-Sheksna Lowland and adjacent areas: novel geological and geochronologic 
+            data // Geochronology of the Quaternary Period: Instrumental Dating Methods of Newest Deposits: Abstracts of the Conference. – 2022. – 
+            P. 64–64 (in Russian).</a>
+          </p>
         </article>
       </div>
 

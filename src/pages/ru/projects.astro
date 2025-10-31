@@ -9,8 +9,9 @@ const { lang = "ru" } = Astro.props;
     <div class="mx-auto w-full max-w-[1000px] px-6 py-16">
       <h1 class="text-3xl font-bold">Проекты</h1>
 
-      <!-- Cards -->
-      <div class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-1 lg:grid-cols-1">
+      <!-- Funded Projects -->
+      <h2 class="mt-8 text-2xl font-semibold">Поддержанные</h2>
+      <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1">
         <!-- Project 3 -->
         <article class="rounded-2xl border border-white/10 bg-black/30 p-6 shadow-lg backdrop-blur w-full max-w-[1000px]">
           <p class="text-base text-white/75 mb-2">
@@ -39,11 +40,16 @@ const { lang = "ru" } = Astro.props;
             <span class="text-amber-300">Научные руководители:</span> Проф. д.г.-м.н. В.Ю. Кузнецов и проф. д-р Т. Райманн
           </p>
           <p class="mt-2 text-sm text-white">
-            <span class="text-amber-300">Публикации:</span><br>
-            <a href="https://doi.org/10.1002/jqs.3618" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin, M. V., Nosevich, E. S., Sheetov, M. V., & Brill, D. (2024). Stratigraphy and OSL chronology of the Middle–Upper Pleistocene sedimentary sequence and vegetation history during Late MIS6 – MIS5e in the Neva Lowland (St. Petersburg Region, Russia). Journal of Quaternary Science, 39, 745–764. https://doi.org/10.1002/jqs.3618</a>
+            <span class="text-amber-300">Статьи:</span><br>
+            <a href="https://doi.org/10.1002/jqs.3618" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin M. V., Nosevich E. S., Sheetov M. V., Brill D. Stratigraphy and OSL chronology of the Middle–Upper Pleistocene sedimentary 
+            sequence and vegetation history during Late MIS6 – MIS5e in the Neva Lowland (St. Petersburg Region, Russia) // 
+            Journal of Quaternary Science. – 2024. – Vol. 39. – P. 745–764. https://doi.org/10.1002/jqs.3618</a>
           </p>
           <p class="mt-2 text-sm text-white">
-            <a href="https://doi.org/10.1016/j.quascirev.2025.109244" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin, M. V., Sheetov, M. V., Taldenkova, Е. E., Pushina, Z. V., Dudanova, V. I., Ovsepyan, Ya. S., Konstantinov, E. A., Nosevich, E. S., & Mustafin, M. A. (2025). Paleohydrological changes in the eastern Baltic Sea during the Middle/Late Pleistocene transition and the Last Interglacial. Quaternary Science Reviews, 360, 109244. https://doi.org/10.1016/j.quascirev.2025.109244</a>
+            <a href="https://doi.org/10.1016/j.quascirev.2025.109244" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin M. V., Sheetov M. V., Taldenkova E. E., Pushina Z. V., Dudanova V. I., Ovsepyan Ya. S., Konstantinov E. A., 
+            Nosevich E. S., Mustafin M. A. Paleohydrological changes in the eastern Baltic Sea during the Middle/Late Pleistocene transition 
+            and the Last Interglacial // Quaternary Science Reviews. – 2025. – Vol. 360. – P. 109244. 
+            https://doi.org/10.1016/j.quascirev.2025.109244</a>
           </p>
 
 
@@ -61,11 +67,76 @@ const { lang = "ru" } = Astro.props;
             проф. д-р Э. Мюррей
           </p>
           <p class="mt-2 text-sm text-white">
-            <span class="text-amber-300">Публикации:</span><br>
-            <a href="https://doi.org/10.1111/bor.12558" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Nazarov, D. V., Nikolskaia, O. A., Gladysheva, A. S., Zhigmanovskiy, I. V., Ruchkin, M. V., Merkuljev, A. V., & Thomsen, K. J. (2022). Evidence for the intrusion of marine Atlantic waters into the West Siberian Arctic during the Middle Pleistocene. Boreas, 51, 402–425. https://doi.org/10.1111/bor.12558</a>
+            <span class="text-amber-300">Статьи:</span><br>
+            <a href="https://doi.org/10.1111/bor.12558" class="text-white hover:underline" target="_blank" rel="noopener noreferrer">Nazarov D. V., Nikolskaia O. A., Gladysheva A. S., Zhigmanovskiy I. V., Ruchkin M. V., Merkuljev A. V., Thomsen K. J. 
+            Evidence for the intrusion of marine Atlantic waters into the West Siberian Arctic during the Middle Pleistocene // 
+            Boreas. – 2022. – Vol. 51. – P. 402–425. https://doi.org/10.1111/bor.12558</a>
           </p>
 
 
+        </article>
+      </div>
+
+      <!-- Unfunded Projects -->
+      <h2 class="mt-6 text-2xl font-semibold">Другие</h2>
+      <div class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-1 lg:grid-cols-1">
+        <!-- Unfunded Project 5 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold"><em>Balta</em> – десктопное приложение для обработки данных гранулометрического анализа и построения графиков</h2>
+          <p class="mt-2 text-sm text-white">
+            <a href="https://www.maxruchkin.org/software" class="text-amber-300 hover:underline" target="_blank" rel="noopener noreferrer">https://www.maxruchkin.org/software</a>
+          </p>
+        </article>
+
+        <!-- Unfunded Project 4 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold"><em>Lumen</em> – десктопное приложение для расчета люминесцентого возраста отложений</h2>
+        </article>
+
+        <!-- Unfunded Project 3 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold">Касплянский (цайфенский) интерстадиал (МИС 6) в Приневской низменности (Ленинградская область)</h2>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Участники:</span> к.г.н. Д.О. Садоков
+          </p>
+        </article>
+
+        <!-- Unfunded Project 2 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold">MIS 3 в Приневской низменности (Ленинградская область)</h2>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Участники:</span> к.г.-м.н. М.В. Шитов
+          </p>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Тезисы конференций:</span><br>
+          </p>
+          <p class="mt-2 text-sm text-white">
+            <a href="https://disk.yandex.ru/i/yMzp061op0vjAg" class="text-white hover:text-amber-300 hover:underline" target="_blank" rel="noopener noreferrer">Шитов М. В., Дуданова В. И., Ручкин М. В. Средний валдай Приневской низменности: новые данные и новые проблемы // 
+            Рельеф и четвертичные образования Арктики, Субарктики и Северо-Запада России. Материалы ежегодной конференции по результатам 
+            экспедиционных исследований. Выпуск 10. Санкт-Петербург, 2023. С. 401–404.</a>
+          
+        </article>
+
+        <!-- Unfunded Project 1 -->
+        <article class="rounded-2xl border border-white/10 bg-black/50 p-6 shadow-lg backdrop-blur w-full max-w-[1100px]">
+          <h2 class="text-xl font-semibold">Граница поздневалдайского (поздневисленского) оледенения в Молого-Шекснинской низменности и прилегающих районах</h2>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Участники:</span> к.г.н. Д.О. Садоков, Е.С. Носевич
+          </p>
+          <p class="mt-2 text-sm text-white">
+            <span class="text-amber-300">Тезисы конференций:</span><br>
+          </p>
+          <p class="mt-2 text-sm text-white">
+            <a href="https://doi.org/10.5281/zenodo.12749221" class="text-white hover:text-amber-300 hover:underline" target="_blank" rel="noopener noreferrer">Ruchkin M. V., Sadokov D. O. Age and genesis of diamictons in the Mologa-Sheksna Lowland and adjacent areas // XXI Congress of the International 
+            Union for Quaternary Research, July 14th – 20th 2023, Sapienza University of Rome, Italy: Abstract Book. – 2023. – P. 2456–2456. 
+            https://doi.org/10.5281/zenodo.12749221</a>
+          </p>
+          <p class="mt-2 text-sm text-white">
+            <a href="https://disk.yandex.ru/i/8z3HESddg1P3Hg" class="text-white hover:text-amber-300 hover:underline" target="_blank" rel="noopener noreferrer">Ручкин М. В., Садоков Д. О. Граница поздневалдайского оледенения в Молого-Щекснинской низменности и сопредельных районах: 
+            новые геологические и геохронометрические данные // Геохронология четвертичного периода: инструментальные методы датирования новейших 
+            отложений: Сборник тезисов Второй всероссийской научной конференции (с международным участием). – Москва: Институт географии РАН, 2022. – 
+            С. 64–64.</a>
+          </p>
         </article>
       </div>
 
