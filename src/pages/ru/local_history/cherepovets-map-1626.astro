@@ -1196,37 +1196,6 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 }
               }
               
-              // Логирование после setFullscreenPixelSizes
-              if (mapEl) {
-                const rect = mapEl.getBoundingClientRect();
-                const mapComputed = window.getComputedStyle(mapEl);
-                console.log('[Step 1] After setFullscreenPixelSizes: mapEl.bottom = ' + rect.bottom + 'px (target: ' + vhPx + 'px)');
-                console.log('[Step 1] mapEl.style.height = ' + mapEl.style.height + ', mapEl.style.top = ' + mapEl.style.top);
-                console.log('[Step 1] mapEl computed: height = ' + mapComputed.height + ', top = ' + mapComputed.top + ', transform = ' + mapComputed.transform);
-                console.log('[Step 1] mapEl.getBoundingClientRect(): top = ' + rect.top + ', bottom = ' + rect.bottom + ', height = ' + rect.height);
-                
-                // Проверяем родительские элементы
-                if (frame) {
-                  const frameRect = frame.getBoundingClientRect();
-                  const frameComputed = window.getComputedStyle(frame);
-                  console.log('[Step 1] frame: top = ' + frameRect.top + ', bottom = ' + frameRect.bottom + ', height = ' + frameRect.height);
-                  console.log('[Step 1] frame computed: height = ' + frameComputed.height + ', top = ' + frameComputed.top);
-                  console.log('[Step 1] frame.style.height = ' + frame.style.height + ', frame.style.top = ' + frame.style.top);
-                }
-                if (ratioBox) {
-                  const ratioRect = ratioBox.getBoundingClientRect();
-                  const ratioComputed = window.getComputedStyle(ratioBox);
-                  console.log('[Step 1] ratioBox: top = ' + ratioRect.top + ', bottom = ' + ratioRect.bottom + ', height = ' + ratioRect.height);
-                  console.log('[Step 1] ratioBox computed: height = ' + ratioComputed.height + ', top = ' + ratioComputed.top);
-                  console.log('[Step 1] ratioBox.style.height = ' + ratioBox.style.height + ', ratioBox.style.top = ' + ratioBox.style.top);
-                }
-                if (viewer) {
-                  const viewerRect = viewer.getBoundingClientRect();
-                  const viewerComputed = window.getComputedStyle(viewer);
-                  console.log('[Step 1] viewer: top = ' + viewerRect.top + ', bottom = ' + viewerRect.bottom + ', height = ' + viewerRect.height);
-                  console.log('[Step 1] viewer computed: height = ' + viewerComputed.height + ', top = ' + viewerComputed.top);
-                }
-              }
             };
 
             const restoreRatioMode = () => {
@@ -1278,6 +1247,14 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             });
 
             const enterMobileFs = () => {
+              // КРИТИЧНО: Сохраняем текущую позицию скролла перед входом в полноэкранный режим
+              const savedScrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+              const savedScrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
+              
+              // Сохраняем позицию скролла в dataset
+              document.body.dataset.savedScrollTop = savedScrollTop.toString();
+              document.body.dataset.savedScrollLeft = savedScrollLeft.toString();
+              
               // КРИТИЧНО: Сначала сбрасываем scroll СИНХРОННО, чтобы не было смещения
               // Используем behavior: 'instant' для немедленного сброса
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -1367,9 +1344,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               setFullscreenPixelSizes(vh);
 
               requestAnimationFrame(() => {
-                // Сначала убеждаемся, что размеры установлены правильно
                 const currentVh = getViewportHeight();
-                console.log('[Enter Fullscreen] Step 0: Viewport height = ' + currentVh + 'px');
                 
                 // КРИТИЧНО: Еще раз убеждаемся, что viewer имеет правильные размеры
                 // Используем setProperty с important, чтобы переопределить CSS стили
@@ -1380,14 +1355,10 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                   while (parent && parentLevel < 5) {
                     const parentRect = parent.getBoundingClientRect();
                     const parentComputed = window.getComputedStyle(parent);
-                    console.log('[Step 0.5] Parent level ' + parentLevel + ' (' + parent.tagName + '): top = ' + parentRect.top + ', transform = ' + parentComputed.transform);
-                    console.log('[Step 0.5] Parent level ' + parentLevel + ' computed: margin = ' + parentComputed.margin + ', padding = ' + parentComputed.padding);
-                    console.log('[Step 0.5] Parent level ' + parentLevel + ' computed: margin-top = ' + parentComputed.marginTop + ', padding-top = ' + parentComputed.paddingTop);
                     
                     // Убираем transform у родительских элементов, если он есть
                     if (parentComputed.transform && parentComputed.transform !== 'none') {
                       parent.style.setProperty('transform', 'none', 'important');
-                      console.log('[Step 0.5] Removed transform from parent level ' + parentLevel);
                     }
                     
                     // КРИТИЧНО: Убираем padding-top и margin-top у ВСЕХ родительских элементов в полноэкранном режиме
@@ -1400,16 +1371,11 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                       parent.style.setProperty('padding-top', '0', 'important');
                       parent.style.setProperty('margin', '0', 'important');
                       parent.style.setProperty('padding', '0', 'important');
-                      console.log('[Step 0.5] Removed margin/padding from parent level ' + parentLevel + ' (padding-top was ' + parentPaddingTop + 'px, margin-top was ' + parentMarginTop + 'px, top was ' + parentRect.top + ')');
                     }
                     
                     parent = parent.parentElement;
                     parentLevel++;
                   }
-                  
-                  // Проверяем scroll position
-                  console.log('[Step 0.5] window.scrollY = ' + window.scrollY + ', window.scrollX = ' + window.scrollX);
-                  console.log('[Step 0.5] document.documentElement.scrollTop = ' + document.documentElement.scrollTop);
                   
                   // Устанавливаем scroll на 0
                   window.scrollTo(0, 0);
@@ -1430,35 +1396,6 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                   viewer.style.setProperty('overflow', 'hidden', 'important');
                   viewer.style.setProperty('transform', 'none', 'important');
                   viewer.style.setProperty('will-change', 'auto', 'important');
-                  
-                  // КРИТИЧНО: Проверяем и компенсируем смещение viewer
-                  const viewerRect = viewer.getBoundingClientRect();
-                  const offsetTop = viewerRect.top;
-                  const offsetBottom = viewerRect.bottom;
-                  
-                  if (offsetTop !== 0 || offsetBottom !== currentVh) {
-                    console.log('[Step 0.5] viewer is offset by ' + offsetTop + 'px, compensating');
-                    // Компенсируем смещение, используя отрицательный top
-                    const compensatedTop = -offsetTop;
-                    viewer.style.setProperty('top', compensatedTop + 'px', 'important');
-                    // Также компенсируем высоту, чтобы bottom совпадал с viewport bottom
-                    const targetBottom = currentVh;
-                    const currentHeight = viewerRect.height;
-                    const heightAdjustment = targetBottom - offsetBottom;
-                    if (heightAdjustment !== 0) {
-                      const newHeight = currentHeight + heightAdjustment;
-                      viewer.style.setProperty('height', newHeight + 'px', 'important');
-                      viewer.style.setProperty('min-height', newHeight + 'px', 'important');
-                      viewer.style.setProperty('max-height', newHeight + 'px', 'important');
-                    }
-                  }
-                  
-                  console.log('[Step 0.5] After setting viewer styles: viewer.style.height = ' + viewer.style.height);
-                  const finalViewer = document.getElementById('viewer');
-                  const finalViewerRect = finalViewer ? finalViewer.getBoundingClientRect() : viewer.getBoundingClientRect();
-                  console.log('[Step 0.5] viewer.getBoundingClientRect(): top = ' + finalViewerRect.top + ', bottom = ' + finalViewerRect.bottom + ', height = ' + finalViewerRect.height);
-                  const finalComputed = finalViewer ? window.getComputedStyle(finalViewer) : window.getComputedStyle(viewer);
-                  console.log('[Step 0.5] viewer computed: height = ' + finalComputed.height + ', top = ' + finalComputed.top + ', transform = ' + finalComputed.transform);
                 }
                 
                 // Еще раз проверяем и убираем padding у родительских элементов после небольшой задержки
@@ -1483,11 +1420,9 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 const btnZoomIn = document.getElementById('btn-zoom-in');
                 const zoomControlsContainer = btnZoomIn?.parentElement;
                 if (zoomControlsContainer && frame?.contains(zoomControlsContainer)) {
-                  console.log('[Step 1.5] Found zoom controls container');
-                  
                   // КРИТИЧНО: Сначала устанавливаем размеры и видимость для кнопок
                   const buttons = zoomControlsContainer.querySelectorAll('button');
-                  buttons.forEach((btn, idx) => {
+                  buttons.forEach((btn) => {
                     btn.style.setProperty('z-index', '10000001', 'important');
                     btn.style.setProperty('display', 'flex', 'important');
                     btn.style.setProperty('visibility', 'visible', 'important');
@@ -1497,7 +1432,6 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                     btn.style.setProperty('min-width', '2.5rem', 'important');
                     btn.style.setProperty('min-height', '2.5rem', 'important');
                     btn.style.setProperty('position', 'relative', 'important');
-                    console.log('[Step 1.5] Button ' + idx + ' (' + btn.id + '): visible, size = ' + btn.offsetWidth + 'x' + btn.offsetHeight);
                   });
                   
                   // Затем устанавливаем стили для контейнера
@@ -1519,66 +1453,16 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                   zoomControlsContainer.style.setProperty('min-height', '8rem', 'important');
                   zoomControlsContainer.style.setProperty('margin', '0', 'important');
                   zoomControlsContainer.style.setProperty('padding', '0', 'important');
-                  
-                  // Ждем рендера и проверяем размеры
-                  requestAnimationFrame(() => {
-                    const rect = zoomControlsContainer.getBoundingClientRect();
-                    console.log('[Step 1.5] Zoom controls container after RAF: top = ' + rect.top + ', left = ' + rect.left + ', width = ' + rect.width + ', height = ' + rect.height);
-                    console.log('[Step 1.5] Container computed style: display = ' + window.getComputedStyle(zoomControlsContainer).display + ', visibility = ' + window.getComputedStyle(zoomControlsContainer).visibility);
-                    
-                    // Проверяем размеры кнопок еще раз
-                    buttons.forEach((btn, idx) => {
-                      const btnRect = btn.getBoundingClientRect();
-                      console.log('[Step 1.5] Button ' + idx + ' (' + btn.id + ') after RAF: top = ' + btnRect.top + ', left = ' + btnRect.left + ', width = ' + btnRect.width + ', height = ' + btnRect.height);
-                    });
-                  });
-                } else {
-                  console.log('[Step 1.5] Zoom controls container not found! btnZoomIn = ' + btnZoomIn + ', parent = ' + zoomControlsContainer);
                 }
                 
-                // Затем применяем границы и подгоняем карту
-                if (mapEl) {
-                  const rect = mapEl.getBoundingClientRect();
-                  console.log('[Step 2] After setFullscreenPixelSizes, before applyMapInsetsToBorder: mapEl.bottom = ' + rect.bottom + 'px');
-                }
-                
-              applyMapInsetsToBorder();
-                if (mapEl) {
-                  const rect = mapEl.getBoundingClientRect();
-                  console.log('[Step 3] After applyMapInsetsToBorder: mapEl.bottom = ' + rect.bottom + 'px');
-                  console.log('[Step 3] mapEl.style.top = ' + mapEl.style.top + ', mapEl.style.bottom = ' + mapEl.style.bottom);
-                }
-                
+                applyMapInsetsToBorder();
                 map.invalidateSize(false);
-                if (mapEl) {
-                  const rect = mapEl.getBoundingClientRect();
-                  console.log('[Step 4] After invalidateSize: mapEl.bottom = ' + rect.bottom + 'px');
-                }
-                
                 fitPreferHeight(map, bounds);
-                if (mapEl) {
-                  const rect = mapEl.getBoundingClientRect();
-                  console.log('[Step 5] After fitPreferHeight: mapEl.bottom = ' + rect.bottom + 'px');
-                }
                 
-                // Логирование координат после входа в полноэкранный режим
-              setTimeout(() => {
-                  // Еще раз обновляем размеры, если viewport изменился
+                setTimeout(() => {
                   const finalVh = getViewportHeight();
-                  console.log('[Step 6] In setTimeout: finalVh = ' + finalVh + 'px');
-                  if (mapEl) {
-                    const rect = mapEl.getBoundingClientRect();
-                    console.log('[Step 6] Before setFullscreenPixelSizes in setTimeout: mapEl.bottom = ' + rect.bottom + 'px');
-                  }
-                  
                   setFullscreenPixelSizes(finalVh);
                   
-                  if (mapEl) {
-                    const rect = mapEl.getBoundingClientRect();
-                    console.log('[Step 7] After setFullscreenPixelSizes in setTimeout: mapEl.bottom = ' + rect.bottom + 'px');
-                  }
-                  
-                  // ФОРСИРУЕМ правильное позиционирование после всех операций
                   if (ratioBox) {
                     ratioBox.style.top = '0';
                     ratioBox.style.left = '0';
@@ -1610,10 +1494,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                     mapEl.style.maxHeight = finalVh + 'px';
                     mapEl.style.margin = '0';
                     mapEl.style.transform = 'none';
-                    
-                    const rect = mapEl.getBoundingClientRect();
-                    console.log('[Step 8] After forcing styles: mapEl.bottom = ' + rect.bottom + 'px');
-                    console.log('[Step 8] mapEl.style.height = ' + mapEl.style.height + ', mapEl.style.top = ' + mapEl.style.top);
+                    mapEl.style.inset = '0';
                   }
                   
                   map.invalidateSize(false);
@@ -1644,22 +1525,10 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                     zoomControlsContainerAgain.style.setProperty('top', '50%', 'important');
                     zoomControlsContainerAgain.style.setProperty('transform', 'translateY(-50%)', 'important');
                     zoomControlsContainerAgain.style.setProperty('gap', '0.25rem', 'important');
-                    
-                    const rectAgain = zoomControlsContainerAgain.getBoundingClientRect();
-                    console.log('[Step 9.5] Zoom controls container after invalidateSize: top = ' + rectAgain.top + ', left = ' + rectAgain.left + ', width = ' + rectAgain.width + ', height = ' + rectAgain.height);
                   }
                   
-                  if (mapEl) {
-                    const rect = mapEl.getBoundingClientRect();
-                    console.log('[Step 9] After invalidateSize in setTimeout: mapEl.bottom = ' + rect.bottom + 'px');
-                  }
-                  
-                  // Еще раз принудительно устанавливаем позиционирование после invalidateSize
                   requestAnimationFrame(() => {
                     if (mapEl) {
-                      const rectBefore = mapEl.getBoundingClientRect();
-                      console.log('[Step 10] In requestAnimationFrame, before forcing: mapEl.bottom = ' + rectBefore.bottom + 'px');
-                      
                       mapEl.style.top = '0';
                       mapEl.style.left = '0';
                       mapEl.style.right = '0';
@@ -1671,11 +1540,6 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                       mapEl.style.margin = '0';
                       mapEl.style.transform = 'none';
                       mapEl.style.inset = '0';
-                      
-                      const rectAfter = mapEl.getBoundingClientRect();
-                      console.log('[Step 10] After forcing in requestAnimationFrame: mapEl.bottom = ' + rectAfter.bottom + 'px');
-                      console.log('[Step 10] mapEl.style.height = ' + mapEl.style.height + ', mapEl.style.top = ' + mapEl.style.top);
-                      console.log('[Step 10] Computed style: height = ' + window.getComputedStyle(mapEl).height + ', top = ' + window.getComputedStyle(mapEl).top);
                     }
                     if (frame) {
                       frame.style.top = '0';
@@ -1697,58 +1561,27 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                       ratioBox.style.minHeight = finalVh + 'px';
                       ratioBox.style.maxHeight = finalVh + 'px';
                     }
-                    
-                    // Координаты экрана (viewport)
-                    const viewportTop = 0;
-                    const viewportBottom = getViewportHeight();
-                    
-                    // Координаты карты (контейнера)
-                    const mapContainer = map.getContainer();
-                    const mapRect = mapContainer.getBoundingClientRect();
-                    const mapTop = mapRect.top;
-                    const mapBottom = mapRect.bottom;
-                    
-                    // Координаты изображения карты
-                    const imgLayerEl = mapContainer.querySelector('.leaflet-image-layer');
-                    let imgTop = null;
-                    let imgBottom = null;
-                    
-                    if (imgLayerEl) {
-                      const imgRect = imgLayerEl.getBoundingClientRect();
-                      imgTop = imgRect.top;
-                      imgBottom = imgRect.bottom;
-                    }
-                    
-                    // Координаты в системе координат Leaflet
-                    const mapBounds = map.getBounds();
-                    const mapTopLatLng = map.containerPointToLatLng([mapRect.width / 2, 0]);
-                    const mapBottomLatLng = map.containerPointToLatLng([mapRect.width / 2, mapRect.height]);
-                    
-                    console.log('=== Fullscreen Mode - Coordinates ===');
-                    console.log('Screen (viewport):');
-                    console.log('  Top: ' + viewportTop + 'px');
-                    console.log('  Bottom: ' + viewportBottom + 'px');
-                    console.log('Map Container:');
-                    console.log('  Top: ' + mapTop + 'px');
-                    console.log('  Bottom: ' + mapBottom + 'px');
-                    console.log('Image Layer:');
-                    console.log('  Top: ' + (imgTop !== null ? imgTop + 'px' : 'null'));
-                    console.log('  Bottom: ' + (imgBottom !== null ? imgBottom + 'px' : 'null'));
-                    console.log('Map Coordinates (Leaflet):');
-                    console.log('  Top center: ' + JSON.stringify({lat: mapTopLatLng.lat, lng: mapTopLatLng.lng}));
-                    console.log('  Bottom center: ' + JSON.stringify({lat: mapBottomLatLng.lat, lng: mapBottomLatLng.lng}));
-                    console.log('  Bounds: ' + JSON.stringify({
-                      north: mapBounds.getNorth(),
-                      south: mapBounds.getSouth(),
-                      east: mapBounds.getEast(),
-                      west: mapBounds.getWest()
-                    }));
                   });
                 }, 200);
               });
             };
 
             const exitMobileFs = () => {
+              console.log('=== EXIT FULLSCREEN: START ===');
+              
+              // Проверяем состояние до выхода
+              const htmlOverflowBefore = window.getComputedStyle(document.documentElement).overflow;
+              const bodyOverflowBefore = window.getComputedStyle(document.body).overflow;
+              const htmlPositionBefore = window.getComputedStyle(document.documentElement).position;
+              const bodyPositionBefore = window.getComputedStyle(document.body).position;
+              const hasFullscreenClass = document.body.classList.contains('fullscreen-mobile-active');
+              const scrollTopBefore = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+              
+              console.log('[Exit FS] BEFORE - HTML overflow:', htmlOverflowBefore, ', position:', htmlPositionBefore);
+              console.log('[Exit FS] BEFORE - Body overflow:', bodyOverflowBefore, ', position:', bodyPositionBefore);
+              console.log('[Exit FS] BEFORE - Has fullscreen class:', hasFullscreenClass);
+              console.log('[Exit FS] BEFORE - Scroll position:', scrollTopBefore);
+              
               // КРИТИЧНО: Сначала восстанавливаем все стили элементов
               // Удаляем все inline-стили, установленные через setProperty с !important
               if (viewer) {
@@ -1782,14 +1615,20 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 parentLevel++;
               }
               
-              // Восстанавливаем scroll position
-              document.documentElement.style.overflow = '';
-              document.body.style.overflow = '';
-              
-              // Удаляем классы
+              // КРИТИЧНО: Сначала удаляем классы, чтобы CSS не блокировал прокрутку
               viewer.classList.remove('fullscreen-mobile');
               document.body.classList.remove('fullscreen-mobile-active');
               document.documentElement.classList.remove('fullscreen-mobile-active');
+              
+              console.log('[Exit FS] Classes removed');
+              
+              // Затем восстанавливаем scroll position и overflow
+              document.documentElement.style.overflow = '';
+              document.body.style.overflow = '';
+              
+              // Убираем overflow с !important, если он был установлен
+              document.documentElement.style.removeProperty('overflow');
+              document.body.style.removeProperty('overflow');
 
               const header = document.querySelector('header');
               const footer = document.querySelector('footer');
@@ -1828,6 +1667,104 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
               // Восстанавливаем режим ratio
               restoreRatioMode();
+              
+              // КРИТИЧНО: Убеждаемся, что прокрутка восстановлена
+              // Восстанавливаем позицию скролла, если она была сохранена
+              const savedScrollTop = document.body.dataset.savedScrollTop ? parseInt(document.body.dataset.savedScrollTop, 10) : null;
+              const savedScrollLeft = document.body.dataset.savedScrollLeft ? parseInt(document.body.dataset.savedScrollLeft, 10) : null;
+              
+              // КРИТИЧНО: Многократно восстанавливаем прокрутку с разными задержками
+              // Сначала сразу после удаления классов
+              requestAnimationFrame(() => {
+                console.log('[Exit FS] RAF 1: Removing overflow properties');
+                document.documentElement.style.setProperty('overflow', '', 'important');
+                document.body.style.setProperty('overflow', '', 'important');
+                document.documentElement.style.removeProperty('overflow');
+                document.body.style.removeProperty('overflow');
+                
+                const htmlOverflowRAF1 = window.getComputedStyle(document.documentElement).overflow;
+                const bodyOverflowRAF1 = window.getComputedStyle(document.body).overflow;
+                console.log('[Exit FS] RAF 1 - HTML overflow:', htmlOverflowRAF1, ', Body overflow:', bodyOverflowRAF1);
+              });
+              
+              // Затем через небольшую задержку
+              setTimeout(() => {
+                console.log('[Exit FS] Timeout 100ms: Restoring scroll');
+                
+                // Принудительно восстанавливаем overflow с !important
+                document.documentElement.style.setProperty('overflow', '', 'important');
+                document.body.style.setProperty('overflow', '', 'important');
+                
+                // Убираем position: fixed с body и html, если они были установлены
+                document.documentElement.style.removeProperty('position');
+                document.body.style.removeProperty('position');
+                
+                // Убираем width и height, если они были установлены
+                document.documentElement.style.removeProperty('width');
+                document.documentElement.style.removeProperty('height');
+                document.body.style.removeProperty('width');
+                document.body.style.removeProperty('height');
+                
+                // Убеждаемся, что overflow не скрыт
+                const htmlOverflow = window.getComputedStyle(document.documentElement).overflow;
+                const bodyOverflow = window.getComputedStyle(document.body).overflow;
+                const htmlPosition = window.getComputedStyle(document.documentElement).position;
+                const bodyPosition = window.getComputedStyle(document.body).position;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = document.documentElement.clientHeight;
+                const canScroll = scrollHeight > clientHeight;
+                
+                console.log('[Exit FS] Timeout 100ms - HTML overflow:', htmlOverflow, ', position:', htmlPosition);
+                console.log('[Exit FS] Timeout 100ms - Body overflow:', bodyOverflow, ', position:', bodyPosition);
+                console.log('[Exit FS] Timeout 100ms - ScrollHeight:', scrollHeight, ', ClientHeight:', clientHeight, ', Can scroll:', canScroll);
+                
+                // Если overflow все еще hidden, принудительно устанавливаем auto
+                if (htmlOverflow === 'hidden') {
+                  document.documentElement.style.setProperty('overflow', 'auto', 'important');
+                  console.log('[Exit FS] Timeout 100ms - FORCED HTML overflow to auto');
+                }
+                if (bodyOverflow === 'hidden') {
+                  document.body.style.setProperty('overflow', 'auto', 'important');
+                  console.log('[Exit FS] Timeout 100ms - FORCED Body overflow to auto');
+                }
+                
+                // Проверяем еще раз после принудительного изменения
+                const htmlOverflowAfter = window.getComputedStyle(document.documentElement).overflow;
+                const bodyOverflowAfter = window.getComputedStyle(document.body).overflow;
+                console.log('[Exit FS] Timeout 100ms - AFTER FORCE - HTML overflow:', htmlOverflowAfter, ', Body overflow:', bodyOverflowAfter);
+                
+                // Удаляем сохраненные значения скролла
+                delete document.body.dataset.savedScrollTop;
+                delete document.body.dataset.savedScrollLeft;
+                
+                // Восстанавливаем позицию скролла, если она была сохранена
+                if (savedScrollTop !== null && savedScrollTop !== undefined) {
+                  requestAnimationFrame(() => {
+                    console.log('[Exit FS] Restoring scroll position:', savedScrollTop);
+                    window.scrollTo({ top: savedScrollTop, left: savedScrollLeft || 0, behavior: 'instant' });
+                    document.documentElement.scrollTop = savedScrollTop;
+                    document.body.scrollTop = savedScrollTop;
+                    if (savedScrollLeft !== null) {
+                      document.documentElement.scrollLeft = savedScrollLeft;
+                      document.body.scrollLeft = savedScrollLeft;
+                    }
+                    
+                    // Проверяем результат
+                    const scrollTopAfter = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+                    const finalHtmlOverflow = window.getComputedStyle(document.documentElement).overflow;
+                    const finalBodyOverflow = window.getComputedStyle(document.body).overflow;
+                    console.log('[Exit FS] AFTER SCROLL - Scroll position:', scrollTopAfter, '(expected:', savedScrollTop, ')');
+                    console.log('[Exit FS] AFTER SCROLL - HTML overflow:', finalHtmlOverflow, ', Body overflow:', finalBodyOverflow);
+                    console.log('=== EXIT FULLSCREEN: END ===');
+                  });
+                } else {
+                  const finalHtmlOverflow = window.getComputedStyle(document.documentElement).overflow;
+                  const finalBodyOverflow = window.getComputedStyle(document.body).overflow;
+                  console.log('[Exit FS] No saved scroll position');
+                  console.log('[Exit FS] FINAL - HTML overflow:', finalHtmlOverflow, ', Body overflow:', finalBodyOverflow);
+                  console.log('=== EXIT FULLSCREEN: END ===');
+                }
+              }, 100);
               
               // Убеждаемся, что viewer снова видим и имеет правильные размеры
               requestAnimationFrame(() => {
@@ -1880,10 +1817,15 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 // Убеждаемся, что viewer видим
                 if (viewer) {
                   const viewerRect = viewer.getBoundingClientRect();
-                  console.log('[Exit Fullscreen] Viewer restored: top = ' + viewerRect.top + ', height = ' + viewerRect.height);
+                  const htmlOverflowFinal = window.getComputedStyle(document.documentElement).overflow;
+                  const bodyOverflowFinal = window.getComputedStyle(document.body).overflow;
+                  const scrollTopFinal = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+                  console.log('[Exit FS] Viewer restored: top =', viewerRect.top, ', height =', viewerRect.height);
+                  console.log('[Exit FS] FINAL CHECK - HTML overflow:', htmlOverflowFinal, ', Body overflow:', bodyOverflowFinal);
+                  console.log('[Exit FS] FINAL CHECK - Scroll position:', scrollTopFinal);
                 }
-              });
-            };
+            });
+          };
 
             const toggleFullscreen = () => {
               if (isMobile()) {
