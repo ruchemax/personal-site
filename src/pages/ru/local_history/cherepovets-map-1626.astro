@@ -12,7 +12,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
 <LocalHistoryLayout title="Карта земельных владений — Максим Ручкин" lang={lang}>
   <section class="w-full text-white">
-    <div class="mx-auto w-full max-w-[1000px] px-6 pt-4 pb-12">
+    <div class="mx-auto w-full max-w-[1000px] px-0 md:px-6 pt-4 pb-12">
       <!-- Весь контент на фоне бумаги -->
       <div class="paper-old shadow-2xl">
         <div class="relative z-10">
@@ -1063,7 +1063,18 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               fitExact(isFullscreen);
             });
 
+            // Проверка, является ли устройство мобильным
+            const isMobile = () => {
+              return /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                     (window.innerWidth <= 768);
+            };
+
             const isFS = () => {
+              // На мобильных устройствах проверяем CSS класс
+              if (isMobile()) {
+                return viewer.classList.contains('fullscreen-mobile');
+              }
+              // На десктопе проверяем Fullscreen API
               return !!(document.fullscreenElement === viewer || 
                        document.webkitFullscreenElement === viewer ||
                        document.mozFullScreenElement === viewer ||
@@ -1071,6 +1082,35 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             };
             
             const reqFS = () => {
+              // На мобильных устройствах используем CSS класс
+              if (isMobile()) {
+                viewer.classList.add('fullscreen-mobile');
+                document.body.style.overflow = 'hidden';
+                // Пересчитываем размеры карты
+                setTimeout(() => {
+                  map.invalidateSize({ animate: false });
+                  applyMapInsetsToBorder();
+                  fitExact(true);
+                  const ratio = img.naturalHeight / img.naturalWidth;
+                  const frameEl = document.getElementById('frame');
+                  const ratioBox = document.getElementById('ratio');
+                  if (frameEl && ratioBox) {
+                    const vh = window.innerHeight;
+                    const vw = window.innerWidth;
+                    const frameRatio = vh / vw;
+                    if (ratio > frameRatio) {
+                      ratioBox.style.height = vh + 'px';
+                      ratioBox.style.width = (vh / ratio) + 'px';
+                    } else {
+                      ratioBox.style.width = vw + 'px';
+                      ratioBox.style.height = (vw * ratio) + 'px';
+                    }
+                  }
+                }, 100);
+                return;
+              }
+              
+              // На десктопе используем Fullscreen API
               if (viewer.requestFullscreen) {
                 viewer.requestFullscreen().catch(err => console.error('Error entering fullscreen:', err));
               } else if (viewer.webkitRequestFullscreen) {
@@ -1083,6 +1123,27 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             };
             
             const exitFS = () => {
+              // На мобильных устройствах убираем CSS класс
+              if (isMobile()) {
+                viewer.classList.remove('fullscreen-mobile');
+                document.body.style.overflow = '';
+                // Пересчитываем размеры карты
+                setTimeout(() => {
+                  map.invalidateSize({ animate: false });
+                  applyMapInsetsToBorder();
+                  fitExact(false);
+                  const ratioPercent = (img.naturalHeight / img.naturalWidth) * 100;
+                  const ratioBox = document.getElementById('ratio');
+                  if (ratioBox) {
+                    ratioBox.style.paddingTop = ratioPercent + '%';
+                    ratioBox.style.height = '';
+                    ratioBox.style.width = '';
+                  }
+                }, 100);
+                return;
+              }
+              
+              // На десктопе используем Fullscreen API
               if (document.exitFullscreen) {
                 document.exitFullscreen().catch(err => console.error('Error exiting fullscreen:', err));
               } else if (document.webkitExitFullscreen) {
@@ -1110,11 +1171,6 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               try {
                 if (!isFS()) {
                   reqFS();
-                  // Небольшая задержка для мобильных устройств
-                  await new Promise(resolve => setTimeout(resolve, 100));
-                  if (!isFS()) {
-                    console.warn('Fullscreen may require user gesture on mobile devices');
-                  }
                 } else {
                   exitFS();
                 }
@@ -1128,10 +1184,40 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             }
 
             // Обработка событий изменения размера и полноэкранного режима
-            window.addEventListener('resize', reflow);
+            window.addEventListener('resize', () => {
+              if (isFS() && isMobile()) {
+                // Для мобильного fullscreen пересчитываем размеры карты
+                setTimeout(() => {
+                  map.invalidateSize({ animate: false });
+                  applyMapInsetsToBorder();
+                  fitExact(true);
+                  const ratio = img.naturalHeight / img.naturalWidth;
+                  const ratioBox = document.getElementById('ratio');
+                  if (ratioBox) {
+                    const vh = window.innerHeight;
+                    const vw = window.innerWidth;
+                    const frameRatio = vh / vw;
+                    if (ratio > frameRatio) {
+                      ratioBox.style.height = vh + 'px';
+                      ratioBox.style.width = (vh / ratio) + 'px';
+                    } else {
+                      ratioBox.style.width = vw + 'px';
+                      ratioBox.style.height = (vw * ratio) + 'px';
+                    }
+                  }
+                }, 100);
+              } else {
+                reflow();
+              }
+            });
             
             // Универсальная обработка событий fullscreen для всех браузеров
             const handleFullscreenChange = () => {
+              // На мобильных устройствах события Fullscreen API не срабатывают, поэтому пропускаем
+              if (isMobile()) {
+                return;
+              }
+              
               // Увеличиваем задержку для мобильных устройств
               const delay = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 300 : 150;
               setTimeout(() => {
@@ -1143,10 +1229,13 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               }, delay);
             };
             
-            document.addEventListener('fullscreenchange', handleFullscreenChange);
-            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-            document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-            document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+            // Обработка событий Fullscreen API только для десктопа
+            if (!isMobile()) {
+              document.addEventListener('fullscreenchange', handleFullscreenChange);
+              document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+              document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+              document.addEventListener('MSFullscreenChange', handleFullscreenChange);
+            }
           };
 
           img.onerror = () => {
@@ -1206,9 +1295,14 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
     .paper-old .text-white, .paper-old .text-white * { color:#2a1e14 !important; }
 
     @media (min-width:768px){ .paper-old{ padding:2.5rem; } }
-
-    /* Перенос слов по слогам на мобильных устройствах для таблицы */
+    
     @media (max-width: 767px) {
+      .paper-old {
+        padding: 1rem;
+        margin: 0;
+      }
+      
+      /* Перенос слов по слогам на мобильных устройствах для таблицы */
       table td, table th {
         word-break: break-word;
         overflow-wrap: break-word;
@@ -1217,6 +1311,54 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
         -moz-hyphens: auto;
         -ms-hyphens: auto;
       }
+      
+      /* Убираем ограничения на мобильных для широкого экрана */
+      section > div {
+        max-width: 100% !important;
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+
+    /* Стили для полноэкранного режима карты */
+    #viewer.fullscreen-mobile {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      background: #000;
+    }
+
+    #viewer.fullscreen-mobile #ratio {
+      height: 100vh !important;
+      padding-top: 0 !important;
+    }
+
+    #viewer.fullscreen-mobile #frame {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    #viewer.fullscreen-mobile .mt-4 {
+      display: none;
+    }
+
+    /* Кнопка закрытия для мобильного fullscreen */
+    #viewer.fullscreen-mobile #btn-fullscreen::before {
+      content: '×';
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    #viewer.fullscreen-mobile #btn-fullscreen svg {
+      display: none;
     }
   </style>
 </LocalHistoryLayout>
