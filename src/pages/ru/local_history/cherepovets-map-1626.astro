@@ -978,6 +978,9 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
       <script is:inline>
         document.addEventListener('DOMContentLoaded', () => {
+          // -----------------------
+          // Элементы/конфиг
+          // -----------------------
           const imgUrl   = "/images/maps/cherepovets-1626.jpg";
           const viewer   = document.getElementById('viewer');
           const ratioBox = document.getElementById('ratio');
@@ -989,7 +992,37 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
           const btnReset = document.getElementById('btn-reset');
           const btnFS    = document.getElementById('btn-fullscreen');
 
+          // -----------------------
+          // Хелперы
+          // -----------------------
+          const debounce = (fn, wait = 120) => {
+            let t;
+            return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
+          };
+
+          const getViewportHeight = () => {
+            if (window.visualViewport && typeof window.visualViewport.height === 'number') {
+              return Math.round(window.visualViewport.height);
+            }
+            return Math.round(window.innerHeight || document.documentElement.clientHeight || screen.height);
+          };
+
+          const isMobile = () => {
+            return /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                   (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) ||
+                   (window.innerWidth <= 768);
+          };
+
           const applyMapInsetsToBorder = () => {
+            if (!frame || !mapEl) return;
+            // В полноэкранном режиме на мобильном не применяем insets от границ
+            if (viewer && viewer.classList.contains('fullscreen-mobile') && isMobile()) {
+              mapEl.style.top = '0';
+              mapEl.style.right = '0';
+              mapEl.style.bottom = '0';
+              mapEl.style.left = '0';
+              return;
+            }
             const cs = getComputedStyle(frame);
             const t = parseFloat(cs.borderTopWidth)    || 0;
             const r = parseFloat(cs.borderRightWidth)  || 0;
@@ -1001,30 +1034,42 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             mapEl.style.left   = l + 'px';
           };
 
+          // -----------------------
+          // Загрузка изображения (чтобы взять ratio)
+          // -----------------------
           const img = new Image();
           img.src = imgUrl;
+
+          img.onerror = () => {
+            if (frame) {
+              frame.innerHTML = '<div style="padding:1rem;color:#fca5a5;">Не удалось загрузить файл карты: ' + imgUrl + '</div>';
+            }
+          };
 
           img.onload = () => {
             const w = img.naturalWidth;
             const h = img.naturalHeight;
-
             const ratioPercent = (h / w) * 100;
-            ratioBox.style.paddingTop = ratioPercent + '%';
 
+            if (ratioBox) {
+              ratioBox.style.paddingTop = ratioPercent + '%';
+            }
             applyMapInsetsToBorder();
 
+            // -----------------------
+            // Инициализация Leaflet
+            // -----------------------
             const map = L.map(mapEl, {
               crs: L.CRS.Simple,
               zoomControl: false,
               minZoom: -5,
-              maxZoom:  5,
+              maxZoom:  8,
               zoomSnap: 0,
               wheelPxPerZoomLevel: 120,
               attributionControl: false,
               inertia: false,
               worldCopyJump: false,
               maxBoundsViscosity: 1.0,
-              // Улучшенные настройки для прокрутки
               preferCanvas: false,
               fadeAnimation: false,
               zoomAnimation: false
@@ -1033,214 +1078,883 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             const bounds = [[0,0],[h,w]];
             L.imageOverlay(imgUrl, bounds).addTo(map);
 
-            const fitExact = (isFullscreen = false) => {
-              // Небольшая задержка для корректного расчета размеров
-              setTimeout(() => {
-                const zoom = map.getBoundsZoom(bounds, true);
-                map.setView([h/2, w/2], zoom, { animate:false });
-                
-                // В полноэкранном режиме разрешаем прокрутку за пределы изображения
-                if (isFullscreen) {
-                  // Убираем ограничения границ в полноэкранном режиме
-                  map.setMaxBounds(null);
-                } else {
-                  map.setMaxBounds(bounds);
+            // -----------------------
+            // Функция: принудительное вписывание по высоте
+            // -----------------------
+            async function fitPreferHeight(mapInstance, boundsObj) {
+              if (!mapInstance) return;
+              // Базовый fit
+              mapInstance.fitBounds(boundsObj, { animate: false, padding: [0, 0] });
+              // Ждём рендера
+              await new Promise(requestAnimationFrame);
+              mapInstance.invalidateSize(false);
+              await new Promise(resolve => setTimeout(resolve, 30));
+
+              const container = mapInstance.getContainer();
+              const imgLayerEl = container.querySelector('.leaflet-image-layer');
+              if (!imgLayerEl) return;
+
+              const containerH = container.clientHeight;
+              const imgH = imgLayerEl.offsetHeight;
+
+              // Если уже занимает по высоте — ничего не делаем
+              if (imgH >= containerH - 1) return;
+
+              // Нужно увеличить zoom так, чтобы imgH * scale >= containerH
+              const neededScale = containerH / Math.max(imgH, 1);
+              const deltaZoom = Math.log2(neededScale);
+              const curZoom = mapInstance.getZoom();
+              let targetZoom = curZoom + deltaZoom;
+
+              // Ограничения
+              const minZ = mapInstance.getMinZoom();
+              const maxZ = mapInstance.getMaxZoom();
+              if (targetZoom > maxZ) targetZoom = maxZ;
+              if (targetZoom < minZ) targetZoom = minZ;
+
+              mapInstance.setZoom(targetZoom, { animate: false });
+
+              // Финальный invalidate
+              requestAnimationFrame(() => mapInstance.invalidateSize(false));
+            }
+
+            // -----------------------
+            // Управление размерами контейнеров в fullscreen (мобильный)
+            // -----------------------
+            const setFullscreenPixelSizes = (vhPx) => {
+              // КРИТИЧНО: Сначала устанавливаем правильные размеры для viewer
+              // Используем setProperty с important, чтобы переопределить CSS стили
+              if (viewer) {
+                viewer.style.setProperty('position', 'fixed', 'important');
+                viewer.style.setProperty('top', '0', 'important');
+                viewer.style.setProperty('left', '0', 'important');
+                viewer.style.setProperty('right', '0', 'important');
+                viewer.style.setProperty('bottom', '0', 'important');
+                viewer.style.setProperty('width', '100vw', 'important');
+                viewer.style.setProperty('height', vhPx + 'px', 'important');
+                viewer.style.setProperty('min-height', vhPx + 'px', 'important');
+                viewer.style.setProperty('max-height', vhPx + 'px', 'important');
+                viewer.style.setProperty('margin', '0', 'important');
+                viewer.style.setProperty('padding', '0', 'important');
+                viewer.style.setProperty('overflow', 'hidden', 'important');
+                viewer.style.setProperty('z-index', '999999', 'important');
+                viewer.style.setProperty('transform', 'none', 'important');
+              }
+              
+              // Используем width:100vw для полноэкранного режима
+              if (ratioBox) {
+                ratioBox.style.paddingTop = '0';
+                ratioBox.style.width = '100vw';
+                ratioBox.style.height = vhPx + 'px';
+                ratioBox.style.minHeight = vhPx + 'px';
+                ratioBox.style.maxHeight = vhPx + 'px';
+                ratioBox.style.position = 'absolute';
+                ratioBox.style.top = '0';
+                ratioBox.style.left = '0';
+                ratioBox.style.right = '0';
+                ratioBox.style.bottom = '0';
+                ratioBox.style.margin = '0';
+                ratioBox.style.padding = '0';
+                ratioBox.style.transform = 'none';
+              }
+              if (frame) {
+                frame.style.width  = '100vw';
+                frame.style.height = vhPx + 'px';
+                frame.style.minHeight = vhPx + 'px';
+                frame.style.maxHeight = vhPx + 'px';
+                frame.style.position = 'absolute';
+                frame.style.top = '0';
+                frame.style.left = '0';
+                frame.style.right = '0';
+                frame.style.bottom = '0';
+                frame.style.margin = '0';
+                frame.style.transform = 'none';
+              }
+              if (mapEl) {
+                mapEl.style.width  = '100vw';
+                mapEl.style.height = vhPx + 'px';
+                mapEl.style.minHeight = vhPx + 'px';
+                mapEl.style.maxHeight = vhPx + 'px';
+                mapEl.style.position = 'absolute';
+                mapEl.style.top = '0';
+                mapEl.style.left = '0';
+                mapEl.style.right = '0';
+                mapEl.style.bottom = '0';
+                mapEl.style.margin = '0';
+                mapEl.style.transform = 'none';
+                mapEl.style.inset = '0';
+              }
+              
+              // Убеждаемся, что Leaflet контейнер также имеет правильные размеры
+              if (mapEl) {
+                const leafletContainer = mapEl;
+                if (leafletContainer) {
+                  leafletContainer.style.width = '100vw';
+                  leafletContainer.style.height = vhPx + 'px';
+                  leafletContainer.style.minHeight = vhPx + 'px';
+                  leafletContainer.style.maxHeight = vhPx + 'px';
                 }
-              }, 10);
+              }
+              
+              // Логирование после setFullscreenPixelSizes
+              if (mapEl) {
+                const rect = mapEl.getBoundingClientRect();
+                const mapComputed = window.getComputedStyle(mapEl);
+                console.log('[Step 1] After setFullscreenPixelSizes: mapEl.bottom = ' + rect.bottom + 'px (target: ' + vhPx + 'px)');
+                console.log('[Step 1] mapEl.style.height = ' + mapEl.style.height + ', mapEl.style.top = ' + mapEl.style.top);
+                console.log('[Step 1] mapEl computed: height = ' + mapComputed.height + ', top = ' + mapComputed.top + ', transform = ' + mapComputed.transform);
+                console.log('[Step 1] mapEl.getBoundingClientRect(): top = ' + rect.top + ', bottom = ' + rect.bottom + ', height = ' + rect.height);
+                
+                // Проверяем родительские элементы
+                if (frame) {
+                  const frameRect = frame.getBoundingClientRect();
+                  const frameComputed = window.getComputedStyle(frame);
+                  console.log('[Step 1] frame: top = ' + frameRect.top + ', bottom = ' + frameRect.bottom + ', height = ' + frameRect.height);
+                  console.log('[Step 1] frame computed: height = ' + frameComputed.height + ', top = ' + frameComputed.top);
+                  console.log('[Step 1] frame.style.height = ' + frame.style.height + ', frame.style.top = ' + frame.style.top);
+                }
+                if (ratioBox) {
+                  const ratioRect = ratioBox.getBoundingClientRect();
+                  const ratioComputed = window.getComputedStyle(ratioBox);
+                  console.log('[Step 1] ratioBox: top = ' + ratioRect.top + ', bottom = ' + ratioRect.bottom + ', height = ' + ratioRect.height);
+                  console.log('[Step 1] ratioBox computed: height = ' + ratioComputed.height + ', top = ' + ratioComputed.top);
+                  console.log('[Step 1] ratioBox.style.height = ' + ratioBox.style.height + ', ratioBox.style.top = ' + ratioBox.style.top);
+                }
+                if (viewer) {
+                  const viewerRect = viewer.getBoundingClientRect();
+                  const viewerComputed = window.getComputedStyle(viewer);
+                  console.log('[Step 1] viewer: top = ' + viewerRect.top + ', bottom = ' + viewerRect.bottom + ', height = ' + viewerRect.height);
+                  console.log('[Step 1] viewer computed: height = ' + viewerComputed.height + ', top = ' + viewerComputed.top);
+                }
+              }
             };
 
-            fitExact();
+            const restoreRatioMode = () => {
+              const ratioPercentLocal = (img.naturalHeight / img.naturalWidth) * 100;
+              if (ratioBox) {
+                ratioBox.style.paddingTop = ratioPercentLocal + '%';
+                ratioBox.style.height = '';
+                ratioBox.style.width = '';
+                ratioBox.style.position = '';
+              }
+              if (frame) {
+                frame.style.width = '';
+                frame.style.height = '';
+              }
+              if (mapEl) {
+                mapEl.style.width = '';
+                mapEl.style.height = '';
+              }
+            };
 
+            // -----------------------
+            // Fit initial
+            // -----------------------
+            const initialFit = () => {
+              requestAnimationFrame(() => {
+                map.invalidateSize(false);
+                map.fitBounds(bounds, { animate: false, padding: [0, 0] });
+              });
+            };
+            initialFit();
+
+            // -----------------------
+            // Кнопки и fullscreen
+            // -----------------------
             map.dragging.enable();
             map.scrollWheelZoom.enable();
             map.touchZoom.enable();
             map.doubleClickZoom.enable();
 
-            btnPlus.addEventListener('click',  () => map.zoomIn());
-            btnMinus.addEventListener('click', () => map.zoomOut());
-            btnReset.addEventListener('click', () => {
-              const isFullscreen = isFS();
-              fitExact(isFullscreen);
-            });
+            btnPlus?.addEventListener('click',  () => map.zoomIn());
+            btnMinus?.addEventListener('click', () => map.zoomOut());
 
-            // Проверка, является ли устройство мобильным
-            const isMobile = () => {
-              return /iPhone|iPad|iPod|Android|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
-                     (window.innerWidth <= 768);
-            };
-
-            const isFS = () => {
-              // На мобильных устройствах проверяем CSS класс
-              if (isMobile()) {
-                return viewer.classList.contains('fullscreen-mobile');
-              }
-              // На десктопе проверяем Fullscreen API
-              return !!(document.fullscreenElement === viewer || 
-                       document.webkitFullscreenElement === viewer ||
-                       document.mozFullScreenElement === viewer ||
-                       document.msFullscreenElement === viewer);
-            };
-            
-            const reqFS = () => {
-              // На мобильных устройствах используем CSS класс
-              if (isMobile()) {
-                viewer.classList.add('fullscreen-mobile');
-                document.body.style.overflow = 'hidden';
-                // Пересчитываем размеры карты
-                setTimeout(() => {
-                  map.invalidateSize({ animate: false });
-                  applyMapInsetsToBorder();
-                  fitExact(true);
-                  const ratio = img.naturalHeight / img.naturalWidth;
-                  const frameEl = document.getElementById('frame');
-                  const ratioBox = document.getElementById('ratio');
-                  if (frameEl && ratioBox) {
-                    const vh = window.innerHeight;
-                    const vw = window.innerWidth;
-                    const frameRatio = vh / vw;
-                    if (ratio > frameRatio) {
-                      ratioBox.style.height = vh + 'px';
-                      ratioBox.style.width = (vh / ratio) + 'px';
-                    } else {
-                      ratioBox.style.width = vw + 'px';
-                      ratioBox.style.height = (vw * ratio) + 'px';
-                    }
-                  }
-                }, 100);
-                return;
-              }
-              
-              // На десктопе используем Fullscreen API
-              if (viewer.requestFullscreen) {
-                viewer.requestFullscreen().catch(err => console.error('Error entering fullscreen:', err));
-              } else if (viewer.webkitRequestFullscreen) {
-                viewer.webkitRequestFullscreen();
-              } else if (viewer.mozRequestFullScreen) {
-                viewer.mozRequestFullScreen();
-              } else if (viewer.msRequestFullscreen) {
-                viewer.msRequestFullscreen();
-              }
-            };
-            
-            const exitFS = () => {
-              // На мобильных устройствах убираем CSS класс
-              if (isMobile()) {
-                viewer.classList.remove('fullscreen-mobile');
-                document.body.style.overflow = '';
-                // Пересчитываем размеры карты
-                setTimeout(() => {
-                  map.invalidateSize({ animate: false });
-                  applyMapInsetsToBorder();
-                  fitExact(false);
-                  const ratioPercent = (img.naturalHeight / img.naturalWidth) * 100;
-                  const ratioBox = document.getElementById('ratio');
-                  if (ratioBox) {
-                    ratioBox.style.paddingTop = ratioPercent + '%';
-                    ratioBox.style.height = '';
-                    ratioBox.style.width = '';
-                  }
-                }, 100);
-                return;
-              }
-              
-              // На десктопе используем Fullscreen API
-              if (document.exitFullscreen) {
-                document.exitFullscreen().catch(err => console.error('Error exiting fullscreen:', err));
-              } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-              } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-              } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-              }
-            };
-
-            const reflow = () => {
-              applyMapInsetsToBorder();
-              // Увеличиваем задержку для полноэкранного режима
-              const delay = isFS() ? 100 : 10;
-              const fullscreen = isFS();
-              setTimeout(() => {
-                map.invalidateSize({ animate:false });
-                fitExact(fullscreen);
-              }, delay);
-            };
-
-            // Специальная функция для переключения полноэкранного режима
-            const toggleFullscreen = async () => {
-              try {
-                if (!isFS()) {
-                  reqFS();
-                } else {
-                  exitFS();
-                }
-              } catch (error) {
-                console.error('Error toggling fullscreen:', error);
-              }
-            };
-
-            if (btnFS) {
-              btnFS.addEventListener('click', toggleFullscreen);
-            }
-
-            // Обработка событий изменения размера и полноэкранного режима
-            window.addEventListener('resize', () => {
-              if (isFS() && isMobile()) {
-                // Для мобильного fullscreen пересчитываем размеры карты
-                setTimeout(() => {
-                  map.invalidateSize({ animate: false });
-                  applyMapInsetsToBorder();
-                  fitExact(true);
-                  const ratio = img.naturalHeight / img.naturalWidth;
-                  const ratioBox = document.getElementById('ratio');
-                  if (ratioBox) {
-                    const vh = window.innerHeight;
-                    const vw = window.innerWidth;
-                    const frameRatio = vh / vw;
-                    if (ratio > frameRatio) {
-                      ratioBox.style.height = vh + 'px';
-                      ratioBox.style.width = (vh / ratio) + 'px';
-                    } else {
-                      ratioBox.style.width = vw + 'px';
-                      ratioBox.style.height = (vw * ratio) + 'px';
-                    }
-                  }
-                }, 100);
+            btnReset?.addEventListener('click', () => {
+              if (viewer.classList.contains('fullscreen-mobile') && isMobile()) {
+                fitPreferHeight(map, bounds);
               } else {
-                reflow();
+                map.fitBounds(bounds, { animate: false, padding: [0, 0] });
               }
             });
-            
-            // Универсальная обработка событий fullscreen для всех браузеров
-            const handleFullscreenChange = () => {
-              // На мобильных устройствах события Fullscreen API не срабатывают, поэтому пропускаем
-              if (isMobile()) {
-                return;
-              }
+
+            const enterMobileFs = () => {
+              // КРИТИЧНО: Сначала сбрасываем scroll СИНХРОННО, чтобы не было смещения
+              // Используем behavior: 'instant' для немедленного сброса
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+              document.documentElement.scrollTop = 0;
+              document.documentElement.scrollLeft = 0;
+              document.body.scrollTop = 0;
+              document.body.scrollLeft = 0;
               
-              // Увеличиваем задержку для мобильных устройств
-              const delay = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 300 : 150;
-              setTimeout(() => {
-                const fullscreen = isFS();
-                map.invalidateSize({ animate: false });
-                applyMapInsetsToBorder();
-                fitExact(fullscreen);
-                reflow();
-              }, delay);
+              // Принудительно блокируем прокрутку
+              document.documentElement.style.overflow = 'hidden';
+              document.body.style.overflow = 'hidden';
+              
+              // Небольшая задержка чтобы убедиться, что scroll сброшен
+              requestAnimationFrame(() => {
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+                
+                viewer.classList.add('fullscreen-mobile');
+                document.body.classList.add('fullscreen-mobile-active');
+                document.documentElement.classList.add('fullscreen-mobile-active');
+                
+                enterMobileFsContinue();
+              });
             };
             
-            // Обработка событий Fullscreen API только для десктопа
-            if (!isMobile()) {
-              document.addEventListener('fullscreenchange', handleFullscreenChange);
-              document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
-              document.addEventListener('mozfullscreenchange', handleFullscreenChange);
-              document.addEventListener('MSFullscreenChange', handleFullscreenChange);
-            }
-          };
+            const enterMobileFsContinue = () => {
 
-          img.onerror = () => {
-            frame.innerHTML = '<div style="padding:1rem;color:#fca5a5;">Не удалось загрузить файл карты: ' + imgUrl + '</div>';
-          };
+              const header = document.querySelector('header');
+              const footer = document.querySelector('footer');
+              if (header) { header.dataset.fullscreenHidden = 'true'; header.style.display = 'none'; }
+              if (footer) { footer.dataset.fullscreenHidden = 'true'; footer.style.display = 'none'; }
+
+              // КРИТИЧНО: Убираем отступы у body и html в полноэкранном режиме
+              const body = document.body;
+              const html = document.documentElement;
+              
+              // Сохраняем оригинальные стили для восстановления
+              if (!body.dataset.originalBodyStyle) {
+                body.dataset.originalBodyStyle = JSON.stringify({
+                  margin: body.style.margin,
+                  padding: body.style.padding,
+                  overflow: body.style.overflow
+                });
+              }
+              if (!html.dataset.originalHtmlStyle) {
+                html.dataset.originalHtmlStyle = JSON.stringify({
+                  margin: html.style.margin,
+                  padding: html.style.padding,
+                  overflow: html.style.overflow
+                });
+              }
+              
+              body.style.margin = '0';
+              body.style.padding = '0';
+              body.style.overflow = 'hidden';
+              html.style.margin = '0';
+              html.style.padding = '0';
+              html.style.overflow = 'hidden';
+
+              // Еще раз сбрасываем scroll перед установкой стилей
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+              document.documentElement.scrollTop = 0;
+              document.body.scrollTop = 0;
+
+              const vh = getViewportHeight();
+              
+              // КРИТИЧНО: Устанавливаем правильные размеры для viewer ПЕРЕД setFullscreenPixelSizes
+              // Используем setProperty с important, чтобы переопределить CSS стили
+              if (viewer) {
+                viewer.style.setProperty('position', 'fixed', 'important');
+                viewer.style.setProperty('top', '0', 'important');
+                viewer.style.setProperty('left', '0', 'important');
+                viewer.style.setProperty('right', '0', 'important');
+                viewer.style.setProperty('bottom', '0', 'important');
+                viewer.style.setProperty('width', '100vw', 'important');
+                viewer.style.setProperty('height', vh + 'px', 'important');
+                viewer.style.setProperty('min-height', vh + 'px', 'important');
+                viewer.style.setProperty('max-height', vh + 'px', 'important');
+                viewer.style.setProperty('margin', '0', 'important');
+                viewer.style.setProperty('padding', '0', 'important');
+                viewer.style.setProperty('z-index', '999999', 'important');
+                viewer.style.setProperty('transform', 'none', 'important');
+                viewer.style.setProperty('overflow', 'hidden', 'important');
+              }
+              
+              setFullscreenPixelSizes(vh);
+
+              requestAnimationFrame(() => {
+                // Сначала убеждаемся, что размеры установлены правильно
+                const currentVh = getViewportHeight();
+                console.log('[Enter Fullscreen] Step 0: Viewport height = ' + currentVh + 'px');
+                
+                // КРИТИЧНО: Еще раз убеждаемся, что viewer имеет правильные размеры
+                // Используем setProperty с important, чтобы переопределить CSS стили
+                if (viewer) {
+                  // Проверяем и исправляем родительские элементы
+                  let parent = viewer.parentElement;
+                  let parentLevel = 0;
+                  while (parent && parentLevel < 5) {
+                    const parentRect = parent.getBoundingClientRect();
+                    const parentComputed = window.getComputedStyle(parent);
+                    console.log('[Step 0.5] Parent level ' + parentLevel + ' (' + parent.tagName + '): top = ' + parentRect.top + ', transform = ' + parentComputed.transform);
+                    console.log('[Step 0.5] Parent level ' + parentLevel + ' computed: margin = ' + parentComputed.margin + ', padding = ' + parentComputed.padding);
+                    console.log('[Step 0.5] Parent level ' + parentLevel + ' computed: margin-top = ' + parentComputed.marginTop + ', padding-top = ' + parentComputed.paddingTop);
+                    
+                    // Убираем transform у родительских элементов, если он есть
+                    if (parentComputed.transform && parentComputed.transform !== 'none') {
+                      parent.style.setProperty('transform', 'none', 'important');
+                      console.log('[Step 0.5] Removed transform from parent level ' + parentLevel);
+                    }
+                    
+                    // КРИТИЧНО: Убираем padding-top и margin-top у ВСЕХ родительских элементов в полноэкранном режиме
+                    // Даже если top = 0, padding-top может влиять на позиционирование дочерних элементов
+                    const parentPaddingTop = parseFloat(parentComputed.paddingTop) || 0;
+                    const parentMarginTop = parseFloat(parentComputed.marginTop) || 0;
+                    
+                    if (parentPaddingTop > 0 || parentMarginTop > 0 || parentRect.top !== 0) {
+                      parent.style.setProperty('margin-top', '0', 'important');
+                      parent.style.setProperty('padding-top', '0', 'important');
+                      parent.style.setProperty('margin', '0', 'important');
+                      parent.style.setProperty('padding', '0', 'important');
+                      console.log('[Step 0.5] Removed margin/padding from parent level ' + parentLevel + ' (padding-top was ' + parentPaddingTop + 'px, margin-top was ' + parentMarginTop + 'px, top was ' + parentRect.top + ')');
+                    }
+                    
+                    parent = parent.parentElement;
+                    parentLevel++;
+                  }
+                  
+                  // Проверяем scroll position
+                  console.log('[Step 0.5] window.scrollY = ' + window.scrollY + ', window.scrollX = ' + window.scrollX);
+                  console.log('[Step 0.5] document.documentElement.scrollTop = ' + document.documentElement.scrollTop);
+                  
+                  // Устанавливаем scroll на 0
+                  window.scrollTo(0, 0);
+                  document.documentElement.scrollTop = 0;
+                  document.body.scrollTop = 0;
+                  
+                  viewer.style.setProperty('position', 'fixed', 'important');
+                  viewer.style.setProperty('top', '0', 'important');
+                  viewer.style.setProperty('left', '0', 'important');
+                  viewer.style.setProperty('right', '0', 'important');
+                  viewer.style.setProperty('bottom', '0', 'important');
+                  viewer.style.setProperty('width', '100vw', 'important');
+                  viewer.style.setProperty('height', currentVh + 'px', 'important');
+                  viewer.style.setProperty('min-height', currentVh + 'px', 'important');
+                  viewer.style.setProperty('max-height', currentVh + 'px', 'important');
+                  viewer.style.setProperty('margin', '0', 'important');
+                  viewer.style.setProperty('padding', '0', 'important');
+                  viewer.style.setProperty('overflow', 'hidden', 'important');
+                  viewer.style.setProperty('transform', 'none', 'important');
+                  viewer.style.setProperty('will-change', 'auto', 'important');
+                  
+                  // КРИТИЧНО: Проверяем и компенсируем смещение viewer
+                  const viewerRect = viewer.getBoundingClientRect();
+                  const offsetTop = viewerRect.top;
+                  const offsetBottom = viewerRect.bottom;
+                  
+                  if (offsetTop !== 0 || offsetBottom !== currentVh) {
+                    console.log('[Step 0.5] viewer is offset by ' + offsetTop + 'px, compensating');
+                    // Компенсируем смещение, используя отрицательный top
+                    const compensatedTop = -offsetTop;
+                    viewer.style.setProperty('top', compensatedTop + 'px', 'important');
+                    // Также компенсируем высоту, чтобы bottom совпадал с viewport bottom
+                    const targetBottom = currentVh;
+                    const currentHeight = viewerRect.height;
+                    const heightAdjustment = targetBottom - offsetBottom;
+                    if (heightAdjustment !== 0) {
+                      const newHeight = currentHeight + heightAdjustment;
+                      viewer.style.setProperty('height', newHeight + 'px', 'important');
+                      viewer.style.setProperty('min-height', newHeight + 'px', 'important');
+                      viewer.style.setProperty('max-height', newHeight + 'px', 'important');
+                    }
+                  }
+                  
+                  console.log('[Step 0.5] After setting viewer styles: viewer.style.height = ' + viewer.style.height);
+                  const finalViewer = document.getElementById('viewer');
+                  const finalViewerRect = finalViewer ? finalViewer.getBoundingClientRect() : viewer.getBoundingClientRect();
+                  console.log('[Step 0.5] viewer.getBoundingClientRect(): top = ' + finalViewerRect.top + ', bottom = ' + finalViewerRect.bottom + ', height = ' + finalViewerRect.height);
+                  const finalComputed = finalViewer ? window.getComputedStyle(finalViewer) : window.getComputedStyle(viewer);
+                  console.log('[Step 0.5] viewer computed: height = ' + finalComputed.height + ', top = ' + finalComputed.top + ', transform = ' + finalComputed.transform);
+                }
+                
+                // Еще раз проверяем и убираем padding у родительских элементов после небольшой задержки
+                // чтобы убедиться, что изменения применились
+                requestAnimationFrame(() => {
+                  let parent = viewer.parentElement;
+                  let parentLevel = 0;
+                  while (parent && parentLevel < 5) {
+                    parent.style.setProperty('margin', '0', 'important');
+                    parent.style.setProperty('padding', '0', 'important');
+                    parent.style.setProperty('margin-top', '0', 'important');
+                    parent.style.setProperty('padding-top', '0', 'important');
+                    parent = parent.parentElement;
+                    parentLevel++;
+                  }
+                });
+                
+                setFullscreenPixelSizes(currentVh);
+                
+                // КРИТИЧНО: Применяем стили к контейнеру с кнопками зума
+                // Находим кнопку зума и поднимаемся к её родителю (контейнеру)
+                const btnZoomIn = document.getElementById('btn-zoom-in');
+                const zoomControlsContainer = btnZoomIn?.parentElement;
+                if (zoomControlsContainer && frame?.contains(zoomControlsContainer)) {
+                  console.log('[Step 1.5] Found zoom controls container');
+                  
+                  // КРИТИЧНО: Сначала устанавливаем размеры и видимость для кнопок
+                  const buttons = zoomControlsContainer.querySelectorAll('button');
+                  buttons.forEach((btn, idx) => {
+                    btn.style.setProperty('z-index', '10000001', 'important');
+                    btn.style.setProperty('display', 'flex', 'important');
+                    btn.style.setProperty('visibility', 'visible', 'important');
+                    btn.style.setProperty('opacity', '1', 'important');
+                    btn.style.setProperty('width', '2.5rem', 'important');
+                    btn.style.setProperty('height', '2.5rem', 'important');
+                    btn.style.setProperty('min-width', '2.5rem', 'important');
+                    btn.style.setProperty('min-height', '2.5rem', 'important');
+                    btn.style.setProperty('position', 'relative', 'important');
+                    console.log('[Step 1.5] Button ' + idx + ' (' + btn.id + '): visible, size = ' + btn.offsetWidth + 'x' + btn.offsetHeight);
+                  });
+                  
+                  // Затем устанавливаем стили для контейнера
+                  zoomControlsContainer.style.setProperty('z-index', '10000000', 'important');
+                  zoomControlsContainer.style.setProperty('display', 'flex', 'important');
+                  zoomControlsContainer.style.setProperty('flex-direction', 'column', 'important');
+                  zoomControlsContainer.style.setProperty('visibility', 'visible', 'important');
+                  zoomControlsContainer.style.setProperty('opacity', '1', 'important');
+                  zoomControlsContainer.style.setProperty('pointer-events', 'auto', 'important');
+                  zoomControlsContainer.style.setProperty('position', 'absolute', 'important');
+                  zoomControlsContainer.style.setProperty('left', '0.5rem', 'important');
+                  zoomControlsContainer.style.setProperty('top', '50%', 'important');
+                  zoomControlsContainer.style.setProperty('transform', 'translateY(-50%)', 'important');
+                  zoomControlsContainer.style.setProperty('gap', '0.25rem', 'important');
+                  zoomControlsContainer.style.setProperty('background', 'transparent', 'important');
+                  zoomControlsContainer.style.setProperty('width', 'auto', 'important');
+                  zoomControlsContainer.style.setProperty('height', 'auto', 'important');
+                  zoomControlsContainer.style.setProperty('min-width', '2.5rem', 'important');
+                  zoomControlsContainer.style.setProperty('min-height', '8rem', 'important');
+                  zoomControlsContainer.style.setProperty('margin', '0', 'important');
+                  zoomControlsContainer.style.setProperty('padding', '0', 'important');
+                  
+                  // Ждем рендера и проверяем размеры
+                  requestAnimationFrame(() => {
+                    const rect = zoomControlsContainer.getBoundingClientRect();
+                    console.log('[Step 1.5] Zoom controls container after RAF: top = ' + rect.top + ', left = ' + rect.left + ', width = ' + rect.width + ', height = ' + rect.height);
+                    console.log('[Step 1.5] Container computed style: display = ' + window.getComputedStyle(zoomControlsContainer).display + ', visibility = ' + window.getComputedStyle(zoomControlsContainer).visibility);
+                    
+                    // Проверяем размеры кнопок еще раз
+                    buttons.forEach((btn, idx) => {
+                      const btnRect = btn.getBoundingClientRect();
+                      console.log('[Step 1.5] Button ' + idx + ' (' + btn.id + ') after RAF: top = ' + btnRect.top + ', left = ' + btnRect.left + ', width = ' + btnRect.width + ', height = ' + btnRect.height);
+                    });
+                  });
+                } else {
+                  console.log('[Step 1.5] Zoom controls container not found! btnZoomIn = ' + btnZoomIn + ', parent = ' + zoomControlsContainer);
+                }
+                
+                // Затем применяем границы и подгоняем карту
+                if (mapEl) {
+                  const rect = mapEl.getBoundingClientRect();
+                  console.log('[Step 2] After setFullscreenPixelSizes, before applyMapInsetsToBorder: mapEl.bottom = ' + rect.bottom + 'px');
+                }
+                
+              applyMapInsetsToBorder();
+                if (mapEl) {
+                  const rect = mapEl.getBoundingClientRect();
+                  console.log('[Step 3] After applyMapInsetsToBorder: mapEl.bottom = ' + rect.bottom + 'px');
+                  console.log('[Step 3] mapEl.style.top = ' + mapEl.style.top + ', mapEl.style.bottom = ' + mapEl.style.bottom);
+                }
+                
+                map.invalidateSize(false);
+                if (mapEl) {
+                  const rect = mapEl.getBoundingClientRect();
+                  console.log('[Step 4] After invalidateSize: mapEl.bottom = ' + rect.bottom + 'px');
+                }
+                
+                fitPreferHeight(map, bounds);
+                if (mapEl) {
+                  const rect = mapEl.getBoundingClientRect();
+                  console.log('[Step 5] After fitPreferHeight: mapEl.bottom = ' + rect.bottom + 'px');
+                }
+                
+                // Логирование координат после входа в полноэкранный режим
+              setTimeout(() => {
+                  // Еще раз обновляем размеры, если viewport изменился
+                  const finalVh = getViewportHeight();
+                  console.log('[Step 6] In setTimeout: finalVh = ' + finalVh + 'px');
+                  if (mapEl) {
+                    const rect = mapEl.getBoundingClientRect();
+                    console.log('[Step 6] Before setFullscreenPixelSizes in setTimeout: mapEl.bottom = ' + rect.bottom + 'px');
+                  }
+                  
+                  setFullscreenPixelSizes(finalVh);
+                  
+                  if (mapEl) {
+                    const rect = mapEl.getBoundingClientRect();
+                    console.log('[Step 7] After setFullscreenPixelSizes in setTimeout: mapEl.bottom = ' + rect.bottom + 'px');
+                  }
+                  
+                  // ФОРСИРУЕМ правильное позиционирование после всех операций
+                  if (ratioBox) {
+                    ratioBox.style.top = '0';
+                    ratioBox.style.left = '0';
+                    ratioBox.style.right = '0';
+                    ratioBox.style.bottom = '0';
+                    ratioBox.style.position = 'absolute';
+                    ratioBox.style.height = finalVh + 'px';
+                    ratioBox.style.minHeight = finalVh + 'px';
+                    ratioBox.style.maxHeight = finalVh + 'px';
+                  }
+                  if (frame) {
+                    frame.style.top = '0';
+                    frame.style.left = '0';
+                    frame.style.right = '0';
+                    frame.style.bottom = '0';
+                    frame.style.position = 'absolute';
+                    frame.style.height = finalVh + 'px';
+                    frame.style.minHeight = finalVh + 'px';
+                    frame.style.maxHeight = finalVh + 'px';
+                  }
+                  if (mapEl) {
+                    mapEl.style.top = '0';
+                    mapEl.style.left = '0';
+                    mapEl.style.right = '0';
+                    mapEl.style.bottom = '0';
+                    mapEl.style.position = 'absolute';
+                    mapEl.style.height = finalVh + 'px';
+                    mapEl.style.minHeight = finalVh + 'px';
+                    mapEl.style.maxHeight = finalVh + 'px';
+                    mapEl.style.margin = '0';
+                    mapEl.style.transform = 'none';
+                    
+                    const rect = mapEl.getBoundingClientRect();
+                    console.log('[Step 8] After forcing styles: mapEl.bottom = ' + rect.bottom + 'px');
+                    console.log('[Step 8] mapEl.style.height = ' + mapEl.style.height + ', mapEl.style.top = ' + mapEl.style.top);
+                  }
+                  
+                  map.invalidateSize(false);
+                  
+                  // КРИТИЧНО: Снова применяем стили к контейнеру с кнопками после invalidateSize
+                  const btnZoomInAgain = document.getElementById('btn-zoom-in');
+                  const zoomControlsContainerAgain = btnZoomInAgain?.parentElement;
+                  if (zoomControlsContainerAgain && frame?.contains(zoomControlsContainerAgain)) {
+                    const buttonsAgain = zoomControlsContainerAgain.querySelectorAll('button');
+                    buttonsAgain.forEach((btn) => {
+                      btn.style.setProperty('z-index', '10000001', 'important');
+                      btn.style.setProperty('display', 'flex', 'important');
+                      btn.style.setProperty('visibility', 'visible', 'important');
+                      btn.style.setProperty('opacity', '1', 'important');
+                      btn.style.setProperty('width', '2.5rem', 'important');
+                      btn.style.setProperty('height', '2.5rem', 'important');
+                      btn.style.setProperty('min-width', '2.5rem', 'important');
+                      btn.style.setProperty('min-height', '2.5rem', 'important');
+                    });
+                    
+                    zoomControlsContainerAgain.style.setProperty('z-index', '10000000', 'important');
+                    zoomControlsContainerAgain.style.setProperty('display', 'flex', 'important');
+                    zoomControlsContainerAgain.style.setProperty('flex-direction', 'column', 'important');
+                    zoomControlsContainerAgain.style.setProperty('visibility', 'visible', 'important');
+                    zoomControlsContainerAgain.style.setProperty('opacity', '1', 'important');
+                    zoomControlsContainerAgain.style.setProperty('position', 'absolute', 'important');
+                    zoomControlsContainerAgain.style.setProperty('left', '0.5rem', 'important');
+                    zoomControlsContainerAgain.style.setProperty('top', '50%', 'important');
+                    zoomControlsContainerAgain.style.setProperty('transform', 'translateY(-50%)', 'important');
+                    zoomControlsContainerAgain.style.setProperty('gap', '0.25rem', 'important');
+                    
+                    const rectAgain = zoomControlsContainerAgain.getBoundingClientRect();
+                    console.log('[Step 9.5] Zoom controls container after invalidateSize: top = ' + rectAgain.top + ', left = ' + rectAgain.left + ', width = ' + rectAgain.width + ', height = ' + rectAgain.height);
+                  }
+                  
+                  if (mapEl) {
+                    const rect = mapEl.getBoundingClientRect();
+                    console.log('[Step 9] After invalidateSize in setTimeout: mapEl.bottom = ' + rect.bottom + 'px');
+                  }
+                  
+                  // Еще раз принудительно устанавливаем позиционирование после invalidateSize
+                  requestAnimationFrame(() => {
+                    if (mapEl) {
+                      const rectBefore = mapEl.getBoundingClientRect();
+                      console.log('[Step 10] In requestAnimationFrame, before forcing: mapEl.bottom = ' + rectBefore.bottom + 'px');
+                      
+                      mapEl.style.top = '0';
+                      mapEl.style.left = '0';
+                      mapEl.style.right = '0';
+                      mapEl.style.bottom = '0';
+                      mapEl.style.position = 'absolute';
+                      mapEl.style.height = finalVh + 'px';
+                      mapEl.style.minHeight = finalVh + 'px';
+                      mapEl.style.maxHeight = finalVh + 'px';
+                      mapEl.style.margin = '0';
+                      mapEl.style.transform = 'none';
+                      mapEl.style.inset = '0';
+                      
+                      const rectAfter = mapEl.getBoundingClientRect();
+                      console.log('[Step 10] After forcing in requestAnimationFrame: mapEl.bottom = ' + rectAfter.bottom + 'px');
+                      console.log('[Step 10] mapEl.style.height = ' + mapEl.style.height + ', mapEl.style.top = ' + mapEl.style.top);
+                      console.log('[Step 10] Computed style: height = ' + window.getComputedStyle(mapEl).height + ', top = ' + window.getComputedStyle(mapEl).top);
+                    }
+                    if (frame) {
+                      frame.style.top = '0';
+                      frame.style.left = '0';
+                      frame.style.right = '0';
+                      frame.style.bottom = '0';
+                      frame.style.position = 'absolute';
+                      frame.style.height = finalVh + 'px';
+                      frame.style.minHeight = finalVh + 'px';
+                      frame.style.maxHeight = finalVh + 'px';
+                    }
+                    if (ratioBox) {
+                      ratioBox.style.top = '0';
+                      ratioBox.style.left = '0';
+                      ratioBox.style.right = '0';
+                      ratioBox.style.bottom = '0';
+                      ratioBox.style.position = 'absolute';
+                      ratioBox.style.height = finalVh + 'px';
+                      ratioBox.style.minHeight = finalVh + 'px';
+                      ratioBox.style.maxHeight = finalVh + 'px';
+                    }
+                    
+                    // Координаты экрана (viewport)
+                    const viewportTop = 0;
+                    const viewportBottom = getViewportHeight();
+                    
+                    // Координаты карты (контейнера)
+                    const mapContainer = map.getContainer();
+                    const mapRect = mapContainer.getBoundingClientRect();
+                    const mapTop = mapRect.top;
+                    const mapBottom = mapRect.bottom;
+                    
+                    // Координаты изображения карты
+                    const imgLayerEl = mapContainer.querySelector('.leaflet-image-layer');
+                    let imgTop = null;
+                    let imgBottom = null;
+                    
+                    if (imgLayerEl) {
+                      const imgRect = imgLayerEl.getBoundingClientRect();
+                      imgTop = imgRect.top;
+                      imgBottom = imgRect.bottom;
+                    }
+                    
+                    // Координаты в системе координат Leaflet
+                    const mapBounds = map.getBounds();
+                    const mapTopLatLng = map.containerPointToLatLng([mapRect.width / 2, 0]);
+                    const mapBottomLatLng = map.containerPointToLatLng([mapRect.width / 2, mapRect.height]);
+                    
+                    console.log('=== Fullscreen Mode - Coordinates ===');
+                    console.log('Screen (viewport):');
+                    console.log('  Top: ' + viewportTop + 'px');
+                    console.log('  Bottom: ' + viewportBottom + 'px');
+                    console.log('Map Container:');
+                    console.log('  Top: ' + mapTop + 'px');
+                    console.log('  Bottom: ' + mapBottom + 'px');
+                    console.log('Image Layer:');
+                    console.log('  Top: ' + (imgTop !== null ? imgTop + 'px' : 'null'));
+                    console.log('  Bottom: ' + (imgBottom !== null ? imgBottom + 'px' : 'null'));
+                    console.log('Map Coordinates (Leaflet):');
+                    console.log('  Top center: ' + JSON.stringify({lat: mapTopLatLng.lat, lng: mapTopLatLng.lng}));
+                    console.log('  Bottom center: ' + JSON.stringify({lat: mapBottomLatLng.lat, lng: mapBottomLatLng.lng}));
+                    console.log('  Bounds: ' + JSON.stringify({
+                      north: mapBounds.getNorth(),
+                      south: mapBounds.getSouth(),
+                      east: mapBounds.getEast(),
+                      west: mapBounds.getWest()
+                    }));
+                  });
+                }, 200);
+              });
+            };
+
+            const exitMobileFs = () => {
+              // КРИТИЧНО: Сначала восстанавливаем все стили элементов
+              // Удаляем все inline-стили, установленные через setProperty с !important
+              if (viewer) {
+                viewer.style.removeProperty('position');
+                viewer.style.removeProperty('top');
+                viewer.style.removeProperty('left');
+                viewer.style.removeProperty('right');
+                viewer.style.removeProperty('bottom');
+                viewer.style.removeProperty('width');
+                viewer.style.removeProperty('height');
+                viewer.style.removeProperty('min-height');
+                viewer.style.removeProperty('max-height');
+                viewer.style.removeProperty('margin');
+                viewer.style.removeProperty('padding');
+                viewer.style.removeProperty('z-index');
+                viewer.style.removeProperty('transform');
+                viewer.style.removeProperty('overflow');
+                viewer.style.removeProperty('will-change');
+              }
+              
+              // Восстанавливаем стили родительских элементов
+              let parent = viewer?.parentElement;
+              let parentLevel = 0;
+              while (parent && parentLevel < 5) {
+                parent.style.removeProperty('margin');
+                parent.style.removeProperty('padding');
+                parent.style.removeProperty('margin-top');
+                parent.style.removeProperty('padding-top');
+                parent.style.removeProperty('transform');
+                parent = parent.parentElement;
+                parentLevel++;
+              }
+              
+              // Восстанавливаем scroll position
+              document.documentElement.style.overflow = '';
+              document.body.style.overflow = '';
+              
+              // Удаляем классы
+              viewer.classList.remove('fullscreen-mobile');
+              document.body.classList.remove('fullscreen-mobile-active');
+              document.documentElement.classList.remove('fullscreen-mobile-active');
+
+              const header = document.querySelector('header');
+              const footer = document.querySelector('footer');
+              if (header) { header.style.display = ''; header.removeAttribute('data-fullscreen-hidden'); }
+              if (footer) { footer.style.display = ''; footer.removeAttribute('data-fullscreen-hidden'); }
+
+              // Восстанавливаем оригинальные стили body и html
+              const body = document.body;
+              const html = document.documentElement;
+              
+              if (body.dataset.originalBodyStyle) {
+                const original = JSON.parse(body.dataset.originalBodyStyle);
+                body.style.margin = original.margin || '';
+                body.style.padding = original.padding || '';
+                body.style.overflow = original.overflow || '';
+                body.removeAttribute('data-original-body-style');
+              } else {
+                // Если не сохраняли, просто очищаем
+                body.style.margin = '';
+                body.style.padding = '';
+                body.style.overflow = '';
+              }
+              
+              if (html.dataset.originalHtmlStyle) {
+                const original = JSON.parse(html.dataset.originalHtmlStyle);
+                html.style.margin = original.margin || '';
+                html.style.padding = original.padding || '';
+                html.style.overflow = original.overflow || '';
+                html.removeAttribute('data-original-html-style');
+              } else {
+                // Если не сохраняли, просто очищаем
+                html.style.margin = '';
+                html.style.padding = '';
+                html.style.overflow = '';
+              }
+
+              // Восстанавливаем режим ratio
+              restoreRatioMode();
+              
+              // Убеждаемся, что viewer снова видим и имеет правильные размеры
+              requestAnimationFrame(() => {
+                // Убеждаемся, что все дочерние элементы также восстановлены
+                if (ratioBox) {
+                  ratioBox.style.removeProperty('position');
+                  ratioBox.style.removeProperty('top');
+                  ratioBox.style.removeProperty('left');
+                  ratioBox.style.removeProperty('right');
+                  ratioBox.style.removeProperty('bottom');
+                  ratioBox.style.removeProperty('width');
+                  ratioBox.style.removeProperty('height');
+                  ratioBox.style.removeProperty('min-height');
+                  ratioBox.style.removeProperty('max-height');
+                  ratioBox.style.removeProperty('transform');
+                }
+                
+                if (frame) {
+                  frame.style.removeProperty('position');
+                  frame.style.removeProperty('top');
+                  frame.style.removeProperty('left');
+                  frame.style.removeProperty('right');
+                  frame.style.removeProperty('bottom');
+                  frame.style.removeProperty('width');
+                  frame.style.removeProperty('height');
+                  frame.style.removeProperty('min-height');
+                  frame.style.removeProperty('max-height');
+                  frame.style.removeProperty('transform');
+                }
+                
+                if (mapEl) {
+                  mapEl.style.removeProperty('position');
+                  mapEl.style.removeProperty('top');
+                  mapEl.style.removeProperty('left');
+                  mapEl.style.removeProperty('right');
+                  mapEl.style.removeProperty('bottom');
+                  mapEl.style.removeProperty('width');
+                  mapEl.style.removeProperty('height');
+                  mapEl.style.removeProperty('min-height');
+                  mapEl.style.removeProperty('max-height');
+                  mapEl.style.removeProperty('margin');
+                  mapEl.style.removeProperty('transform');
+                  mapEl.style.removeProperty('inset');
+                }
+                
+                applyMapInsetsToBorder();
+                map.invalidateSize(false);
+                map.fitBounds(bounds, { animate: false, padding: [0, 0] });
+                
+                // Убеждаемся, что viewer видим
+                if (viewer) {
+                  const viewerRect = viewer.getBoundingClientRect();
+                  console.log('[Exit Fullscreen] Viewer restored: top = ' + viewerRect.top + ', height = ' + viewerRect.height);
+                }
+              });
+            };
+
+            const toggleFullscreen = () => {
+              if (isMobile()) {
+                if (!viewer.classList.contains('fullscreen-mobile')) {
+                  enterMobileFs();
+              } else {
+                  exitMobileFs();
+                }
+                return;
+              }
+
+              // Десктоп: Fullscreen API
+              if (!document.fullscreenElement && viewer.requestFullscreen) {
+                viewer.requestFullscreen().catch(e => console.error('FS request failed:', e));
+              } else if (document.fullscreenElement && document.exitFullscreen) {
+                document.exitFullscreen().catch(e => console.error('FS exit failed:', e));
+              }
+            };
+
+            btnFS?.addEventListener('click', toggleFullscreen);
+
+            // Fullscreen события (десктоп)
+            const onFsChange = () => {
+              const isFs = !!document.fullscreenElement;
+              setTimeout(() => {
+                applyMapInsetsToBorder();
+                if (isFs) {
+                  // на десктопе при переходе в fullscreen пусть fitBounds будет по высоте
+                  fitPreferHeight(map, bounds);
+                } else {
+                  map.invalidateSize(false);
+                  map.fitBounds(bounds, { animate: false, padding: [0, 0] });
+                }
+              }, 80);
+            };
+            document.addEventListener('fullscreenchange', onFsChange);
+            document.addEventListener('webkitfullscreenchange', onFsChange);
+            document.addEventListener('mozfullscreenchange', onFsChange);
+            document.addEventListener('MSFullscreenChange', onFsChange);
+
+            // -----------------------
+            // Обработчики изменения viewport (visualViewport preferred)
+            // -----------------------
+            const onViewportResize = debounce(() => {
+              applyMapInsetsToBorder();
+              if (viewer.classList.contains('fullscreen-mobile') && isMobile()) {
+                const vh = getViewportHeight();
+                setFullscreenPixelSizes(vh);
+                requestAnimationFrame(() => fitPreferHeight(map, bounds));
+              } else {
+                requestAnimationFrame(() => {
+                  restoreRatioMode();
+                  map.invalidateSize(false);
+                  map.fitBounds(bounds, { animate: false, padding: [0, 0] });
+                });
+              }
+            }, 120);
+
+            if (window.visualViewport) {
+              window.visualViewport.addEventListener('resize', onViewportResize);
+              window.visualViewport.addEventListener('scroll', onViewportResize);
+            }
+            window.addEventListener('resize', onViewportResize);
+            window.addEventListener('orientationchange', onViewportResize);
+
+            // Финальный safety-fit после загрузки
+              setTimeout(() => {
+                applyMapInsetsToBorder();
+              fitPreferHeight(map, bounds);
+            }, 300);
+          }; // img.onload end
         });
       </script>
 
@@ -1249,8 +1963,6 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             <a href="/ru/local_history" class="inline-block rounded-lg border border-amber-800/30 bg-amber-100/50 px-4 py-2 text-sm text-slate-800 hover:bg-amber-200/50">
               ← Назад к «Краеведение»
             </a>
-          </div>
-        </div>
       </div>
     </div>
   </section>
@@ -1321,40 +2033,329 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
     }
 
     /* Стили для полноэкранного режима карты */
+    body.fullscreen-mobile-active {
+      overflow: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    html.fullscreen-mobile-active {
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+    }
+
+    body.fullscreen-mobile-active header,
+    body.fullscreen-mobile-active footer {
+      display: none !important;
+    }
+
     #viewer.fullscreen-mobile {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 9999;
-      background: #000;
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      height: 100svh !important;
+      min-height: 100vh !important;
+      min-height: -webkit-fill-available !important;
+      max-height: 100svh !important;
+      z-index: 999999 !important;
+      background: #1a1a1a !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      display: block !important;
+      visibility: visible !important;
+    }
+    
+    /* Для iOS Safari */
+    @supports (-webkit-touch-callout: none) {
+      #viewer.fullscreen-mobile {
+        height: -webkit-fill-available !important;
+      }
     }
 
     #viewer.fullscreen-mobile #ratio {
-      height: 100vh !important;
+      height: 100svh !important;
+      min-height: 100svh !important;
+      max-height: 100svh !important;
+      width: 100vw !important;
+      min-width: 100vw !important;
+      max-width: 100vw !important;
       padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      margin: 0 !important;
+      display: block !important;
+      visibility: visible !important;
+      box-sizing: border-box !important;
     }
 
     #viewer.fullscreen-mobile #frame {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      min-width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100svh !important;
+      min-height: 100svh !important;
+      max-height: 100svh !important;
+      margin: 0 !important;
+      border: none !important;
+      overflow: visible !important;
+      box-sizing: border-box !important;
+    }
+
+    #viewer.fullscreen-mobile #map {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100vw !important;
+      min-width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100svh !important;
+      min-height: 100svh !important;
+      max-height: 100svh !important;
+      overflow: visible !important;
+      display: block !important;
+      visibility: visible !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Leaflet контейнер в fullscreen */
+    #viewer.fullscreen-mobile .leaflet-container {
+      width: 100vw !important;
+      min-width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100svh !important;
+      min-height: 100svh !important;
+      max-height: 100svh !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      overflow: visible !important;
+      display: block !important;
+      visibility: visible !important;
+      z-index: 1 !important;
+      background: transparent !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    /* Leaflet панели - должны быть ниже кнопок */
+    #viewer.fullscreen-mobile .leaflet-pane {
+      z-index: 1 !important;
+      pointer-events: none !important;
+    }
+    
+    /* Убеждаемся, что Leaflet панели не блокируют клики, но кнопки могут быть кликабельны */
+    #viewer.fullscreen-mobile .leaflet-pane * {
+      pointer-events: auto !important;
+    }
+
+    /* Leaflet image overlay должен быть видим */
+    #viewer.fullscreen-mobile .leaflet-image-layer {
+      z-index: 1 !important;
+      display: block !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      max-width: none !important;
+      max-height: none !important;
+      width: auto !important;
+      height: auto !important;
+    }
+    
+    /* Кнопки должны быть поверх всего в fullscreen */
+    #viewer.fullscreen-mobile #frame button,
+    #viewer.fullscreen-mobile #frame > div {
+      z-index: 9999999 !important;
+      position: absolute !important;
+      pointer-events: auto !important;
+      display: flex !important;
+      visibility: visible !important;
+    }
+
+    /* Для iOS Safari */
+    @supports (-webkit-touch-callout: none) {
+      #viewer.fullscreen-mobile {
+        height: -webkit-fill-available !important;
+      }
     }
 
     #viewer.fullscreen-mobile .mt-4 {
       display: none;
     }
 
+    /* Кнопки управления в полноэкранном режиме должны быть видны */
+    #viewer.fullscreen-mobile #btn-fullscreen,
+    #viewer.fullscreen-mobile #btn-zoom-in,
+    #viewer.fullscreen-mobile #btn-zoom-out,
+    #viewer.fullscreen-mobile #btn-reset {
+      z-index: 10000000 !important;
+      display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      position: absolute !important;
+    }
+
+    /* Контейнер с кнопками зума - выбираем div, который содержит кнопки, но НЕ #map */
+    /* Используем селектор по наличию кнопок внутри */
+    #viewer.fullscreen-mobile #frame > div:has(button#btn-zoom-in),
+    #viewer.fullscreen-mobile #frame > div:not(#map) {
+      z-index: 10000000 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      position: absolute !important;
+      left: 0.5rem !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      gap: 0.25rem !important;
+      background: transparent !important;
+      width: auto !important;
+      min-width: 2.5rem !important;
+      height: auto !important;
+      min-height: 8rem !important;
+      max-width: none !important;
+      max-height: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      clip: unset !important;
+      clip-path: none !important;
+    }
+    
+    /* Альтернативный селектор для браузеров без поддержки :has() */
+    #viewer.fullscreen-mobile #frame > div.absolute.top-1\/2 {
+      z-index: 10000000 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
+      position: absolute !important;
+      left: 0.5rem !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      gap: 0.25rem !important;
+      background: transparent !important;
+      width: auto !important;
+      min-width: 2.5rem !important;
+      height: auto !important;
+      min-height: 8rem !important;
+      max-width: none !important;
+      max-height: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      clip: unset !important;
+      clip-path: none !important;
+    }
+    
+    /* Кнопка fullscreen в правом верхнем углу */
+    #viewer.fullscreen-mobile #btn-fullscreen {
+      top: 0.5rem !important;
+      right: 0.5rem !important;
+      left: auto !important;
+      bottom: auto !important;
+      transform: none !important;
+    }
+    
+    /* Убеждаемся, что все кнопки зума видны */
+    #viewer.fullscreen-mobile #btn-zoom-in,
+    #viewer.fullscreen-mobile #btn-zoom-out,
+    #viewer.fullscreen-mobile #btn-reset {
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+      min-width: 2.5rem !important;
+      min-height: 2.5rem !important;
+      max-width: 2.5rem !important;
+      max-height: 2.5rem !important;
+      background-color: rgba(0, 0, 0, 0.3) !important;
+      border: 1px solid #000 !important;
+      border-radius: 0.375rem !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      font-size: 1rem !important;
+      line-height: 1 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      z-index: 10000001 !important;
+      position: relative !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-sizing: border-box !important;
+      overflow: visible !important;
+    }
+    
+    #viewer.fullscreen-mobile #btn-fullscreen {
+      width: 2.5rem !important;
+      height: 2.5rem !important;
+      min-width: 2.5rem !important;
+      min-height: 2.5rem !important;
+      background-color: rgba(0, 0, 0, 0.3) !important;
+      border: 1px solid #000 !important;
+      border-radius: 0.375rem !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      position: relative !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* Убеждаемся, что frame не перекрывает кнопки */
+    #viewer.fullscreen-mobile #frame {
+      z-index: 1 !important;
+    }
+
+    #viewer.fullscreen-mobile #map {
+      z-index: 0 !important;
+      overflow: visible !important;
+    }
+    
+    /* Убеждаемся, что Leaflet контейнер не перекрывает кнопки */
+    #viewer.fullscreen-mobile .leaflet-container {
+      z-index: 0 !important;
+      overflow: visible !important;
+    }
+
     /* Кнопка закрытия для мобильного fullscreen */
     #viewer.fullscreen-mobile #btn-fullscreen::before {
       content: '×';
-      font-size: 2rem;
-      line-height: 1;
+      font-size: 1.75rem !important;
+      line-height: 1 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 100% !important;
+      height: 100% !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
     }
 
     #viewer.fullscreen-mobile #btn-fullscreen svg {
