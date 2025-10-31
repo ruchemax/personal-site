@@ -11,6 +11,12 @@ import ContactsLayout from "../layouts/ContactsLayout.astro";
       <div id="form-status" class="mb-4 hidden rounded-md border border-white/20 px-4 py-3 text-sm"></div>
 
       <form id="contact-form" method="POST" action="/api/contacts" class="space-y-4" novalidate>
+        <!-- Honeypot spam protection -->
+        <div class="absolute left-[-9999px] opacity-0 pointer-events-none">
+          <label for="website">Don't fill this field</label>
+          <input type="text" id="website" name="website" autocomplete="off" />
+        </div>
+
         <!-- Name -->
         <div>
           <label for="name" class="mb-1 block text-sm">Your name</label>
@@ -60,6 +66,9 @@ import ContactsLayout from "../layouts/ContactsLayout.astro";
             class="w-full rounded-md border border-white/20 bg-black/1 backdrop-blur px-3 py-2 text-white"
           ></textarea>
         </div>
+
+        <!-- Cloudflare Turnstile -->
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAB93lgc1IE7eRZFt"></div>
 
         <!-- Submit -->
         <button

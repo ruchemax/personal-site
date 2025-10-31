@@ -47,6 +47,9 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.ico" />
     
+    <!-- Cloudflare Turnstile -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    
     <!-- Предзагрузка фоновых изображений -->
     <link rel="preload" as="image" href="/images/background/main-bg.webp" />
     <link rel="preload" as="image" href="/images/background/publications-bg.webp" />
