@@ -1063,9 +1063,36 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               fitExact(isFullscreen);
             });
 
-            const isFS = () => document.fullscreenElement === viewer || document.webkitFullscreenElement === viewer;
-            const reqFS = () => { if (viewer.requestFullscreen) viewer.requestFullscreen(); else if (viewer.webkitRequestFullscreen) viewer.webkitRequestFullscreen(); };
-            const exitFS= () => { if (document.exitFullscreen) document.exitFullscreen(); else if (document.webkitExitFullscreen) document.webkitExitFullscreen(); };
+            const isFS = () => {
+              return !!(document.fullscreenElement === viewer || 
+                       document.webkitFullscreenElement === viewer ||
+                       document.mozFullScreenElement === viewer ||
+                       document.msFullscreenElement === viewer);
+            };
+            
+            const reqFS = () => {
+              if (viewer.requestFullscreen) {
+                viewer.requestFullscreen().catch(err => console.error('Error entering fullscreen:', err));
+              } else if (viewer.webkitRequestFullscreen) {
+                viewer.webkitRequestFullscreen();
+              } else if (viewer.mozRequestFullScreen) {
+                viewer.mozRequestFullScreen();
+              } else if (viewer.msRequestFullscreen) {
+                viewer.msRequestFullscreen();
+              }
+            };
+            
+            const exitFS = () => {
+              if (document.exitFullscreen) {
+                document.exitFullscreen().catch(err => console.error('Error exiting fullscreen:', err));
+              } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+              } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+              } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+              }
+            };
 
             const reflow = () => {
               applyMapInsetsToBorder();
@@ -1079,40 +1106,47 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             };
 
             // Специальная функция для переключения полноэкранного режима
-            const toggleFullscreen = () => {
-              if (!isFS()) {
-                reqFS();
-              } else {
-                exitFS();
+            const toggleFullscreen = async () => {
+              try {
+                if (!isFS()) {
+                  reqFS();
+                  // Небольшая задержка для мобильных устройств
+                  await new Promise(resolve => setTimeout(resolve, 100));
+                  if (!isFS()) {
+                    console.warn('Fullscreen may require user gesture on mobile devices');
+                  }
+                } else {
+                  exitFS();
+                }
+              } catch (error) {
+                console.error('Error toggling fullscreen:', error);
               }
             };
 
-            btnFS.addEventListener('click', toggleFullscreen);
+            if (btnFS) {
+              btnFS.addEventListener('click', toggleFullscreen);
+            }
 
             // Обработка событий изменения размера и полноэкранного режима
             window.addEventListener('resize', reflow);
-            document.addEventListener('fullscreenchange', reflow);
-            document.addEventListener('webkitfullscreenchange', reflow);
-            document.addEventListener('mozfullscreenchange', reflow);
-            document.addEventListener('MSFullscreenChange', reflow);
             
-            // Дополнительная обработка для корректной работы в полноэкранном режиме
-            document.addEventListener('fullscreenchange', () => {
+            // Универсальная обработка событий fullscreen для всех браузеров
+            const handleFullscreenChange = () => {
+              // Увеличиваем задержку для мобильных устройств
+              const delay = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) ? 300 : 150;
               setTimeout(() => {
                 const fullscreen = isFS();
                 map.invalidateSize({ animate: false });
                 applyMapInsetsToBorder();
                 fitExact(fullscreen);
-              }, 150);
-            });
-            document.addEventListener('webkitfullscreenchange', () => {
-              setTimeout(() => {
-                const fullscreen = isFS();
-                map.invalidateSize({ animate: false });
-                applyMapInsetsToBorder();
-                fitExact(fullscreen);
-              }, 150);
-            });
+                reflow();
+              }, delay);
+            };
+            
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+            document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
+            document.addEventListener('mozfullscreenchange', handleFullscreenChange);
+            document.addEventListener('MSFullscreenChange', handleFullscreenChange);
           };
 
           img.onerror = () => {
