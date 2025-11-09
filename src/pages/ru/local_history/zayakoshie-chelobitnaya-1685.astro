@@ -3,22 +3,23 @@ import LocalHistoryLayout from "../../../layouts/LocalHistoryLayout.astro";
 
 const { lang = "ru" } = Astro.props;
 
-const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
+const publishedAt = new Date("2025-11-09").toLocaleDateString("ru-RU", {
   day: "numeric",
   month: "long",
   year: "numeric",
 });
 ---
 
-<LocalHistoryLayout title="Челобитная архиепископу Гавриилу — Максим Ручкин" lang={lang}>
+<LocalHistoryLayout title="Челобитные прихожан Борисоглебской церкви (д. Заякошье) Череповской волости Белозерского уезда архиепископу Гавриилу (конец XVII в.) — Максим Ручкин" lang={lang}>
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1000px] px-6 pt-4 pb-12">
       <div class="paper-old shadow-2xl">
           <div class="relative z-10">
             <p class="text-xs text-gray-600 mb-4">Опубликовано: {publishedAt}</p>
 
-            <h1 class="text-2xl font-bold mb-2 text-slate-800">Челобитная архиепископу Гавриилу прихожан Борисоглебской церкви Череповской вол. 
-              Надпорожского стана Белозерского уезда о выдаче антиминса для освящения новой церкви (не ранее 1685 г.)</h1>
+            <h1 class="text-2xl font-bold mb-3 text-slate-800">
+              Церковь Бориса и Глеба в д. Заякошье Череповской волости Белозерского уезда
+            </h1>
 
             <div class="mt-3 flex flex-wrap gap-2 text-xs mb-6">
               <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Белозерский уезд</span>
@@ -27,20 +28,54 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">д. Заякошье</span>
             </div>
 
-            <div class="space-y-3 text-sm text-slate-800 leading-relaxed mb-8 text-right">
-               <p class="italic">
-                 <a href="https://gosarchive.gov35.ru/archive1/unit/391445#3" target="_blank" class="text-amber-700 underline">ГАВО Ф.1260 Оп.1. Д.6710 Л.1</a>
-               </p>
-              <p class="italic">
-                Прочтение: М.В. Ручкин
-              </p>
-            </div>
-
-            <div class="mb-8 pb-6">
+            <div>
               
               <div class="space-y-6 text-base leading-tight">
                 <div class="space-y-4">
                   <div class="space-y-3">
+                    <p class="text-xl font-semibold text-center text-black">№ 1</p>
+                    <h2 class="text-lg font-semibold text-slate-800">
+                      Челобитная архиепископу Гавриилу приходских людей Покровской [Борисоглебской] церкви Череповской волости Белозерского уезда о выдаче
+                      благословенной грамоты на строительство новой церкви Покрова Пресвятой Богородицы с приделом во имя Бориса и Глеба (18 июля 1685 г.)
+                    </h2>
+                    <p class="text-sm text-right italic text-slate-700">
+                      <a href="https://gosarchive.gov35.ru/archive1/unit/391469#4" target="_blank" class="text-amber-700 underline">ГАВО. Ф. 1260. Оп. 1. Д. 6721. Лл. 1-1об.</a>
+                    </p>
+                    <div class="space-y-3 text-sm text-slate-800 leading-relaxed mb-8 text-right">
+                      <p class="italic">
+                        Прочтение: М.В. Ручкин
+                      </p>
+                    </div>
+                    <p class="text-base leading-relaxed text-justify hyphens-auto">
+                      <span class="text-gray-600 italic">(л. 1)</span> Государю Преосвященному Гавриилу, Архиепископу Вологодскому и Белоозерскому бьют челом Алферко Данилов сын Худошин, Ивашко да
+                      Сенька Акимовы дети Поливановы, Гришка да Петрушка Моисеевы дети Бурковы, Фетка Лукьянов сын Дешин да Ярофейко Кондратьев сын Дешин и все
+                      приходские люди Белозерского уезду Череповские волости. В приходе, Государь, у нас церковь Бориса и Глеба ветха. Милостивый государь
+                      Преосвященный Гавриил, Архиепископ Вологотский и Белозерский, пожалуй нас, приходских людей, вели, Государь, нам дать свою святительскую
+                      благословенную грамоту на церковь Пресвятыя Богородицы Покрова и в пределе Бориса и Глеба бревна ронить и строить. Государь, смилуйся и
+                      пожалуй.
+                    </p>
+                    <p class="text-base leading-relaxed text-justify hyphens-auto">Дана июля в 18 день.</p>
+                    <p class="text-base leading-relaxed text-justify hyphens-auto">
+                      <span class="text-gray-600 italic">(л. 1об.)</span> РЧГ [1685] июля в 18 день дать благословенная грамота, а о пределе в грамоте написать имянно.
+                    </p>
+                    <p class="text-base leading-relaxed text-justify hyphens-auto">
+                      К сей челобитной Борисоиглбебской поп Иван вместо прихожен своих по их велению руку приложил.
+                    </p>
+                  </div>
+                  <div class="mb-8"></div>
+                  <div class="space-y-3">
+                    <p class="text-xl font-semibold text-center text-black">№ 2</p>
+                    <h2 class="text-lg font-semibold text-slate-800">
+                      Челобитная архиепископу Гавриилу прихожан Борисоглебской церкви Череповской волости Надпорожского стана Белозерского уезда о выдаче антиминса для освящения новой церкви (не ранее 1685 г.)
+                    </h2>
+                    <p class="text-sm text-right italic text-slate-700">
+                      <a href="https://gosarchive.gov35.ru/archive1/unit/391445#3" target="_blank" class="text-amber-700 underline">ГАВО. Ф. 1260. Оп. 1. Д. 6710. Л. 1</a>
+                    </p>
+                    <div class="space-y-3 text-sm text-slate-800 leading-relaxed mb-8 text-right">
+                      <p class="italic">
+                        Прочтение: М.В. Ручкин
+                      </p>
+                    </div>
                      <p class="text-base leading-relaxed text-justify hyphens-auto">
                        Государю преосвященному Гаврилу, архиепископу Вологоцкому и Белозерскому, били челом тебе Великому Архиерею Божию Белозерского 
                        уезду Надпорожского стану Череповской волости Алферко Данилов сын Худошин и все прихоженя того храма Бориса и Глеба о создании 
@@ -49,6 +84,95 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                        совершили. Пожалуй, Государь, нас, приходцких людей, святый антемис тот новой храм свещать по преданию святых. Отец, смилуйся, 
                        пожалуй, Государь Архиерей Божий, нас, приходцких людей.
                      </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-4 mt-12">
+              <h2 class="text-lg font-semibold mb-4 text-slate-800">Комментарий</h2>
+              <div class="space-y-3 text-sm text-slate-800 leading-relaxed text-justify hyphens-auto">
+                <p>
+                  В акте № 1 прихожане Череповской волости просят архиепископа Гавриила выдать благословенную грамоту на возведение новой церкви Покрова
+                  Пресвятой Богородицы с приделом во имя Бориса и Глеба, поскольку прежняя церковь обветшала. Согласно преданию, записанному краеведом
+                  <a href="#ref-8" class="text-amber-700 hover:text-amber-900">П. Д. Федотовым (2005, с. 8)</a>, церковь Бориса и Глеба изначально находилась в
+                  Малечкинских горах (современный пос. Малечкино), а после «землетрясения» была перенесена в д. Заякошье, однако документальных подтверждений существования
+                  церкви в Малечкинских горах не обнаружено. Церковь в д. Заякошье впервые упоминается в Переписной книге Белозерского уезда 1677–1679 гг.
+                  (<a href="#ref-6" class="text-amber-700 hover:text-amber-900">Переписная…, 1677–1679, л. 107об.</a>;
+                  <a href="#ref-1" class="text-amber-700 hover:text-amber-900">Замысловский, 1888, с. 236</a>): «Погост, а на погосте церковь святых страстотерпцов 
+                  Бориса и Глеба на церковной земле. Да на той ж церковной земле полдеревни Заякошья». Вторая половина деревни была заселена после переписи 1645/46 г.
+                  (<a href="#ref-5" class="text-amber-700 hover:text-amber-900">Переписная…, 1645/46</a>) и в 1677–1679 гг. принадлежала Алферию Данилову
+                  сыну Худошину (<a href="#ref-6" class="text-amber-700 hover:text-amber-900">Переписная…, 1677–1679, л. 60</a>;
+                  <a href="#ref-1" class="text-amber-700 hover:text-amber-900">Замысловский, 1888, с. 230</a>). В писцовой книге Белозерского уезда 1626/27 г.
+                  (<a href="#ref-7" class="text-amber-700 hover:text-amber-900">Писцовая…, 1626/27</a>;
+                  <a href="#ref-9" class="text-amber-700 hover:text-amber-900">Ручкин, 2025</a>) отмечено, что во владении Хотена Васильева сына Худошина,
+                  деда Алферия, «полпустоши Заякошье, а другая половина той пустоши церковная земля». Наличие церковной земли может свидетельствовать 
+                  о существовании здесь более старой церкви, не сохранившейся к 1626/27 г.
+                </p>
+                <p>
+                  В акте № 2 говорится, что новая церковь Бориса и Глеба поставлена на старом месте. По сведениям уроженца д. Заякошье
+                  советского военачальника <a href="#ref-3" class="text-amber-700 hover:text-amber-900">А. В. Кукушкина (2023)</a>, «деревянная церковь 
+                  стояла в 500 метрах восточнее Заякошья, с правой стороны от дороги в д. Войново». Около церкви был погост, о котором «сегодня напоминает куча камней одинакового размера, по-видимому, 
+                  собранных с могил. До колхоза на месте этого погоста стоял сеновал Ивана Харитонова (Лоханова) и было распаханное поле»
+                  (<a href="#ref-3" class="text-amber-700 hover:text-amber-900">Кукушкин, 2023</a>). По данным
+                  <a href="#ref-8" class="text-amber-700 hover:text-amber-900">П. Д. Федотова (2005, с. 8)</a>, в 1695 году помещик Дешин перенёс церковь Бориса и
+                  Глеба в своё сельцо Дементьево, однако источник данных сведений не указан.
+                </p>
+              </div>
+            </div>
+
+            <div class="space-y-4 mt-12">
+              <h2 class="text-lg font-semibold mb-4 text-slate-800">Источники</h2>
+              <div class="space-y-6 text-sm text-slate-800 leading-relaxed text-justify">
+                <div class="space-y-2">
+                  <h3 class="text-base font-semibold text-slate-800">Архивные</h3>
+                  <div class="space-y-2">
+                    <p id="ref-5">
+                      Переписная книга Белозерского уезда переписи Селуяна Павлова и подьячего Григория Белова 1645/46 г. Список 1664–1669 гг. за скрепой дьяка
+                      Степана Венедиктова // РГАДА. Ф. 1209. Оп. 1. Д. 12760. Лл. 1–1580; см. также опись
+                      (<a href="#ref-2" class="text-amber-700 hover:text-amber-900">Зенченко и др., 2010</a>).
+                    </p>
+                    <p id="ref-6">
+                      Переписная книга Белозерского уезда переписи стольника Федора Ивановича Потемкина и подьячего Федора Бирелева 1677–1679 гг. Подлинник за
+                      скрепами Ф. И. Потемкина и Ф. Бирелева // РГАДА. Ф. 1209. Оп. 1. Д. 12757. Лл. 1–613; см. также опись
+                      (<a href="#ref-2" class="text-amber-700 hover:text-amber-900">Зенченко и др., 2010</a>) и извлечения
+                      (<a href="#ref-1" class="text-amber-700 hover:text-amber-900">Замысловский, 1888</a>).
+                    </p>
+                    <p id="ref-7">
+                      Писцовая книга Белозерского уезда письма и меры Никиты Шеховского и подьячего Максима Козлова 1626/27 г. Копия XVIII в. за скрепой секретаря
+                      Ильи Феоктистова и справами подканцеляристов Петра Цветкова и Ивана Михайлова // РГАДА. Ф. 1209. Оп. 1. Д. 591. Лл. 1–761; см. также опись
+                      (<a href="#ref-2" class="text-amber-700 hover:text-amber-900">Зенченко и др., 2010</a>).
+                    </p>
+                  </div>
+                </div>
+
+                <div class="space-y-3">
+                  <h3 class="text-base font-semibold text-slate-800">Опубликованные</h3>
+                  <div class="space-y-2 text-sm text-slate-800 leading-relaxed text-justify">
+                    <p id="ref-1">
+                      <a href="https://www.prlib.ru/item/694549" target="_blank" class="text-amber-700 underline">
+                        Замысловский Е. Е. (сост.). Извлечения из переписных книг (1676–1682 гг.). Белоозеро и Белозерский уезд. С. 223–307 // Летопись занятий Археографической комиссии. Вып. 8: 1878–1881 гг. / ред. Е. Е. Замысловский. СПб.: Тип. бр. Пантелеевых, 1888.
+                      </a>
+                    </p>
+                    <p id="ref-2">
+                      <a href="http://rgada.info/sprav/sprav/zenchenko_ivanova_2010.pdf" target="_blank" class="text-amber-700 underline">
+                        Зенченко М.Ю. и др. (сост.). Белозерская земля. С. 62–98. // Зенченко М.Ю. и др. (сост.). Каталог писцовых книг Русского государства. Вып. 4: Писцовые книги Верхнего Заволжья / отв. ред. Г.А. Иванова. – М.: Памятники исторической мысли, 2010. – 447 с.
+                      </a>
+                    </p>
+                    <p id="ref-3">
+                      <a href="https://vk.com/id80857358?w=wall80857358_21579" target="_blank" class="text-amber-700 underline">
+                        Кукушкин А. В. Моя деревенька (история деревни Заякошье). 2023. [Интернет-ресурс: дата обращения 26.10.2025].
+                      </a>
+                    </p>
+                    <p id="ref-9">
+                      <a href="http://localhost:4321/ru/local_history/cherepovets-map-1626" target="_blank" class="text-amber-700 underline">
+                        Ручкин М. В. (сост.). Карта земельных владений в волости Череповец (1626/27 г.). 2025. [Интернет-ресурс: дата обращения 26.10.2025].
+                      </a>
+                    </p>
+                    <p id="ref-8">
+                      <a href="https://tonsh-lib.vlg.muzkult.ru/Istoricheskoe_kraevedenie" target="_blank" class="text-amber-700 underline">
+                        Федотов П. Д. Земля родная. Ч. 2. Череповец: Окраина, 2005. 67 с.
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
