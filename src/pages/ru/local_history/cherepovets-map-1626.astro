@@ -29,7 +29,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
           <p class="mb-8 text-sm text-slate-800 leading-relaxed text-justify">
             Карта составлена по данным писцовой книги Белозерского уезда письма и меры Никиты Шеховского и подьячего Максима Козлова 1626/27 г.
-            Копия XVIII в. за скрепой секретаря Ильи Феоктистова и справами подканцеляристов Петра Цветкова и Ивана Михайлова (РГАДА Ф.1209 Оп.1 Д.591).
+            Копия XVIII в. за скрепой секретаря Ильи Феоктистова и справами подканцеляристов Петра Цветкова и Ивана Михайлова (РГАДА. Ф. 1209. Оп. 1. Д. 591. Лл. 1–761).
             Книга включает наиболее раннюю сохранившуюся полную перепись Череповской волости.
           </p>
 
@@ -50,7 +50,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                     <div id="map" class="absolute"></div>
                     
                     <!-- Zoom controls -->
-                    <div class="absolute top-1/2 left-2 z-[1000] flex flex-col gap-1 -translate-y-1/2">
+                    <div id="zoom-controls" class="absolute top-1/2 left-2 z-[1000] flex flex-col gap-1 -translate-y-1/2">
                       <button id="btn-zoom-in"  type="button" class="w-10 h-10 rounded-md border border-black bg-black/30 text-sm text-white/90 hover:bg-white/10 flex items-center justify-center" aria-label="Приблизить">+</button>
                       <button id="btn-zoom-out" type="button" class="w-10 h-10 rounded-md border border-black bg-black/30 text-sm text-white/90 hover:bg-white/10 flex items-center justify-center" aria-label="Отдалить">−</button>
                       <button id="btn-reset" type="button" class="w-10 h-10 rounded-md border border-black bg-black/30 text-sm text-white/90 hover:bg-white/10 flex items-center justify-center" aria-label="Сбросить масштаб">⌂</button>
@@ -2157,47 +2157,16 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       position: absolute !important;
     }
 
-    /* Контейнер с кнопками зума - выбираем div, который содержит кнопки, но НЕ #map */
-    /* Используем селектор по наличию кнопок внутри */
-    #viewer.fullscreen-mobile #frame > div:has(button#btn-zoom-in),
-    #viewer.fullscreen-mobile #frame > div:not(#map) {
-      z-index: 10000000 !important;
-      display: flex !important;
-      flex-direction: column !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      pointer-events: auto !important;
-      position: absolute !important;
+    /* В обычном режиме позиционирование зум-кнопок задаётся классами в разметке.
+       В полноэкранном режиме фиксируем их относительно экрана, а не контейнера. */
+    #viewer.fullscreen-mobile #zoom-controls {
+      position: fixed !important;
       left: 0.5rem !important;
       top: 50% !important;
       transform: translateY(-50%) !important;
-      gap: 0.25rem !important;
-      background: transparent !important;
-      width: auto !important;
-      min-width: 2.5rem !important;
-      height: auto !important;
-      min-height: 8rem !important;
-      max-width: none !important;
-      max-height: none !important;
-      margin: 0 !important;
-      padding: 0 !important;
-      overflow: visible !important;
-      clip: unset !important;
-      clip-path: none !important;
-    }
-    
-    /* Альтернативный селектор для браузеров без поддержки :has() */
-    #viewer.fullscreen-mobile #frame > div.absolute.top-1\/2 {
       z-index: 10000000 !important;
       display: flex !important;
       flex-direction: column !important;
-      visibility: visible !important;
-      opacity: 1 !important;
-      pointer-events: auto !important;
-      position: absolute !important;
-      left: 0.5rem !important;
-      top: 50% !important;
-      transform: translateY(-50%) !important;
       gap: 0.25rem !important;
       background: transparent !important;
       width: auto !important;
