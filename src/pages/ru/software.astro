@@ -4,7 +4,10 @@ import SoftwareLayout from "../../layouts/SoftwareLayout.astro";
 const { lang = "ru" } = Astro.props;
 ---
 
-<SoftwareLayout title="Программы — Максим Ручкин" lang={lang}>
+<SoftwareLayout 
+  title="Программы — Максим Ручкин" 
+  description="Программные инструменты и приложения, разработанные для исследований в области четвертичной геологии, люминесцентного датирования и анализа данных."
+  lang={lang}>
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1000px] px-6 py-16">
       <h1 class="text-4xl font-bold">Программы</h1>

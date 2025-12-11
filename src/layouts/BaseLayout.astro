@@ -3,7 +3,12 @@ const {
   title = "Maksim Ruchkin",
   description = "Personal site",
   lang = "en", // "en" | "ru"
+  image = "https://www.maxruchkin.org/images/portrait.webp",
+  type = "website",
 } = Astro.props;
+
+const siteUrl = "https://www.maxruchkin.org";
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).href;
 
 import "../styles/globals.css";
 import Analytics from '@vercel/analytics/astro'; 
@@ -46,6 +51,29 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.ico" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalUrl} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:locale" content={lang === "ru" ? "ru_RU" : "en_US"} />
+    {lang === "ru" && <meta property="og:locale:alternate" content="en_US" />}
+    {lang === "en" && <meta property="og:locale:alternate" content="ru_RU" />}
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    
+    <!-- Robots -->
+    <meta name="robots" content="index, follow" />
     
     <!-- Предзагрузка фоновых изображений -->
     <link rel="preload" as="image" href="/images/background/main-bg.webp" />

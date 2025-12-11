@@ -4,7 +4,10 @@ import ProjectsLayout from "../../layouts/ProjectsLayout.astro";
 const { lang = "ru" } = Astro.props;
 ---
 
-<ProjectsLayout title="Проекты — Максим Ручкин" lang={lang}>
+<ProjectsLayout 
+  title="Проекты — Максим Ручкин" 
+  description="Исследовательские проекты в области четвертичной геологии, палеогеографии и люминесцентного датирования."
+  lang={lang}>
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1000px] px-6 py-16">
       <h1 class="text-3xl font-bold">Проекты</h1>
