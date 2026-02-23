@@ -9,6 +9,7 @@ type Pub = {
   doi?: string;
   doiRu?: string;  // Russian version DOI
   doiEn?: string;  // English version DOI
+  doiPP?: string;  // Preprint DOI
   url?: string;
   urlRu?: string;  // Russian version URL
   urlEn?: string;  // English version URL
@@ -18,9 +19,12 @@ type Pub = {
 /* ---------- ДАННЫЕ ---------- */
 /* Статьи в журналах */
 const journals: Pub[] = [
-  { title: "Мгинская свита Приневской низменности",
-    authors: "Ручкин М. В., Шитов М. В., Плешивцева Э. С., Лудикова А. В., Талденкова Е. Е., Овсепян Я. С., Косинцев П. А., Меркульев А. В.",
-    year: null, venue: "Стратиграфия. Геологическая корреляция", type: "journal" },
+  { title: "Using portable luminescence profiling to refine 14C and OSL-based chronologies of lacustrine littoral sedimentary sequences: a case study from Schweriner See (NE Germany)",
+    authors: "Ruchkin, M. V., Lorenz, S., Adolph, M.-L., Haberzettl, T.",
+    year: null, venue: "Catena", doiPP: "10.2139/ssrn.6271021", type: "journal" },
+  { title: "The Mga Marine Formation of the Last Interglacial in the Neva Lowland (NW Russia): A Review",
+    authors: "Ruchkin, M. V., Sheetov, M. V., Pleshivtseva, E. S., Ludikova, A. V., Taldenkova, E. E., Ovsepyan, Ya. S., Kosintsev, P. A., Merkuliev, A. V.",
+    year: null, venue: "Quaternary International", type: "journal" },
   { title: "The new key sections of the Last Interglacial transgression in the Eurasian Arctic (Eastern White Sea): paleoenvironmental reconstructions and interregional correlations",
     authors: "Zaretskaya N. E., Taldenkova Е. E., Ruchkin M. V., Ovsepyan Ya. S., Rudenko O. P., Timofeeva I. V.",
     year: 2026, venue: "Quaternary International 754, 110067", doi: "10.1016/j.quaint.2025.110067", type: "journal" },
@@ -198,6 +202,14 @@ const typeLabel = (t: Pub["type"]) =>
                         <span class="text-white">ENG </span>
                         <a href={p.urlEn} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
                           PDF
+                        </a>
+                      </span>
+                    )}
+                    {p.doiPP && (
+                      <span>
+                        <span class="text-white">ПРЕПРИНТ </span>
+                        <a href={`https://doi.org/${p.doiPP}`} target="_blank" rel="noopener noreferrer" class="text-amber-400 hover:underline">
+                          DOI: {p.doiPP}
                         </a>
                       </span>
                     )}
