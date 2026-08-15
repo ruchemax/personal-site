@@ -2,7 +2,7 @@
 
 Source code for [maxruchkin.org](https://www.maxruchkin.org), a bilingual personal and academic website covering research projects, publications, software, and local-history materials.
 
-[![Maksim Ruchkin personal website](Screenshot%202026-08-15%20232714.png)](https://www.maxruchkin.org)
+[![Maksim Ruchkin personal website](docs/assets/site-preview.png)](https://www.maxruchkin.org)
 
 ## Technology
 
