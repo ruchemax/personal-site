@@ -169,7 +169,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
         
         menuLinks.forEach(link => {
           const href = link.getAttribute('href');
-          if (savedLang === 'en' && href.startsWith('/ru/') && !href.includes('/local_history')) {
+          if (href && savedLang === 'en' && href.startsWith('/ru/') && !href.includes('/local_history')) {
             // Заменяем русские ссылки на английские
             const englishHref = href.replace('/ru', '') || '/';
             link.setAttribute('href', englishHref);

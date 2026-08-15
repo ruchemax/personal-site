@@ -1,46 +1,51 @@
-# Astro Starter Kit: Basics
+# Personal website of Maksim Ruchkin
+
+Source code for [maxruchkin.org](https://www.maxruchkin.org), a bilingual personal and academic website covering research projects, publications, software, and local-history materials.
+
+## Technology
+
+- [Astro](https://astro.build/) with server-side rendering
+- Tailwind CSS
+- Vercel deployment and analytics
+- Nodemailer for the contact form
+- Cloudflare Turnstile for spam protection
+
+## Local development
+
+Requirements: Node.js 22 or newer and pnpm 10.
 
 ```sh
-pnpm create astro@latest -- --template basics
+pnpm install --frozen-lockfile
+Copy-Item .env.example .env
+pnpm dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The development server is available at `http://localhost:4321`.
 
-## 🚀 Project Structure
+## Environment variables
 
-Inside of your Astro project, you'll see the following folders and files:
+The contact endpoint requires these server-side variables:
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
-```
+| Variable | Purpose |
+| --- | --- |
+| `SMTP_PASSWORD` | Application password for the SMTP account |
+| `TURNSTILE_SECRET_KEY` | Cloudflare Turnstile server-side secret |
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Copy `.env.example` to `.env` for local development and provide real values only in your local environment or deployment provider. Never commit `.env` files or generated `.vercel` output.
 
-## 🧞 Commands
+## Commands
 
-All commands are run from the root of the project, from a terminal:
+| Command | Action |
+| --- | --- |
+| `pnpm dev` | Start the development server |
+| `pnpm build` | Create a production build |
+| `pnpm preview` | Preview the production build |
+| `pnpm astro check` | Run Astro diagnostics |
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## Deployment
 
-## 👀 Want to learn more?
+The project is configured for Vercel through `@astrojs/vercel`. Set the required environment variables in the Vercel project settings before deploying.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Content and licensing
+
+No open-source license is currently granted. Website text, publications, photographs, maps, and other media remain the property of their respective authors and rights holders unless stated otherwise.
