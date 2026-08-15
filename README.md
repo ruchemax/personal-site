@@ -2,6 +2,8 @@
 
 Source code for [maxruchkin.org](https://www.maxruchkin.org), a bilingual personal and academic website covering research projects, publications, software, and local-history materials.
 
+[![Maksim Ruchkin personal website](Screenshot%202026-08-15%20232714.png)](https://www.maxruchkin.org)
+
 ## Technology
 
 - [Astro](https://astro.build/) with server-side rendering
@@ -16,9 +18,11 @@ Requirements: Node.js 22 or newer and pnpm 10.
 
 ```sh
 pnpm install --frozen-lockfile
-Copy-Item .env.example .env
+cp .env.example .env
 pnpm dev
 ```
+
+On Windows PowerShell, use `Copy-Item .env.example .env` instead of `cp .env.example .env`.
 
 The development server is available at `http://localhost:4321`.
 
