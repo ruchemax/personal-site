@@ -71,7 +71,7 @@ import ContactsLayout from "../layouts/ContactsLayout.astro";
         </div>
 
         <!-- Cloudflare Turnstile -->
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAAB93lgc1IE7eRZFt" style="display: none;"></div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAB93lgc1IE7eRZFt" data-theme="dark"></div>
 
         <!-- Submit -->
         <button
@@ -109,8 +109,10 @@ import ContactsLayout from "../layouts/ContactsLayout.astro";
         if (res.ok && data?.success) {
           paintStatus('Your message has been sent. Thank you!', true);
           form.reset();
+          window.turnstile?.reset();
         } else {
-          paintStatus('Failed to send. Please try again later.', false);
+          paintStatus(data?.error || 'Failed to send. Please try again later.', false);
+          window.turnstile?.reset();
         }
       } catch {
         paintStatus('Network error. Please check your connection and try again.', false);

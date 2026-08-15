@@ -62,10 +62,6 @@ export const POST: APIRoute = async ({ request }) => {
     || request.headers.get("x-real-ip")
     || "unknown";
 
-  if (!checkRateLimit(ip)) {
-    return jsonResponse({ success: false, error: "Too many requests. Please try again later." }, 429);
-  }
-
   let name = "";
   let email = "";
   let subject = "";
@@ -102,6 +98,10 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (!await verifyTurnstile(turnstileToken, ip)) {
     return jsonResponse({ success: false, error: "Verification failed" }, 400);
+  }
+
+  if (!checkRateLimit(ip)) {
+    return jsonResponse({ success: false, error: "Too many requests. Please try again later." }, 429);
   }
 
   if (!name || !email || !subject || !message) {

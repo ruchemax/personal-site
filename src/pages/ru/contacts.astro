@@ -71,7 +71,7 @@ import ContactsLayout from "../../layouts/ContactsLayout.astro";
         </div>
 
         <!-- Cloudflare Turnstile -->
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAAB93lgc1IE7eRZFt" style="display: none;"></div>
+        <div class="cf-turnstile" data-sitekey="0x4AAAAAAB93lgc1IE7eRZFt" data-theme="dark"></div>
 
         <!-- Отправка -->
         <button
@@ -109,8 +109,16 @@ import ContactsLayout from "../../layouts/ContactsLayout.astro";
         if (res.ok && data?.success) {
           paintStatus('Сообщение отправлено. Спасибо!', true);
           form.reset();
+          window.turnstile?.reset();
         } else {
-          paintStatus('Не удалось отправить. Попробуйте позже.', false);
+          const errors = {
+            'Verification failed': 'Проверка безопасности не пройдена. Попробуйте ещё раз.',
+            'Too many requests. Please try again later.': 'Слишком много попыток. Попробуйте позже.',
+            'Service unavailable': 'Сервис отправки временно недоступен.',
+            'Failed to send email': 'Не удалось отправить письмо. Попробуйте позже.',
+          };
+          paintStatus(errors[data?.error] || 'Не удалось отправить. Попробуйте позже.', false);
+          window.turnstile?.reset();
         }
       } catch {
         paintStatus('Сетевая ошибка. Проверьте подключение и попробуйте ещё раз.', false);
