@@ -18,17 +18,28 @@ const { lang = "en" } = Astro.props;
         <article class="rounded-2xl border border-white/10 bg-black/1 p-6 shadow-lg backdrop-blur w-full max-w-[550px]">
           <h2 class="text-2xl font-semibold">Balta</h2>
           <p class="mt-2 text-base text-white/75">
-            Application for grain size distribution data processing and the construction of plots
+            Balta is a scientific desktop application for processing and visualising
+            grain-size distribution data used in Quaternary and palaeoenvironmental
+            research.
           </p>
 
-          <!-- Download button -->
-          <div class="mt-4">
+          <!-- Project links -->
+          <div class="mt-4 flex flex-wrap gap-3">
             <a
-              href="https://drive.proton.me/urls/PS29RK4WBM#K7RoDDoRpnl0"
-              download="Balta v1.0.exe"
-              class="inline-block w-full max-w-[130px] text-center rounded-lg bg-amber-500 px-3 py-2 text-base font-semibold text-slate-950 hover:bg-amber-400"
+              href="https://github.com/ruchemax/Balta"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block rounded-lg bg-amber-500 px-4 py-2 text-center text-base font-semibold text-slate-950 hover:bg-amber-400"
             >
-              Download v1.0
+              GitHub repository
+            </a>
+            <a
+              href="https://github.com/ruchemax/Balta/releases/tag/v1.1.0"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block rounded-lg bg-amber-500 px-4 py-2 text-center text-base font-semibold text-slate-950 hover:bg-amber-400"
+            >
+              Balta v1.1.0
             </a>
           </div>
 
@@ -36,23 +47,14 @@ const { lang = "en" } = Astro.props;
           <div class="mt-4 text-sm text-white/70">
             The software is free to use; when using it, please cite this website as a reference:<br />
             <br />
-            Ruchkin M. V. (2025) <i>Balta</i>. Application for grain size distribution data processing and the construction of plots. Available at:
+            Ruchkin M. V. (2025) <i>Balta</i>. Scientific desktop application for processing and visualising grain-size distribution data used in Quaternary and palaeoenvironmental research. Available at:
             <a
               href="https://github.com/ruchemax/Balta"
               target="_blank"
               rel="noopener noreferrer"
               class="text-amber-400 hover:underline"
             >
-              Repository
-            </a>
-            <span class="text-white/50"> · </span>
-            <a
-              href="https://github.com/ruchemax/Balta/releases/latest"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-amber-400 hover:underline"
-            >
-              Latest release
+              https://github.com/ruchemax/Balta
             </a>
           </div>
         </article>
