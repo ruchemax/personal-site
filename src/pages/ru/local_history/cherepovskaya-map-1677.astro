@@ -19,7 +19,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
 >
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1000px] px-0 md:px-6 pt-4 pb-12">
-      <!-- Весь контент на фоне бумаги -->
+      <!-- UI section -->
       <div class="paper-old shadow-2xl">
         <div class="relative z-10">
           <p class="text-xs text-gray-600 mb-4">Опубликовано: {publishedAt}</p>
@@ -28,7 +28,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
             Карта земельных владений в Череповской волости (1677–79 гг.)
           </h1>
 
-          <!-- Теги -->
+          <!-- UI section -->
           <div class="mt-3 flex flex-wrap gap-2 text-xs mb-6">
             <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Белозерский уезд</span>
             <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Надпорожский стан</span>
@@ -45,10 +45,10 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
             Вы можете помочь с определением местоположения населённых пунктов и пустошей, существовавших в Череповской волости
             в 1677–1679 гг. Под картой находится таблица с указанием размещённых и не размещённых на карте объектов.
             Если вам известно местоположение какого-то из неразмещённых объектов или вы нашли ошибку на карте,
-            напишите мне через <a href="/ru/contacts" class="text-amber-700 hover:text-amber-800 underline">форму обратной связи</a>.
+            напишите мне через{" "}<a href="/ru/contacts" class="text-amber-700 hover:text-amber-800 underline">форму обратной связи</a>.
           </p>
 
-          <!-- Карта -->
+          <!-- UI section -->
           <div class="mb-8">
             <link
               rel="stylesheet"
@@ -136,7 +136,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
             </div>
           </div>
 
-          <!-- Таблица владельцев и локализации (1677–79 гг.) -->
+          <!-- UI section -->
           <div class="mt-8">
         
         <div class="overflow-x-auto">
@@ -149,13 +149,13 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
               </tr>
             </thead>
             <tbody>
-              <!-- Заголовок волости -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 55)</span> Волость Череповская, а в ней за помещики в поместьях
                 </td>
               </tr>
               
-              <!-- №40 Михаил Иванов сын Косецкий -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">
                   №40 За Михаилом Ивановым сыном Косецким в поместье
@@ -172,7 +172,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №41 Иван Игнатьев сын Козловский -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №41 За Иваном Игнатьевым сыном Козловским в поместье
@@ -183,7 +183,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №42 Федор Федоров сын Патреев -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №42 За Федором Федоровым сыном Патреевым в поместье
@@ -194,7 +194,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №43 Иван и Семен Акимовы дети Поливановы -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">
                   №43 За Иваном да за Семеном Акимовыми детьми Поливановыми в поместье
@@ -223,7 +223,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №44 Александр Иванов сын Юрлов -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">
                   №44 За Александром Ивановым сыном Юрлова в поместье
@@ -240,7 +240,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №45 Борис Семенов сын Поливанов -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="3">
                   №45 За Борисом Семеновым сыном Поливановым в поместье
@@ -263,7 +263,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №46 Офрей Данилов сын Худошин -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">
                   №46 За Олферием Даниловым сыном Худошиным в поместье
@@ -291,7 +291,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 </td>
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
-              <!-- №47 вдова Феврония Иванова жена Анисимова сына Михайлова -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №47 За вдовою за Февроньею Ивановскою женою Анисимова сына Михайлова в поместье
@@ -300,7 +300,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №48 Иван Игнатьев сын Больший Козловский -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №48 За Иваном Игнатьевым сыном Большим Козловским в поместье
@@ -309,7 +309,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №49 Лука Абрамов сын Некрасов -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №49 За Лукою Аврамовым сыном Некрасовым в поместье
@@ -318,7 +318,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №50 Фёдор Дмитреев сын Векентьев -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №50 За Федором Дмитреевым сыном Векентьевым в поместье
@@ -327,7 +327,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №51 Иван Васильев сын Варсобин -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="3">
                   №51 За Иваном Васильевым сыном Варсобиным в поместье
@@ -344,7 +344,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №52 Иван Алексеев сын Панфилов -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">
                   №52 За Иваном Алексеевым сыном Панфиловым в поместье
@@ -357,7 +357,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №53 Аврам да Леонтий Алексеевы дети Панфиловы -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">
                   №53 За Аврамом да з Леонтьем Алексеевыми детьми Панфиловыми в поместье
@@ -370,7 +370,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №54 Фёдор Лукьянов сын Дешин -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №54 За Федором Лукьяновым сыном Дешиным в поместье
@@ -379,7 +379,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №55 Пётр Иванов сын Юрлов -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="3">
                   №55 За Петром Ивановым сыном Юрловым в поместье
@@ -396,7 +396,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №56 Гаврило, Яков и Степан Ивановы дети Юрловы -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">
                   №56 За Гаврилом да за Яковом, да за Степаном Ивановыми детми Юрловыми в поместье
@@ -409,7 +409,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №57 Дмитрей и Борис Ивановы дети Косецкие -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №57 За Дмитреем да за Борисом Ивановыми детми Косецкими в поместье
@@ -418,7 +418,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №58 Кондратей Лукьянов сын Дешин -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №58 За Кондратьем Лукьяновым сыном Дешиным в поместье
@@ -427,7 +427,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №59 Онтон Фадеев сын Поливанов -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №59 За можаитином за Онтоном Фадеевым сыном Поливановым в поместье
@@ -436,14 +436,14 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Заголовок вотчинников -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3">
                   <span class="text-gray-400 italic font-normal">(л. 68об.)</span> В той ж Череповской волости за вотчинниками в вотчинах
                 </td>
               </tr>
 
-              <!-- №60 Степан Яковлев сын Кафтырев -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">
                   №60 За Степаном Яковлевым сыном Кафтыревым в вотчине
@@ -464,7 +464,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №61 Иван Агеев сын Якушкин -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №61 на вотчинной земле можаитина Ивана Агеева сына да племянников ево родных Федота да Григорья Ивановых детей Якушкиных
@@ -474,7 +474,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №62 Иван Агеев сын Якушкин -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="3">
                   №62 За Иваном Агеевым сыном Якушкиным в вотчине
@@ -491,7 +491,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №63 Григорий Иванов сын Якушкин -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">
                   №63 За Григорьем Ивановым сыном Якушкиным в вотчине
@@ -504,7 +504,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №64 Федот Иванов сын Якушкин -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">
                   №64 За Федотом Ивановым сыном Якушкиным в вотчине
@@ -517,7 +517,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №65 Федор Максимов сын Люткин -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="1">
                   №65 За Федором Максимовым сыном Люткина в вотчине
@@ -526,7 +526,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №66 Воскресенский монастырь -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="44">
                   №66 В Череповской волости Великого Господина Святеишаго Иоакима, Патриарха Московского и всеа Росии, домовой Воскресенской монастырь,
@@ -712,7 +712,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №67 В Череповской волости Преосвященного Ионы митрополита Ростовского и Ярославского -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="18">
                   №67 В Череповской волости Преосвященного Ионы, Митрополита Ростовского и Ярославского
@@ -791,7 +791,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №68 В Череповской волости монастыря Воронины Пустыни -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">
                   №68 В Череповской волости монастырь Воронины Пустыни, да подле того монастыря двор гостиной да двор конюшей, да двор скотной
@@ -812,7 +812,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №69 В той же Череповской волости Ферапонтова монастыря вотчина -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="7">
                   №69 В той ж Череповской волости Ферапонтова монастыря вотчина
@@ -846,14 +846,14 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Погосты на церковной земле -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3">
                   <span class="text-gray-400 italic font-normal">(л. 107об.)</span> В Череповской волости погосты на церковных землях
                 </td>
               </tr>
 
-              <!-- №70 Погост Николая Чюдотворца -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2" rowspan="6">Церковная земля</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">№70 Погост, а на погосте церковь Николая Чюдотворца на церковной земле
@@ -862,7 +862,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №71 Погост Бориса и Глеба -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">№71 Погост, а на погосте церковь Святых Страстотерпцов Бориса и Глеба
                   на церковной земле, да на той же церковной земле полдеревни Заякошья
@@ -870,27 +870,27 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №72 Погост Рождества Иисуса Христа и Николая Чюдотворца -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">№72 Погост, а на погосте церковь Рождество Исус Христос да другая 
                   церковь Николая Чюдотворца на церковной земле</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №73 Погост Рождества Богородицы и Вознесения Господня -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">№73 Погост, а на погосте церковь Рождества Пречистые Богородицы 
                   да другая церковь Вознесение Господне на церковной земле</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №74 Село Никольское -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">№74 Село Никольское, а в нем церковь Николая Чюдотворца на церковной земле</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- №75 Село Шугобожь -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2">№75 Село Шугободь, а в нем церковь Николая Чюдотворца да другая 
                   церковь Алексея Человека Божия на церковной земле</td>
@@ -904,8 +904,8 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
 
         <!-- Back navigation -->
         <div class="mt-10">
-          <a href="/ru/local_history" class="inline-block rounded-lg border border-amber-800/30 bg-amber-100/50 px-4 py-2 text-sm text-slate-800 hover:bg-amber-200/50">
-            ← Назад к «Краеведению и генеалогии»
+          <a href="/ru/local_history/belozerye" class="inline-block rounded-lg border border-amber-800/30 bg-amber-100/50 px-4 py-2 text-sm text-slate-800 hover:bg-amber-200/50">
+            ← Назад к разделу «Белозерье»
           </a>
         </div>
       </div>
@@ -913,7 +913,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
   </section>
 
   <style>
-    /* Пергаментный фон как на странице карты 1626 года */
+    /* Styling or implementation note. */
     .paper-old {
       position: relative;
       color: #2a1e14;
@@ -949,7 +949,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
       color: #2a1e14 !important;
     }
 
-    /* Стили для кнопки навигации внутри paper-old */
+    /* Styling or implementation note. */
     .paper-old .mt-10 a {
       position: relative;
       z-index: 1;
@@ -975,7 +975,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
       }
     }
 
-    /* Стили контейнера карты */
+    /* Styling or implementation note. */
     #frame,
     #map,
     .leaflet-container {
@@ -983,7 +983,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
       background: transparent;
     }
 
-    /* Делаем слой карты растянутым по всему frame (как во версии 1626 г.) */
+    /* Styling or implementation note. */
     #map {
       position: absolute;
       top: 0;
@@ -1051,7 +1051,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
         L.imageOverlay(imgUrl, bounds).addTo(map);
         map.fitBounds(bounds);
 
-        // Простое управление зумом
+        // Implementation note.
         if (btnPlus) {
           btnPlus.addEventListener("click", () => {
             map.zoomIn();
@@ -1070,30 +1070,30 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
           });
         }
 
-        // Центровка кнопок зума по середине экрана в полноэкранном режиме
+        // Implementation note.
         const centerZoomControls = () => {
           if (!zoomControls) return;
           const rect = zoomControls.getBoundingClientRect();
           const winHeight =
             window.innerHeight || document.documentElement.clientHeight || 0;
-          // Математический центр + небольшой сдвиг вниз (чтобы визуально казалось по центру)
+          // Implementation note.
           const targetTop = (winHeight - rect.height) / 2 + 24;
 
           if (document.fullscreenElement === viewer) {
-            // Во fullscreen фиксируем относительно окна
+            // Implementation note.
             zoomControls.style.position = "fixed";
             zoomControls.style.left = "0.5rem";
             zoomControls.style.top = `${targetTop}px`;
             zoomControls.style.transform = "none";
           } else {
-            // В обычном режиме возвращаемся к классам Tailwind
+            // Implementation note.
             zoomControls.style.position = "";
             zoomControls.style.left = "";
             zoomControls.style.top = "";
             zoomControls.style.transform = "";
           }
 
-          // Логируем для отладки
+          // Implementation note.
           console.log(
             "[zoom-controls] windowTop: 0 windowBottom:",
             winHeight
@@ -1107,8 +1107,8 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
           );
         };
 
-        // Полноэкранный режим: используем стандартный Fullscreen API,
-        // как в рабочем варианте страницы 1626 года.
+        // Implementation note.
+        // Implementation note.
         const toggleFullscreen = () => {
           if (!document.fullscreenElement && viewer.requestFullscreen) {
             viewer.requestFullscreen().catch((e) =>

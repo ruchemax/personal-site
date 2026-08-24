@@ -19,14 +19,14 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 >
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1000px] px-0 md:px-6 pt-4 pb-12">
-      <!-- Весь контент на фоне бумаги -->
+      <!-- UI section -->
       <div class="paper-old shadow-2xl">
         <div class="relative z-10">
           <p class="text-xs text-gray-600 mb-4">Опубликовано: {publishedAt}</p>
 
           <h1 class="text-2xl font-bold mb-2 text-slate-800">Карта земельных владений в волости Череповец (1626/27 г.)</h1>
 
-          <!-- Теги -->
+          <!-- UI section -->
           <div class="mt-3 flex flex-wrap gap-2 text-xs mb-6">
             <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Белозерский уезд</span>
             <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Надпорожский стан</span>
@@ -42,11 +42,10 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
           <p class="mb-8 text-sm text-slate-800 leading-relaxed text-justify">
             Вы можете помочь с определением местоположения населённых пунктов и пустошей, существовавших в Череповской волости в 1626/27 г. 
             Под картой находится таблица с указанием размещённых и не размещённых на карте объектов. Если Вам известно местоположение 
-            какого-то из неразмещённых объектов или Вы нашли ошибку на карте, напишите мне через 
-            <a href="/ru/contacts" class="text-amber-700 hover:text-amber-800 underline">форму обратной связи</a>.
+            какого-то из неразмещённых объектов или Вы нашли ошибку на карте, напишите мне через{" "}<a href="/ru/contacts" class="text-amber-700 hover:text-amber-800 underline">форму обратной связи</a>.
           </p>
 
-          <!-- Карта -->
+          <!-- UI section -->
           <div class="mb-8">
             <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
 
@@ -84,7 +83,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             </div>
           </div>
 
-          <!-- Таблица владельцев и локализации -->
+          <!-- UI section -->
           <div class="mt-8">
         
         <div class="overflow-x-auto">
@@ -97,12 +96,12 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               </tr>
             </thead>
             <tbody>
-              <!-- Заголовок волости -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 149)</span> Волость Череповец, а в ней за разными помещики</td>
               </tr>
               
-              <!-- Первая группа - Полукет Елизарьев сын Теметцкой -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="6">№78 За Полуектом Елизарьевым сыном Теметцким</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Урывково, а в ней двор помещиков</td>
@@ -129,7 +128,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Вторая группа - Алексей Михайлов сын Панфилов -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="7">№79 За Алексеем Михайловым сыном Панфилова</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">отца ево поместье полпустоши, что была деревня Рождественская на реке на Шексне а другая половина той пустоши в церковной земле</td>
@@ -160,7 +159,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Третья группа - Матвей Константинов сын Поливанов -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="9">№80 За Матвеем Константиновым сыном Поливанова</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Федора Семенова сына Козлова, деревня Алексеевская пуста</td>
@@ -199,7 +198,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Четвертая группа - Хотен Васильев сын Худошин -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="8">№81 За Хотеном Васильевым сыном Худошина</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Романа Иванова сына Решетова, полселца Дуракова, а другая половина того селца за Иваном Косецким</td>
@@ -234,7 +233,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Пятая группа - Иван Дмитриев сын Косецкий -->
+              <!-- UI section -->
               <tr class="bg-white/10">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="6">№82 За Иваном Дмитревым сыном Косецким</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">полселца Дуракова</td>
@@ -261,7 +260,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Шестая группа - Андрей Пантелеев сын Екушкин -->
+              <!-- UI section -->
               <tr class="bg-white/10">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№83 За Андреем Пантелеевым сыном Екушкина</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Иваном Кузминым сыном Орловым, деревня Баскова а Баскакова тож пуста</td>
@@ -284,7 +283,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Седьмая группа - Федор Дмитриев сын Косецкий -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">№84 За Федором Дмитриевым сыном Косецким</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Перфильем Васильевым сыном Волженским, две трети деревни Новоселки пусто а треть той же деревни за Ондреем Макаровым</td>
@@ -295,7 +294,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Восьмая группа - Иван Иванов сын Юрлов -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="3">№85 За Иваном Ивановым сыном Юрловым</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что была наперед того за дядею ево за Олексеем Михайловым сыном Юрлова деревня Полуева</td>
@@ -310,7 +309,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Девятая группа - Федор Семенов сын Козлов -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="8">№86 За Федором Семеновым сыном Козлова</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что он выменил у Матвея Поливанов, пустошь, что была деревня Кавилское, а Калинское тож</td>
@@ -345,7 +344,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Десятая группа - Тимофей Родионов сын Маслов -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="3">№87 За Тимофеем Родионовым сыном Маслова</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">треть селца Никольскаго, а две трети того селца за Иваном Косецким</td>
@@ -360,21 +359,21 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Одиннадцатая группа - Лаврентий Елисеев сын Бурков и Семен Позняков -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2">№88 За Лаврентьем Елисеевым сыном Буркова да Семеном Позняковым</td>
                 <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2">деревня Дементьева пуста</td>
                 <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Двенадцатая группа - Юрий Иванов сын Оксентьев -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2">№89 За Юрьем Ивановым сыном Оксентьева</td>
                 <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2">полдеревни Киргады пуста, а другая половина той деревни за Алексеем Панфиловым</td>
                 <td class="border-t-2 border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Тринадцатая группа - Волынец Матвеев сын Скабеев -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">№90 За Волынецом Матвеевым сыном Скабеева</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь Анголова [Янголова]</td>
@@ -385,7 +384,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Четырнадцатая группа - Илья Матвеев сын Скабеев -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="2">№91 За Ильею Матвеевым сыном Скабеевом</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Пустыня пуста</td>
@@ -396,7 +395,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Пятнадцатая группа - Федор Васильев сын Худошин -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№92 За Федором Васильевым сыном Худошина</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что было наперед того за Дмитрием Григорьевым сыном Пашнеева да за дочерью за ево за девкою за Ориною, деревня Шакшино пуста</td>
@@ -415,7 +414,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Шестнадцатая группа - Абрам Некрасов -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="4">№93 За Абрамом Некрасовым</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Киселева</td>
@@ -434,7 +433,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Семнадцатая группа - Федор Афонасьев сын Глебов -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№94 За иноземцом за Федором Афонасьевым сыном Глебова</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">пустошь что было село Коштовское, а в нем две церкви пустых Николая Чудотворца да Жен Мироносиц згнили</td>
@@ -457,12 +456,12 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Заголовок вотчинников -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(с. 171)</span> В той же волости за вотчинники что им дано за московское осадное королевичева приход</td>
               </tr>
 
-              <!-- Восемнадцатая группа - Григорий Кузьмин сын Булгаков -->
+              <!-- UI section -->
               <tr class="bg-white/10">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="5">№95 За Григорьем Кузминым сыном Булгакова</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">деревня Тапсама, а в ней двор вотчинников</td>
@@ -485,12 +484,12 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Заголовок помещика -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(с. 172об.)</span> В той же волости за помещиком</td>
               </tr>
 
-              <!-- Девятнадцатая группа - Андрей Макаров -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="6">№96 За можаитином за Ондреем Макаровым</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">что была наперед за Степаном Онисимовым сыном Пашнеева, деревня Семеновская пуста</td>
@@ -517,38 +516,38 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Заголовок порозжих земель -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 174)</span> Да в той же волости в порозжие землях</td>
               </tr>
 
-              <!-- Порозжие земли -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2">Порозжие земли</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">полупустоши Лошаковы [Лашуковы], а другая половина той пустоши за Федором Козловым</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Заголовок церковных земель -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3"><span class="text-gray-400 italic font-normal">(л. 174)</span> Церковные земли</td>
               </tr>
 
-              <!-- Церковные земли -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2">Церковные земли</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2">Да в той же волости полупустоши, что была деревня Рождественская на реке на Шексне, а в ней церковь Рождество Христово, да другая церковь Николы Чудотворца обвалилась</td>
                 <td class="border-t-2 border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Заголовок монастырских владений -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3">
                   <span class="text-gray-400 italic font-normal">(л. 431)</span> Вотчина Великого Государя Святейшаго Патриарха Филорета Никитича 
                   Московского и Всеа Руссии в Череповской волости</td>
               </tr>
 
-              <!-- Двенадцатая группа - монастырские владения -->
+              <!-- UI section -->
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="6">№229 Монастырь обшей, а в нем храм был настоящей Воскресения Господа Бога и Спаса нашего 
                   Исуса Христа, и в розоренья сожгли литовские люди, да церковь Живоначальныя Троицы да в пределе Сергей Чюдотворец древянное строенье 
@@ -577,7 +576,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border border-r-2 border-black px-3 py-2"></td>
               </tr>
               
-              <!-- Заголовок села Федосьево -->              
+              <!-- UI section -->              
               <tr class="bg-white/5 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2" rowspan="44">№230 Село Федосьево, а в нем церковь Преподобнаго Феодосия обшему 
                   житию начальника да Офанасия Александрейскаго студенои клетцкии, а другая церковь Страстотерпьца Христова Георгия теплои с 
@@ -759,14 +758,14 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-l border-r-2 border-b border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Заголовок митрополичьей вотчины -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2 text-base font-medium" colspan="3">
                   <span class="text-gray-400 italic font-normal">(л. 456об.)</span> Вотчина Ростовского митрополита в Череповце 
                   </td>
               </tr>
 
-              <!-- Четвертая группа - Вотчина Ростовского митрополита -->
+              <!-- UI section -->
               <tr class="bg-white/10">
                 <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2" rowspan="21">№233 Село Богородицкое на речке на Шексне, 
                   а в нем церковь Успение Пречистые Богородицы древяннои верьх шатров... ...да в селе ж двор митрополита Ростовского</td>
@@ -854,14 +853,14 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 <td class="border-r-2 border-b-2 border-black px-3 py-2"></td>
               </tr>
 
-              <!-- Заголовок монастыря Воронина пустыня -->
+              <!-- UI section -->
               <tr class="bg-white/5">
                 <td class="border-l-2 border-t-2 border-r-2 border-b border-black px-3 py-2 text-base font-medium" colspan="3">
                   <span class="text-gray-400 italic font-normal">(л. 659об.)</span> Монастырь Воронина Пустыня
                 </td>
               </tr>
 
-              <!-- Группа монастыря Воронина пустыня -->
+              <!-- UI section -->
               <tr class="bg-white/10 owner-group">
                 <td class="border-l-2 border-t-2 border-r-2 border-b-2 border-black px-3 py-2" rowspan="13">№240 Монастырь Воронина Пустыня, а в нем
                   место церковное был храм Богоявление Господа Бога и Спаса нашего Иисуса Христа, храм погорел во 133-м [1624/25] году, да в пределе
@@ -942,7 +941,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
         }
         #viewer:fullscreen .mt-4 { display: none; }
         
-        /* Улучшенная поддержка полноэкранного режима для WebKit */
+        /* Styling or implementation note. */
         #viewer:-webkit-full-screen { 
           width: 100vw; 
           height: 100vh; 
@@ -983,7 +982,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       <script is:inline>
         document.addEventListener('DOMContentLoaded', () => {
           // -----------------------
-          // Элементы/конфиг
+          // Implementation note.
           // -----------------------
           const imgUrl   = "/images/maps/cherepovets-1626.jpg";
           const viewer   = document.getElementById('viewer');
@@ -997,7 +996,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
           const btnFS    = document.getElementById('btn-fullscreen');
 
           // -----------------------
-          // Хелперы
+          // Implementation note.
           // -----------------------
           const debounce = (fn, wait = 120) => {
             let t;
@@ -1019,7 +1018,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
           const applyMapInsetsToBorder = () => {
             if (!frame || !mapEl) return;
-            // В полноэкранном режиме на мобильном не применяем insets от границ
+            // Implementation note.
             if (viewer && viewer.classList.contains('fullscreen-mobile') && isMobile()) {
               mapEl.style.top = '0';
               mapEl.style.right = '0';
@@ -1039,7 +1038,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
           };
 
           // -----------------------
-          // Загрузка изображения (чтобы взять ratio)
+          // Implementation note.
           // -----------------------
           const img = new Image();
           img.src = imgUrl;
@@ -1061,7 +1060,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             applyMapInsetsToBorder();
 
             // -----------------------
-            // Инициализация Leaflet
+            // Implementation note.
             // -----------------------
             const map = L.map(mapEl, {
               crs: L.CRS.Simple,
@@ -1083,13 +1082,13 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             L.imageOverlay(imgUrl, bounds).addTo(map);
 
             // -----------------------
-            // Функция: принудительное вписывание по высоте
+            // Implementation note.
             // -----------------------
             async function fitPreferHeight(mapInstance, boundsObj) {
               if (!mapInstance) return;
-              // Базовый fit
+              // Implementation note.
               mapInstance.fitBounds(boundsObj, { animate: false, padding: [0, 0] });
-              // Ждём рендера
+              // Implementation note.
               await new Promise(requestAnimationFrame);
               mapInstance.invalidateSize(false);
               await new Promise(resolve => setTimeout(resolve, 30));
@@ -1101,16 +1100,16 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               const containerH = container.clientHeight;
               const imgH = imgLayerEl.offsetHeight;
 
-              // Если уже занимает по высоте — ничего не делаем
+              // Implementation note.
               if (imgH >= containerH - 1) return;
 
-              // Нужно увеличить zoom так, чтобы imgH * scale >= containerH
+              // Implementation note.
               const neededScale = containerH / Math.max(imgH, 1);
               const deltaZoom = Math.log2(neededScale);
               const curZoom = mapInstance.getZoom();
               let targetZoom = curZoom + deltaZoom;
 
-              // Ограничения
+              // Implementation note.
               const minZ = mapInstance.getMinZoom();
               const maxZ = mapInstance.getMaxZoom();
               if (targetZoom > maxZ) targetZoom = maxZ;
@@ -1118,16 +1117,16 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
               mapInstance.setZoom(targetZoom, { animate: false });
 
-              // Финальный invalidate
+              // Implementation note.
               requestAnimationFrame(() => mapInstance.invalidateSize(false));
             }
 
             // -----------------------
-            // Управление размерами контейнеров в fullscreen (мобильный)
+            // Implementation note.
             // -----------------------
             const setFullscreenPixelSizes = (vhPx) => {
-              // КРИТИЧНО: Сначала устанавливаем правильные размеры для viewer
-              // Используем setProperty с important, чтобы переопределить CSS стили
+              // Implementation note.
+              // Implementation note.
               if (viewer) {
                 viewer.style.setProperty('position', 'fixed', 'important');
                 viewer.style.setProperty('top', '0', 'important');
@@ -1145,7 +1144,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 viewer.style.setProperty('transform', 'none', 'important');
               }
               
-              // Используем width:100vw для полноэкранного режима
+              // Implementation note.
               if (ratioBox) {
                 ratioBox.style.paddingTop = '0';
                 ratioBox.style.width = '100vw';
@@ -1189,7 +1188,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 mapEl.style.inset = '0';
               }
               
-              // Убеждаемся, что Leaflet контейнер также имеет правильные размеры
+              // Implementation note.
               if (mapEl) {
                 const leafletContainer = mapEl;
                 if (leafletContainer) {
@@ -1232,7 +1231,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             initialFit();
 
             // -----------------------
-            // Кнопки и fullscreen
+            // Implementation note.
             // -----------------------
             map.dragging.enable();
             map.scrollWheelZoom.enable();
@@ -1251,27 +1250,27 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             });
 
             const enterMobileFs = () => {
-              // КРИТИЧНО: Сохраняем текущую позицию скролла перед входом в полноэкранный режим
+              // Implementation note.
               const savedScrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
               const savedScrollLeft = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0;
               
-              // Сохраняем позицию скролла в dataset
+              // Implementation note.
               document.body.dataset.savedScrollTop = savedScrollTop.toString();
               document.body.dataset.savedScrollLeft = savedScrollLeft.toString();
               
-              // КРИТИЧНО: Сначала сбрасываем scroll СИНХРОННО, чтобы не было смещения
-              // Используем behavior: 'instant' для немедленного сброса
+              // Implementation note.
+              // Implementation note.
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
               document.documentElement.scrollTop = 0;
               document.documentElement.scrollLeft = 0;
               document.body.scrollTop = 0;
               document.body.scrollLeft = 0;
               
-              // Принудительно блокируем прокрутку
+              // Implementation note.
               document.documentElement.style.overflow = 'hidden';
               document.body.style.overflow = 'hidden';
               
-              // Небольшая задержка чтобы убедиться, что scroll сброшен
+              // Implementation note.
               requestAnimationFrame(() => {
                 window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
                 document.documentElement.scrollTop = 0;
@@ -1292,11 +1291,11 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               if (header) { header.dataset.fullscreenHidden = 'true'; header.style.display = 'none'; }
               if (footer) { footer.dataset.fullscreenHidden = 'true'; footer.style.display = 'none'; }
 
-              // КРИТИЧНО: Убираем отступы у body и html в полноэкранном режиме
+              // Implementation note.
               const body = document.body;
               const html = document.documentElement;
               
-              // Сохраняем оригинальные стили для восстановления
+              // Implementation note.
               if (!body.dataset.originalBodyStyle) {
                 body.dataset.originalBodyStyle = JSON.stringify({
                   margin: body.style.margin,
@@ -1319,15 +1318,15 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               html.style.padding = '0';
               html.style.overflow = 'hidden';
 
-              // Еще раз сбрасываем scroll перед установкой стилей
+              // Implementation note.
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
               document.documentElement.scrollTop = 0;
               document.body.scrollTop = 0;
 
               const vh = getViewportHeight();
               
-              // КРИТИЧНО: Устанавливаем правильные размеры для viewer ПЕРЕД setFullscreenPixelSizes
-              // Используем setProperty с important, чтобы переопределить CSS стили
+              // Implementation note.
+              // Implementation note.
               if (viewer) {
                 viewer.style.setProperty('position', 'fixed', 'important');
                 viewer.style.setProperty('top', '0', 'important');
@@ -1350,23 +1349,23 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               requestAnimationFrame(() => {
                 const currentVh = getViewportHeight();
                 
-                // КРИТИЧНО: Еще раз убеждаемся, что viewer имеет правильные размеры
-                // Используем setProperty с important, чтобы переопределить CSS стили
+                // Implementation note.
+                // Implementation note.
                 if (viewer) {
-                  // Проверяем и исправляем родительские элементы
+                  // Implementation note.
                   let parent = viewer.parentElement;
                   let parentLevel = 0;
                   while (parent && parentLevel < 5) {
                     const parentRect = parent.getBoundingClientRect();
                     const parentComputed = window.getComputedStyle(parent);
                     
-                    // Убираем transform у родительских элементов, если он есть
+                    // Implementation note.
                     if (parentComputed.transform && parentComputed.transform !== 'none') {
                       parent.style.setProperty('transform', 'none', 'important');
                     }
                     
-                    // КРИТИЧНО: Убираем padding-top и margin-top у ВСЕХ родительских элементов в полноэкранном режиме
-                    // Даже если top = 0, padding-top может влиять на позиционирование дочерних элементов
+                    // Implementation note.
+                    // Implementation note.
                     const parentPaddingTop = parseFloat(parentComputed.paddingTop) || 0;
                     const parentMarginTop = parseFloat(parentComputed.marginTop) || 0;
                     
@@ -1381,7 +1380,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                     parentLevel++;
                   }
                   
-                  // Устанавливаем scroll на 0
+                  // Implementation note.
                   window.scrollTo(0, 0);
                   document.documentElement.scrollTop = 0;
                   document.body.scrollTop = 0;
@@ -1402,8 +1401,8 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                   viewer.style.setProperty('will-change', 'auto', 'important');
                 }
                 
-                // Еще раз проверяем и убираем padding у родительских элементов после небольшой задержки
-                // чтобы убедиться, что изменения применились
+                // Implementation note.
+                // Implementation note.
                 requestAnimationFrame(() => {
                   let parent = viewer.parentElement;
                   let parentLevel = 0;
@@ -1419,12 +1418,12 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 
                 setFullscreenPixelSizes(currentVh);
                 
-                // КРИТИЧНО: Применяем стили к контейнеру с кнопками зума
-                // Находим кнопку зума и поднимаемся к её родителю (контейнеру)
+                // Implementation note.
+                // Implementation note.
                 const btnZoomIn = document.getElementById('btn-zoom-in');
                 const zoomControlsContainer = btnZoomIn?.parentElement;
                 if (zoomControlsContainer && frame?.contains(zoomControlsContainer)) {
-                  // КРИТИЧНО: Сначала устанавливаем размеры и видимость для кнопок
+                  // Implementation note.
                   const buttons = zoomControlsContainer.querySelectorAll('button');
                   buttons.forEach((btn) => {
                     btn.style.setProperty('z-index', '10000001', 'important');
@@ -1438,7 +1437,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                     btn.style.setProperty('position', 'relative', 'important');
                   });
                   
-                  // Затем устанавливаем стили для контейнера
+                  // Implementation note.
                   zoomControlsContainer.style.setProperty('z-index', '10000000', 'important');
                   zoomControlsContainer.style.setProperty('display', 'flex', 'important');
                   zoomControlsContainer.style.setProperty('flex-direction', 'column', 'important');
@@ -1503,7 +1502,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                   
                   map.invalidateSize(false);
                   
-                  // КРИТИЧНО: Снова применяем стили к контейнеру с кнопками после invalidateSize
+                  // Implementation note.
                   const btnZoomInAgain = document.getElementById('btn-zoom-in');
                   const zoomControlsContainerAgain = btnZoomInAgain?.parentElement;
                   if (zoomControlsContainerAgain && frame?.contains(zoomControlsContainerAgain)) {
@@ -1573,7 +1572,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             const exitMobileFs = () => {
               console.log('=== EXIT FULLSCREEN: START ===');
               
-              // Проверяем состояние до выхода
+              // Implementation note.
               const htmlOverflowBefore = window.getComputedStyle(document.documentElement).overflow;
               const bodyOverflowBefore = window.getComputedStyle(document.body).overflow;
               const htmlPositionBefore = window.getComputedStyle(document.documentElement).position;
@@ -1586,8 +1585,8 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               console.log('[Exit FS] BEFORE - Has fullscreen class:', hasFullscreenClass);
               console.log('[Exit FS] BEFORE - Scroll position:', scrollTopBefore);
               
-              // КРИТИЧНО: Сначала восстанавливаем все стили элементов
-              // Удаляем все inline-стили, установленные через setProperty с !important
+              // Implementation note.
+              // Implementation note.
               if (viewer) {
                 viewer.style.removeProperty('position');
                 viewer.style.removeProperty('top');
@@ -1606,7 +1605,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 viewer.style.removeProperty('will-change');
               }
               
-              // Восстанавливаем стили родительских элементов
+              // Implementation note.
               let parent = viewer?.parentElement;
               let parentLevel = 0;
               while (parent && parentLevel < 5) {
@@ -1619,18 +1618,18 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 parentLevel++;
               }
               
-              // КРИТИЧНО: Сначала удаляем классы, чтобы CSS не блокировал прокрутку
+              // Implementation note.
               viewer.classList.remove('fullscreen-mobile');
               document.body.classList.remove('fullscreen-mobile-active');
               document.documentElement.classList.remove('fullscreen-mobile-active');
               
               console.log('[Exit FS] Classes removed');
               
-              // Затем восстанавливаем scroll position и overflow
+              // Implementation note.
               document.documentElement.style.overflow = '';
               document.body.style.overflow = '';
               
-              // Убираем overflow с !important, если он был установлен
+              // Implementation note.
               document.documentElement.style.removeProperty('overflow');
               document.body.style.removeProperty('overflow');
 
@@ -1639,7 +1638,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               if (header) { header.style.display = ''; header.removeAttribute('data-fullscreen-hidden'); }
               if (footer) { footer.style.display = ''; footer.removeAttribute('data-fullscreen-hidden'); }
 
-              // Восстанавливаем оригинальные стили body и html
+              // Implementation note.
               const body = document.body;
               const html = document.documentElement;
               
@@ -1650,7 +1649,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 body.style.overflow = original.overflow || '';
                 body.removeAttribute('data-original-body-style');
               } else {
-                // Если не сохраняли, просто очищаем
+                // Implementation note.
                 body.style.margin = '';
                 body.style.padding = '';
                 body.style.overflow = '';
@@ -1663,22 +1662,22 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 html.style.overflow = original.overflow || '';
                 html.removeAttribute('data-original-html-style');
               } else {
-                // Если не сохраняли, просто очищаем
+                // Implementation note.
                 html.style.margin = '';
                 html.style.padding = '';
                 html.style.overflow = '';
               }
 
-              // Восстанавливаем режим ratio
+              // Implementation note.
               restoreRatioMode();
               
-              // КРИТИЧНО: Убеждаемся, что прокрутка восстановлена
-              // Восстанавливаем позицию скролла, если она была сохранена
+              // Implementation note.
+              // Implementation note.
               const savedScrollTop = document.body.dataset.savedScrollTop ? parseInt(document.body.dataset.savedScrollTop, 10) : null;
               const savedScrollLeft = document.body.dataset.savedScrollLeft ? parseInt(document.body.dataset.savedScrollLeft, 10) : null;
               
-              // КРИТИЧНО: Многократно восстанавливаем прокрутку с разными задержками
-              // Сначала сразу после удаления классов
+              // Implementation note.
+              // Implementation note.
               requestAnimationFrame(() => {
                 console.log('[Exit FS] RAF 1: Removing overflow properties');
                 document.documentElement.style.setProperty('overflow', '', 'important');
@@ -1691,25 +1690,25 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 console.log('[Exit FS] RAF 1 - HTML overflow:', htmlOverflowRAF1, ', Body overflow:', bodyOverflowRAF1);
               });
               
-              // Затем через небольшую задержку
+              // Implementation note.
               setTimeout(() => {
                 console.log('[Exit FS] Timeout 100ms: Restoring scroll');
                 
-                // Принудительно восстанавливаем overflow с !important
+                // Implementation note.
                 document.documentElement.style.setProperty('overflow', '', 'important');
                 document.body.style.setProperty('overflow', '', 'important');
                 
-                // Убираем position: fixed с body и html, если они были установлены
+                // Implementation note.
                 document.documentElement.style.removeProperty('position');
                 document.body.style.removeProperty('position');
                 
-                // Убираем width и height, если они были установлены
+                // Implementation note.
                 document.documentElement.style.removeProperty('width');
                 document.documentElement.style.removeProperty('height');
                 document.body.style.removeProperty('width');
                 document.body.style.removeProperty('height');
                 
-                // Убеждаемся, что overflow не скрыт
+                // Implementation note.
                 const htmlOverflow = window.getComputedStyle(document.documentElement).overflow;
                 const bodyOverflow = window.getComputedStyle(document.body).overflow;
                 const htmlPosition = window.getComputedStyle(document.documentElement).position;
@@ -1722,7 +1721,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 console.log('[Exit FS] Timeout 100ms - Body overflow:', bodyOverflow, ', position:', bodyPosition);
                 console.log('[Exit FS] Timeout 100ms - ScrollHeight:', scrollHeight, ', ClientHeight:', clientHeight, ', Can scroll:', canScroll);
                 
-                // Если overflow все еще hidden, принудительно устанавливаем auto
+                // Implementation note.
                 if (htmlOverflow === 'hidden') {
                   document.documentElement.style.setProperty('overflow', 'auto', 'important');
                   console.log('[Exit FS] Timeout 100ms - FORCED HTML overflow to auto');
@@ -1732,16 +1731,16 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                   console.log('[Exit FS] Timeout 100ms - FORCED Body overflow to auto');
                 }
                 
-                // Проверяем еще раз после принудительного изменения
+                // Implementation note.
                 const htmlOverflowAfter = window.getComputedStyle(document.documentElement).overflow;
                 const bodyOverflowAfter = window.getComputedStyle(document.body).overflow;
                 console.log('[Exit FS] Timeout 100ms - AFTER FORCE - HTML overflow:', htmlOverflowAfter, ', Body overflow:', bodyOverflowAfter);
                 
-                // Удаляем сохраненные значения скролла
+                // Implementation note.
                 delete document.body.dataset.savedScrollTop;
                 delete document.body.dataset.savedScrollLeft;
                 
-                // Восстанавливаем позицию скролла, если она была сохранена
+                // Implementation note.
                 if (savedScrollTop !== null && savedScrollTop !== undefined) {
                   requestAnimationFrame(() => {
                     console.log('[Exit FS] Restoring scroll position:', savedScrollTop);
@@ -1753,7 +1752,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                       document.body.scrollLeft = savedScrollLeft;
                     }
                     
-                    // Проверяем результат
+                    // Implementation note.
                     const scrollTopAfter = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
                     const finalHtmlOverflow = window.getComputedStyle(document.documentElement).overflow;
                     const finalBodyOverflow = window.getComputedStyle(document.body).overflow;
@@ -1770,9 +1769,9 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 }
               }, 100);
               
-              // Убеждаемся, что viewer снова видим и имеет правильные размеры
+              // Implementation note.
               requestAnimationFrame(() => {
-                // Убеждаемся, что все дочерние элементы также восстановлены
+                // Implementation note.
                 if (ratioBox) {
                   ratioBox.style.removeProperty('position');
                   ratioBox.style.removeProperty('top');
@@ -1818,7 +1817,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 map.invalidateSize(false);
                 map.fitBounds(bounds, { animate: false, padding: [0, 0] });
                 
-                // Убеждаемся, что viewer видим
+                // Implementation note.
                 if (viewer) {
                   const viewerRect = viewer.getBoundingClientRect();
                   const htmlOverflowFinal = window.getComputedStyle(document.documentElement).overflow;
@@ -1841,7 +1840,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
                 return;
               }
 
-              // Десктоп: Fullscreen API
+              // Implementation note.
               if (!document.fullscreenElement && viewer.requestFullscreen) {
                 viewer.requestFullscreen().catch(e => console.error('FS request failed:', e));
               } else if (document.fullscreenElement && document.exitFullscreen) {
@@ -1851,13 +1850,13 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
             btnFS?.addEventListener('click', toggleFullscreen);
 
-            // Fullscreen события (десктоп)
+            // Implementation note.
             const onFsChange = () => {
               const isFs = !!document.fullscreenElement;
               setTimeout(() => {
                 applyMapInsetsToBorder();
                 if (isFs) {
-                  // на десктопе при переходе в fullscreen пусть fitBounds будет по высоте
+                  // Implementation note.
                   fitPreferHeight(map, bounds);
                 } else {
                   map.invalidateSize(false);
@@ -1871,7 +1870,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             document.addEventListener('MSFullscreenChange', onFsChange);
 
             // -----------------------
-            // Обработчики изменения viewport (visualViewport preferred)
+            // Implementation note.
             // -----------------------
             const onViewportResize = debounce(() => {
               applyMapInsetsToBorder();
@@ -1895,7 +1894,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
             window.addEventListener('resize', onViewportResize);
             window.addEventListener('orientationchange', onViewportResize);
 
-            // Финальный safety-fit после загрузки
+            // Implementation note.
               setTimeout(() => {
                 applyMapInsetsToBorder();
               fitPreferHeight(map, bounds);
@@ -1906,8 +1905,8 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
           <!-- Back navigation -->
           <div class="mt-10">
-            <a href="/ru/local_history" class="inline-block rounded-lg border border-amber-800/30 bg-amber-100/50 px-4 py-2 text-sm text-slate-800 hover:bg-amber-200/50">
-              ← Назад к «Краеведению и генеалогии»
+            <a href="/ru/local_history/belozerye" class="inline-block rounded-lg border border-amber-800/30 bg-amber-100/50 px-4 py-2 text-sm text-slate-800 hover:bg-amber-200/50">
+              ← Назад к разделу «Белозерье»
             </a>
       </div>
     </div>
@@ -1916,7 +1915,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
   </section>
 
   <style>
-    /* ---------- Пергамент «как на образце» ---------- */
+    /* Styling or implementation note. */
     .paper-old{
       position: relative;
       color:#2a1e14;
@@ -1924,26 +1923,26 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       border-radius: 0;
       overflow: hidden;
 
-      /* базовый тон */
+      /* Styling or implementation note. */
       background-color: #f3e4c9;
 
-      /* Паттерн из файла */
+      /* Styling or implementation note. */
       background-image: url('/images/textures/old-paper.webp');
       background-size: auto;
       background-position: center;
       background-repeat: repeat;
 
-      /* объём и «запылённость» */
+      /* Styling or implementation note. */
       box-shadow:
         0 20px 40px rgba(0,0,0,.35),
         inset 0 0 140px rgba(0,0,0,.22),
         inset 0 0 24px rgba(0,0,0,.12);
 
-      /* лёгкая коррекция тона/контраста */
+      /* Styling or implementation note. */
       filter: saturate(1.05) contrast(1.02);
     }
 
-    /* Светлый слой поверх паттерна для осветления */
+    /* Styling or implementation note. */
     .paper-old::before{
       content:"";
       position:absolute; inset:0; pointer-events:none;
@@ -1951,7 +1950,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       mix-blend-mode: screen;
     }
 
-    /* Внутри «бумаги» белый текст перекрасим в тёмный при необходимости */
+    /* Styling or implementation note. */
     .paper-old .text-white, .paper-old .text-white * { color:#2a1e14 !important; }
 
     @media (min-width:768px){ .paper-old{ padding:2.5rem; } }
@@ -1962,7 +1961,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
         margin: 0;
       }
       
-      /* Перенос слов по слогам на мобильных устройствах для таблицы */
+      /* Styling or implementation note. */
       table td, table th {
         word-break: break-word;
         overflow-wrap: break-word;
@@ -1972,7 +1971,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
         -ms-hyphens: auto;
       }
       
-      /* Убираем ограничения на мобильных для широкого экрана */
+      /* Styling or implementation note. */
       section > div {
         max-width: 100% !important;
         padding-left: 0;
@@ -1980,7 +1979,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       }
     }
 
-    /* Стили для полноэкранного режима карты */
+    /* Styling or implementation note. */
     body.fullscreen-mobile-active {
       overflow: hidden !important;
       margin: 0 !important;
@@ -2017,7 +2016,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       visibility: visible !important;
     }
     
-    /* Для iOS Safari */
+    /* Styling or implementation note. */
     @supports (-webkit-touch-callout: none) {
       #viewer.fullscreen-mobile {
         height: -webkit-fill-available !important;
@@ -2082,7 +2081,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       box-sizing: border-box !important;
     }
 
-    /* Leaflet контейнер в fullscreen */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile .leaflet-container {
       width: 100vw !important;
       min-width: 100vw !important;
@@ -2105,18 +2104,18 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       box-sizing: border-box !important;
     }
 
-    /* Leaflet панели - должны быть ниже кнопок */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile .leaflet-pane {
       z-index: 1 !important;
       pointer-events: none !important;
     }
     
-    /* Убеждаемся, что Leaflet панели не блокируют клики, но кнопки могут быть кликабельны */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile .leaflet-pane * {
       pointer-events: auto !important;
     }
 
-    /* Leaflet image overlay должен быть видим */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile .leaflet-image-layer {
       z-index: 1 !important;
       display: block !important;
@@ -2128,7 +2127,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       height: auto !important;
     }
     
-    /* Кнопки должны быть поверх всего в fullscreen */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile #frame button,
     #viewer.fullscreen-mobile #frame > div {
       z-index: 9999999 !important;
@@ -2138,7 +2137,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       visibility: visible !important;
     }
 
-    /* Для iOS Safari */
+    /* Styling or implementation note. */
     @supports (-webkit-touch-callout: none) {
       #viewer.fullscreen-mobile {
         height: -webkit-fill-available !important;
@@ -2149,7 +2148,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       display: none;
     }
 
-    /* Кнопки управления в полноэкранном режиме должны быть видны */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile #btn-fullscreen,
     #viewer.fullscreen-mobile #btn-zoom-in,
     #viewer.fullscreen-mobile #btn-zoom-out,
@@ -2162,8 +2161,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       position: absolute !important;
     }
 
-    /* В обычном режиме позиционирование зум-кнопок задаётся классами в разметке.
-       В полноэкранном режиме фиксируем их относительно экрана, а не контейнера. */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile #zoom-controls {
       position: fixed !important;
       left: 0.5rem !important;
@@ -2187,7 +2185,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       clip-path: none !important;
     }
     
-    /* Кнопка fullscreen в правом верхнем углу */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile #btn-fullscreen {
       top: 0.5rem !important;
       right: 0.5rem !important;
@@ -2196,7 +2194,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       transform: none !important;
     }
     
-    /* Убеждаемся, что все кнопки зума видны */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile #btn-zoom-in,
     #viewer.fullscreen-mobile #btn-zoom-out,
     #viewer.fullscreen-mobile #btn-reset {
@@ -2242,7 +2240,7 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       margin: 0 !important;
     }
 
-    /* Убеждаемся, что frame не перекрывает кнопки */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile #frame {
       z-index: 1 !important;
     }
@@ -2252,13 +2250,13 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
       overflow: visible !important;
     }
     
-    /* Убеждаемся, что Leaflet контейнер не перекрывает кнопки */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile .leaflet-container {
       z-index: 0 !important;
       overflow: visible !important;
     }
 
-    /* Кнопка закрытия для мобильного fullscreen */
+    /* Styling or implementation note. */
     #viewer.fullscreen-mobile #btn-fullscreen::before {
       content: '×';
       font-size: 1.75rem !important;

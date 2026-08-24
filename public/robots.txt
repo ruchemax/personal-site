@@ -4,7 +4,7 @@ Allow: /
 # Sitemap
 Sitemap: https://www.maxruchkin.org/sitemap-index.xml
 
-# Яндекс
+# Yandex
 User-agent: Yandex
 Allow: /
 

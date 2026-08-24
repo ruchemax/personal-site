@@ -7,7 +7,7 @@ const {
 
 import "../styles/globals.css";
 
-// меню для EN/RU
+// Implementation note.
 const menuEn = [
   { href: "/", label: "Home" },
   { href: "/projects", label: "Projects" },
@@ -26,16 +26,16 @@ const menuRu = [
 ];
 const menu = lang === "ru" ? menuRu : menuEn;
 
-// текущий путь и локализованные ссылки для переключателя
-const path = Astro.url.pathname;              // напр. "/publications" или "/ru/publications" или "/"
+// Implementation note.
+const path = Astro.url.pathname;              // Implementation note.
 const hrefRU = path.startsWith("/ru")
-  ? path                                     // уже RU
-  : (path === "/" ? "/ru" : `/ru${path}`);   // тот же путь с префиксом /ru
+  ? path                                     // Already in Russian
+  : (path === "/" ? "/ru" : `/ru${path}`);   // Implementation note.
 const hrefEN = path.startsWith("/ru")
-  ? (path.slice(3) || "/")                   // убираем "/ru"
-  : (path || "/");                           // уже EN
+  ? (path.slice(3) || "/")                   // Implementation note.
+  : (path || "/");                           // Implementation note.
 
-// Определяем язык на основе пути и сохраненных предпочтений
+// Implementation note.
 const currentLang = path.startsWith("/ru") ? "ru" : "en";
 ---
 
@@ -47,7 +47,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
     <meta name="description" content={description} />
     <link rel="icon" href="/favicon.ico" />
     
-    <!-- Предзагрузка фоновых изображений -->
+    <!-- UI section -->
     <link rel="preload" as="image" href="/images/background/main-bg.webp" />
     <link rel="preload" as="image" href="/images/background/publications-bg.webp" />
     <link rel="preload" as="image" href="/images/background/projects-bg.webp" />
@@ -71,7 +71,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
           <span class="font-semibold text-white">Maksim Ruchkin</span>
         </a>
 
-        <!-- Десктопное меню -->
+        <!-- UI section -->
         <ul class="hidden items-center gap-8 text-sm md:flex">
           {menu.map((item) => (
             <li>
@@ -80,7 +80,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
           ))}
         </ul>
 
-        <!-- Переключатель языка: ведёт на тот же путь -->
+        <!-- UI section -->
         <div class="flex items-center gap-2">
           <div class="flex gap-2">
             <a
@@ -95,7 +95,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
             >EN</a>
           </div>
           
-          <!-- Кнопка гамбургер-меню для мобильных -->
+          <!-- UI section -->
           <button id="mobileMenuBtn" class="md:hidden ml-2 p-2 text-white hover:text-amber-400 focus:outline-none" aria-label="Toggle menu">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path id="menuIcon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
@@ -105,7 +105,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
         </div>
       </nav>
 
-      <!-- Мобильное меню -->
+      <!-- UI section -->
       <div id="mobileMenu" class="hidden md:hidden border-t border-white/10 bg-black/60 backdrop-blur">
         <ul class="mx-auto max-w-[1200px] px-4 py-4 space-y-3">
           {menu.map((item) => (
@@ -126,9 +126,9 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
     </footer>
 
     <script>
-      // Управление языком и сохранение предпочтений
+      // Implementation note.
       document.addEventListener('DOMContentLoaded', function() {
-        // Управление мобильным меню
+        // Implementation note.
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const mobileMenu = document.getElementById('mobileMenu');
         const menuIcon = document.getElementById('menuIcon');
@@ -148,7 +148,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
             }
           });
           
-          // Закрываем меню при клике на ссылку
+          // Implementation note.
           const mobileMenuLinks = mobileMenu.querySelectorAll('a');
           mobileMenuLinks.forEach(link => {
             link.addEventListener('click', function() {
@@ -159,7 +159,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
           });
         }
 
-        // Сохранение выбранного языка в localStorage
+        // Implementation note.
         const langLinks = document.querySelectorAll('a[href*="/ru"], a[href="/"]');
         
         langLinks.forEach(link => {
@@ -168,10 +168,10 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
             if (!href) return;
             console.log('PublicationsLayout - Клик по переключателю языка:', href);
             
-            // НЕ меняем язык при переходе на краеведение
+            // Implementation note.
             if (href.includes('/local_history')) {
               console.log('PublicationsLayout - Переход на краеведение - НЕ меняем язык');
-              return; // Не устанавливаем язык, просто переходим
+              return; // Implementation note.
             }
             
             if (href.startsWith('/ru')) {
@@ -186,24 +186,24 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
           });
         });
 
-        // Проверка сохраненного языка при загрузке страницы
+        // Implementation note.
         const savedLang = localStorage.getItem('preferredLanguage');
         const currentPath = window.location.pathname;
         
-        // ОТЛАДКА: выводим информацию о языке
+        // Implementation note.
         console.log('PublicationsLayout - Текущий путь:', currentPath);
         console.log('PublicationsLayout - Сохраненный язык:', savedLang);
         
-        // Если пользователь переходит с краеведения на другую страницу
-        // и у него сохранен английский язык, перенаправляем на английскую версию
+        // Implementation note.
+        // Implementation note.
         if (savedLang === 'en' && currentPath.startsWith('/ru/') && !currentPath.includes('/local_history')) {
           console.log('PublicationsLayout - Перенаправляем на английскую версию:', currentPath.replace('/ru', '') || '/');
-          // Перенаправляем на английскую версию страницы
+          // Implementation note.
           const englishPath = currentPath.replace('/ru', '') || '/';
           window.location.href = englishPath;
         }
 
-        // Обработка кликов по ссылкам в меню
+        // Implementation note.
         const menuLinks = document.querySelectorAll('nav a[href]');
         menuLinks.forEach(link => {
           link.addEventListener('click', function(e) {
@@ -214,19 +214,19 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
             console.log('PublicationsLayout - Клик по ссылке в меню:', href);
             console.log('PublicationsLayout - Сохраненный язык при клике:', savedLang);
             
-            // Устанавливаем язык в зависимости от того, на какую страницу переходим
+            // Implementation note.
             if (href.startsWith('/ru/') && !href.includes('/local_history')) {
-              // Переход на русскую страницу (кроме краеведения) - устанавливаем русский язык
+              // Implementation note.
               localStorage.setItem('preferredLanguage', 'ru');
               console.log('PublicationsLayout - Установлен русский язык при переходе на русскую страницу');
             } else if (!href.startsWith('/ru/')) {
-              // Переход на английскую страницу - устанавливаем английский язык
+              // Implementation note.
               localStorage.setItem('preferredLanguage', 'en');
               console.log('PublicationsLayout - Установлен английский язык при переходе на английскую страницу');
             }
             
-            // Если пользователь с английской версии кликает на ссылку, ведущую на русскую страницу
-            // (кроме краеведения), перенаправляем на английскую версию
+            // Implementation note.
+            // Implementation note.
             if (savedLang === 'en' && href.startsWith('/ru/') && !href.includes('/local_history')) {
               console.log('PublicationsLayout - Перенаправляем с русской на английскую версию');
               e.preventDefault();
@@ -239,21 +239,21 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
           });
         });
         
-        // Плавное появление фона после загрузки
+        // Implementation note.
         const body = document.body;
         const backgroundImage = new Image();
         
         backgroundImage.onload = function() {
-          // Плавно показываем страницу
+          // Implementation note.
           body.style.opacity = '1';
         };
         
         backgroundImage.onerror = function() {
-          // Если изображение не загрузилось, все равно показываем страницу
+          // Implementation note.
           body.style.opacity = '1';
         };
         
-        // Начинаем загрузку изображения
+        // Implementation note.
         backgroundImage.src = '/images/background/publications-bg.webp';
       });
     </script>

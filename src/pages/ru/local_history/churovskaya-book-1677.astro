@@ -18,22 +18,22 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
   backgroundOverlay={0}
 >
   <section class="w-full text-white">
-    <div class="mx-auto w-full max-w-[1000px] px-6 pt-4 pb-12">
-      <!-- Весь контент на фоне бумаги -->
-      <div class="paper-old shadow-2xl">
+    <div class="parchment-shell mx-auto w-full max-w-[1000px] px-3 pb-12 pt-4 md:px-5">
+      <!-- UI section -->
+      <article class="bound-parchment">
           <div class="relative z-10">
-            <p class="text-xs text-gray-600 mb-4">Опубликовано: {publishedAt}</p>
+            <p class="text-xs text-gray-800 mb-4">Опубликовано: {publishedAt}</p>
 
             <h1 class="text-2xl font-bold mb-2 text-slate-800">Перепись Чуровской волости (1677-79 гг.)</h1>
 
-            <!-- Теги -->
+            <!-- UI section -->
             <div class="mt-3 flex flex-wrap gap-2 text-xs mb-6">
-              <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Белозерский уезд</span>
-              <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Надпорожский стан</span>
-              <span class="rounded-full bg-amber-500/20 px-3 py-1 text-amber-700">Чуровская волость</span>
+              <span class="rounded-full bg-amber-500/20 px-3 py-1 text-[#9a3412]">Белозерский уезд</span>
+              <span class="rounded-full bg-amber-500/20 px-3 py-1 text-[#9a3412]">Надпорожский стан</span>
+              <span class="rounded-full bg-amber-500/20 px-3 py-1 text-[#9a3412]">Чуровская волость</span>
             </div>
 
-            <!-- Описание книги -->
+            <!-- UI section -->
             <div class="space-y-3 text-sm text-slate-800 leading-relaxed mb-8">
               <p>
                 Переписная книга Белозерского уезда переписи стольника Федора Ивановича Потемкина и подьячего Федора Бирелева 1677–1679 гг.
@@ -41,23 +41,23 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               </p>
             </div>
 
-            <!-- Прочтение -->
+            <!-- UI section -->
             <div class="text-right mb-4">
               <p class="text-sm text-black italic">Прочтение: М.В. Ручкин</p>
             </div>
 
-            <!-- Содержание -->
+            <!-- UI section -->
             <div class="mb-8 pb-6 border-b border-amber-800/30">
-              <h2 class="text-xl font-semibold mb-4 text-slate-800">Содержание</h2>
+              <h2 class="text-xl font-semibold mb-4 text-[#9a3412]">Содержание</h2>
               <div class="space-y-2 text-sm">
-                <div><a href="#vysokoe" class="text-amber-700 underline">Деревня Высокое</a></div>
-                <div><a href="#myshkino" class="text-amber-700 underline">Деревня Мышкино на ручие на Меглиевском</a></div>
-                <div><a href="#lyskovo" class="text-amber-700 underline">Деревня Лысково на речке на Пустой на Чюровке</a></div>
-                <div><a href="#rublevo" class="text-amber-700 underline">Деревня Рублево на речке на Пустой Чюровке</a></div>
+                <div><a href="#vysokoe" class="text-[#9a3412] underline">Деревня Высокое</a></div>
+                <div><a href="#myshkino" class="text-[#9a3412] underline">Деревня Мышкино на ручие на Меглиевском</a></div>
+                <div><a href="#lyskovo" class="text-[#9a3412] underline">Деревня Лысково на речке на Пустой на Чюровке</a></div>
+                <div><a href="#rublevo" class="text-[#9a3412] underline">Деревня Рублево на речке на Пустой Чюровке</a></div>
               </div>
             </div>
 
-            <div class="space-y-6 text-base leading-tight">
+            <div class="document-body space-y-6 text-base leading-tight">
               <div class="space-y-4">
                 <p class="text-gray-600 text-base italic mb-2">(л. 358)</p>
 
@@ -74,27 +74,27 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
                 <div class="space-y-3">
                   <h3 id="vysokoe" class="text-lg font-medium">
-                    <span class="text-amber-700">Деревня Высокое</span>, а в ней крестьяне:
+                    <span class="text-[#9a3412]">Деревня Высокое</span>, а в ней крестьяне:
                   </h3>
 
                   <div class="space-y-1 pl-4">
-                    <p>Во дворе крестьянин <span class="font-bold italic">Якушко Ильин</span> з детми с <span class="font-bold italic">Степкою</span> да з <span class="font-bold italic">Гришкою</span> да с <span class="font-bold italic">Мишкою</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Якушко Ильин</span> з детми с <span class="person-name">Степкою</span> да з <span class="person-name">Гришкою</span> да с <span class="person-name">Мишкою</span>.</p>
 
-                    <p>Двор пуст у крестьянина <span class="font-bold italic">Микифорка Савельева</span>, а он <span class="font-bold italic">Микифорко</span> переведен той же вотчины Чюровские волости в деревню Малинуху в 7183 [1674/75] году.</p>
+                    <p>Двор пуст у крестьянина <span class="person-name">Микифорка Савельева</span>, а он <span class="person-name">Микифорко</span> переведен той же вотчины Чюровские волости в деревню Малинуху в 7183 [1674/75] году.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Артюшка Ильин</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Артюшка Ильин</span>.</p>
 
-                    <p>Во дворе бобыль <span class="font-bold italic">Пиминко Софронов</span> з братом родным с <span class="font-bold italic">Сидорком Софроновым</span>.</p>
+                    <p>Во дворе бобыль <span class="person-name">Пиминко Софронов</span> з братом родным с <span class="person-name">Сидорком Софроновым</span>.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Игнашка Максимов</span> с сыном с <span class="font-bold italic">Феоктистком</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Игнашка Максимов</span> с сыном с <span class="person-name">Феоктистком</span>.</p>
 
-                    <p>Во дворе бобылка вдова <span class="font-bold italic">Каптелинка Родкина</span> жена <span class="font-bold italic">Игнатьева</span> с сыном с <span class="font-bold italic">Трошкою Родионовым</span>.</p>
+                    <p>Во дворе бобылка вдова <span class="person-name">Каптелинка Родкина</span> жена <span class="person-name">Игнатьева</span> с сыном с <span class="person-name">Трошкою Родионовым</span>.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Матюшка Евтихиев</span>, а у него дети <span class="font-bold italic">Варфоломейко</span> да <span class="font-bold italic">Ондрюшко</span> тринатцати лет.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Матюшка Евтихиев</span>, а у него дети <span class="person-name">Варфоломейко</span> да <span class="person-name">Ондрюшко</span> тринатцати лет.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Петрушка Сидоров</span> з братьями родными с <span class="font-bold italic">Стенкою</span> да с <span class="font-bold italic">Кондрашкою Сидоровыми</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Петрушка Сидоров</span> з братьями родными с <span class="person-name">Стенкою</span> да с <span class="person-name">Кондрашкою Сидоровыми</span>.</p>
 
-                    <p>Во дворе бобыль <span class="font-bold italic">Антипка Фомин</span>.</p>
+                    <p>Во дворе бобыль <span class="person-name">Антипка Фомин</span>.</p>
                   </div>
                 </div>
               </div>
@@ -104,25 +104,25 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
 
                 <div class="space-y-3">
                   <h3 id="myshkino" class="text-lg font-medium">
-                    <span class="text-amber-700">Деревня Мышкино на ручие на Меглиевском</span>, а в ней крестьяне:
+                    <span class="text-[#9a3412]">Деревня Мышкино на ручие на Меглиевском</span>, а в ней крестьяне:
                   </h3>
 
                   <div class="space-y-1 pl-4">
-                    <p>Во дворе крестьянин <span class="font-bold italic">Игнашка Ермолаев</span> с сыном с <span class="font-bold italic">Мишкою</span>. У <span class="font-bold italic">Мишки</span> сын <span class="font-bold italic">Петрушка</span> тринатцати лет.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Игнашка Ермолаев</span> с сыном с <span class="person-name">Мишкою</span>. У <span class="person-name">Мишки</span> сын <span class="person-name">Петрушка</span> тринатцати лет.</p>
 
-                    <p>Во дворе бобыль <span class="font-bold italic">Тихонко Дмитриев</span>.</p>
+                    <p>Во дворе бобыль <span class="person-name">Тихонко Дмитриев</span>.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Харитонко Ермолаев</span> с детми с <span class="font-bold italic">Ермушкою</span> да с <span class="font-bold italic">Кондрашкою</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Харитонко Ермолаев</span> с детми с <span class="person-name">Ермушкою</span> да с <span class="person-name">Кондрашкою</span>.</p>
 
-                    <p>Во дворе бобыль <span class="font-bold italic">Гришка Васильев</span>.</p>
+                    <p>Во дворе бобыль <span class="person-name">Гришка Васильев</span>.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Самушка Григориев</span>, у него сын <span class="font-bold italic">Малафейко</span>. У <span class="font-bold italic">Малафейка</span> сын <span class="font-bold italic">Куземка</span> семи лет.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Самушка Григориев</span>, у него сын <span class="person-name">Малафейко</span>. У <span class="person-name">Малафейка</span> сын <span class="person-name">Куземка</span> семи лет.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Микитка Амбросимов</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Микитка Амбросимов</span>.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Ивашко Андреев</span>. У него подсоседники <span class="font-bold italic">Селиванко Софронов</span> да <span class="font-bold italic">Елисейко Филипов</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Ивашко Андреев</span>. У него подсоседники <span class="person-name">Селиванко Софронов</span> да <span class="person-name">Елисейко Филипов</span>.</p>
 
-                    <p>Во дворе бобыль <span class="font-bold italic">Матюшка Обросимов</span> з детьми с <span class="font-bold italic">Якимкою</span>, с <span class="font-bold italic">Демкою</span> да с <span class="font-bold italic">Савкою</span>.</p>
+                    <p>Во дворе бобыль <span class="person-name">Матюшка Обросимов</span> з детьми с <span class="person-name">Якимкою</span>, с <span class="person-name">Демкою</span> да с <span class="person-name">Савкою</span>.</p>
                   </div>
                 </div>
               </div>
@@ -130,21 +130,21 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               <div class="space-y-4">
                 <div class="space-y-3">
                   <h3 id="lyskovo" class="text-lg font-medium">
-                    <span class="text-amber-700">Деревня Лысково на речке на Пустой на Чюровке</span>, а в ней крестьяне:
+                    <span class="text-[#9a3412]">Деревня Лысково на речке на Пустой на Чюровке</span>, а в ней крестьяне:
                   </h3>
 
                   <div class="space-y-1 pl-4">
-                    <p>Во дворе крестьянин <span class="font-bold italic">Ивашко Клементьев</span> с сыном <span class="font-bold italic">Якушком</span>. У <span class="font-bold italic">Якушки</span> сын <span class="font-bold italic">Петрушка</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Ивашко Клементьев</span> с сыном <span class="person-name">Якушком</span>. У <span class="person-name">Якушки</span> сын <span class="person-name">Петрушка</span>.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Степка Иванов</span>, у него сын <span class="font-bold italic">Филка</span> семи лет.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Степка Иванов</span>, у него сын <span class="person-name">Филка</span> семи лет.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Федка Филипов</span> з братом родным <span class="text-gray-600 text-base italic mb-2">(л. 364)</span> з <span class="font-bold italic">Захарком Филиповым</span>. У <span class="font-bold italic">Федки</span> сын <span class="font-bold italic">Фролко</span> шести лет.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Федка Филипов</span> з братом родным <span class="text-gray-600 text-base italic mb-2">(л. 364)</span> з <span class="person-name">Захарком Филиповым</span>. У <span class="person-name">Федки</span> сын <span class="person-name">Фролко</span> шести лет.</p>
 
-                    <p>Во дворе бобыль <span class="font-bold italic">Тихонко Иванов</span>. У него сын <span class="font-bold italic">Ивашко</span> шести лет.</p>
+                    <p>Во дворе бобыль <span class="person-name">Тихонко Иванов</span>. У него сын <span class="person-name">Ивашко</span> шести лет.</p>
 
-                    <p>Во дворе вдова бобылка <span class="font-bold italic">Аленка Ферапонтова</span> жена <span class="font-bold italic">Ларионова</span>. У нее дети <span class="font-bold italic">Еремка</span> да <span class="font-bold italic">Евдокимко Ферапонтовы</span>. А он <span class="font-bold italic">Ферапонтко</span> взят в даточные в первой збор.</p>
+                    <p>Во дворе вдова бобылка <span class="person-name">Аленка Ферапонтова</span> жена <span class="person-name">Ларионова</span>. У нее дети <span class="person-name">Еремка</span> да <span class="person-name">Евдокимко Ферапонтовы</span>. А он <span class="person-name">Ферапонтко</span> взят в даточные в первой збор.</p>
 
-                    <p>Двор пуст у крестьянина <span class="font-bold italic">Перфилейка Григориева</span>, а он <span class="font-bold italic">Перфилейко</span> умре в 7177 [1668/69] году, а жены и детей после нево не осталось.</p>
+                    <p>Двор пуст у крестьянина <span class="person-name">Перфилейка Григориева</span>, а он <span class="person-name">Перфилейко</span> умре в 7177 [1668/69] году, а жены и детей после нево не осталось.</p>
                   </div>
                 </div>
               </div>
@@ -152,74 +152,170 @@ const publishedAt = new Date("2025-10-26").toLocaleDateString("ru-RU", {
               <div class="space-y-4">
                 <div class="space-y-3">
                   <h3 id="rublevo" class="text-lg font-medium">
-                    <span class="text-amber-700">Деревня Рублево на речке на Пустой Чюровке</span>, а в ней крестьяне:
+                    <span class="text-[#9a3412]">Деревня Рублево на речке на Пустой Чюровке</span>, а в ней крестьяне:
                   </h3>
 
                   <div class="space-y-1 pl-4">
-                    <p>Во дворе крестьянин <span class="font-bold italic">Петрушка Григориев</span> с сыном <span class="font-bold italic">Алешкою</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Петрушка Григориев</span> с сыном <span class="person-name">Алешкою</span>.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Матюшка Тимофеев</span> с детьми с <span class="font-bold italic">Сенкою</span> да с <span class="font-bold italic">Митькою</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Матюшка Тимофеев</span> с детьми с <span class="person-name">Сенкою</span> да с <span class="person-name">Митькою</span>.</p>
 
-                    <p>Во дворе бобыль <span class="font-bold italic">Васка Григориев</span>.</p>
+                    <p>Во дворе бобыль <span class="person-name">Васка Григориев</span>.</p>
 
-                    <p>Во дворе крестьянин <span class="font-bold italic">Пронка Карпов</span> з братом родным с <span class="font-bold italic">Перфилейком Карповым</span>.</p>
+                    <p>Во дворе крестьянин <span class="person-name">Пронка Карпов</span> з братом родным с <span class="person-name">Перфилейком Карповым</span>.</p>
 
-                    <p>Во дворе бобыль <span class="font-bold italic">Никитка Лазарев</span> з детьми с <span class="font-bold italic">Ывашком</span> да с <span class="font-bold italic">Митькою</span>.</p>
+                    <p>Во дворе бобыль <span class="person-name">Никитка Лазарев</span> з детьми с <span class="person-name">Ывашком</span> да с <span class="person-name">Митькою</span>.</p>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div><!-- /paper -->
+          <span class="paper-bottom-edge" aria-hidden="true"></span>
+        </article>
       </div>
 
       <!-- Back navigation -->
-      <div class="mt-10">
-        <a href="/ru/local_history" class="inline-block rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-sm text-white/80 hover:bg-white/10">
-          ← Назад к «Краеведению и генеалогии»
+      <div class="mt-2">
+        <a href="/ru/local_history/belozerye" class="inline-block rounded-lg border border-white/20 bg-black/30 px-4 py-2 text-sm text-white/80 hover:bg-white/10">
+          ← Назад к разделу «Белозерье»
         </a>
       </div>
   </section>
 
-   <style>
-     /* ---------- Пергамент «как на образце» ---------- */
-     .paper-old{
-       position: relative;
-       color:#2a1e14;
-       padding: 2rem;
-       border-radius: 0;
-       overflow: hidden;
+  <style>
+    .parchment-shell {
+      container-type: inline-size;
+    }
 
-       /* базовый тон */
-       background-color: #f3e4c9;
+    .bound-parchment {
+      position: relative;
+      isolation: isolate;
+      --paper-safe-left: 18%;
+      --paper-safe-right: 12%;
+      --paper-top-edge: 17.578125cqi;
+      overflow: hidden;
+      padding: 5.5rem var(--paper-safe-right) 5.5rem var(--paper-safe-left);
+      border-radius: 0;
+      color: #33281f;
+      background-color: transparent;
+      box-shadow: none;
+    }
 
-       /* Паттерн из файла */
-       background-image: url('/images/textures/old-paper.webp');
-       background-size: auto;
-       background-position: center;
-       background-repeat: repeat;
+    .bound-parchment::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: var(--paper-top-edge);
+      content: "";
+      pointer-events: none;
+      background-image: url('/images/textures/parchment-top-edge-v5.webp');
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
 
-       /* объём и «запылённость» */
-       box-shadow:
-         0 20px 40px rgba(0,0,0,.35),
-         inset 0 0 140px rgba(0,0,0,.22),
-         inset 0 0 24px rgba(0,0,0,.12);
+    .bound-parchment::after {
+      position: absolute;
+      top: var(--paper-top-edge);
+      right: 0;
+      bottom: var(--paper-top-edge);
+      left: 0;
+      z-index: 0;
+      content: "";
+      pointer-events: none;
+      background-image: url('/images/textures/parchment-bound-seamless-v5.webp');
+      background-position: top center;
+      background-repeat: no-repeat round;
+      background-size: 100% auto;
+    }
 
-       /* лёгкая коррекция тона/контраста */
-       filter: saturate(1.05) contrast(1.02);
-     }
+    .paper-bottom-edge {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: var(--paper-top-edge);
+      pointer-events: none;
+      background-image: url('/images/textures/parchment-bottom-edge-v5.webp');
+      background-position: bottom center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
 
-     /* Светлый слой поверх паттерна для осветления */
-     .paper-old::before{
-       content:"";
-       position:absolute; inset:0; pointer-events:none;
-       background: rgba(255,255,255,0.6);
-       mix-blend-mode: screen;
-     }
+    .bound-parchment .text-white,
+    .bound-parchment .text-white * {
+      color: #33281f !important;
+    }
 
-     /* Внутри «бумаги» белый текст перекрасим в тёмный при необходимости */
-     .paper-old .text-white, .paper-old .text-white * { color:#2a1e14 !important; }
+    .bound-parchment > .relative > :not(.document-body) {
+      max-width: 820px;
+      margin-right: auto;
+      margin-left: auto;
+    }
 
-     @media (min-width:768px){ .paper-old{ padding:2.5rem; } }
-   </style>
+    .document-body {
+      max-width: 820px;
+      margin-right: auto;
+      margin-left: auto;
+      color: #33281f;
+      font-size: .9375rem;
+      line-height: 1.58;
+    }
+
+    .document-body h3 {
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: .5rem;
+      border-bottom: 1px solid rgba(146, 64, 14, .35);
+      scroll-margin-top: 5rem;
+      color: #33281f;
+      font-size: 1.0625rem;
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .document-body .text-gray-600 {
+      color: #2563eb;
+    }
+
+    .document-body .text-gray-600 + .space-y-3 {
+      margin-top: .35rem;
+    }
+
+    .document-body .text-gray-600 + .space-y-3 > h3 {
+      margin-top: 0;
+    }
+
+    .document-body .space-y-1 > p {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding: .35rem 1rem .35rem 2.75rem;
+      text-indent: -1.65rem;
+    }
+
+    .person-name {
+      font-weight: 550;
+      font-style: normal;
+    }
+
+    @media (max-width: 700px) {
+      .bound-parchment {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
+
+      .document-body { font-size: .9rem; }
+
+      .document-body .space-y-1 > p {
+        padding: .3rem .75rem .3rem 2rem;
+        text-indent: -1rem;
+      }
+    }
+  </style>
 </LocalHistoryLayout>

@@ -286,13 +286,13 @@ const years = Object.keys(grouped).sort((a, b) => {
       chip.addEventListener("click", () => {
         chip.classList.toggle("active");
 
-        // keep at least one chip active? — по ТЗ не требовалось; убрал автодобавление
+        // Implementation note.
         applyFilter();
         paintChips();
       });
     });
 
-    // initial render: only journal + book active (так задано в разметке)
+    // Implementation note.
     applyFilter();
     paintChips();
   </script>

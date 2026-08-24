@@ -10,17 +10,17 @@ import ContactsLayout from "../../layouts/ContactsLayout.astro";
     <div class="mx-auto w-full max-w-[800px] px-6 py-16">
       <h1 class="mb-8 text-3xl font-bold">Свяжитесь со мной</h1>
 
-      <!-- Блок статуса -->
+      <!-- UI section -->
       <div id="form-status" class="mb-4 hidden rounded-md border border-white/20 px-4 py-3 text-sm"></div>
 
       <form id="contact-form" method="POST" action="/api/contacts" class="space-y-4" novalidate>
-        <!-- Honeypot защита от ботов -->
+        <!-- UI section -->
         <div class="absolute left-[-9999px] opacity-0 pointer-events-none">
           <label for="website">Не заполняйте это поле</label>
           <input type="text" id="website" name="website" autocomplete="off" />
         </div>
 
-        <!-- Имя -->
+        <!-- UI section -->
         <div>
           <label for="name" class="mb-1 block text-sm">Ваше имя</label>
           <input
@@ -46,7 +46,7 @@ import ContactsLayout from "../../layouts/ContactsLayout.astro";
           />
         </div>
 
-        <!-- Тема -->
+        <!-- UI section -->
         <div>
           <label for="subject" class="mb-1 block text-sm">Тема</label>
           <input
@@ -58,7 +58,7 @@ import ContactsLayout from "../../layouts/ContactsLayout.astro";
           />
         </div>
 
-        <!-- Сообщение -->
+        <!-- UI section -->
         <div>
           <label for="message" class="mb-1 block text-sm">Сообщение</label>
           <textarea
@@ -73,7 +73,7 @@ import ContactsLayout from "../../layouts/ContactsLayout.astro";
         <!-- Cloudflare Turnstile -->
         <div class="cf-turnstile" data-sitekey="0x4AAAAAAB93lgc1IE7eRZFt" data-theme="dark"></div>
 
-        <!-- Отправка -->
+        <!-- UI section -->
         <button
           type="submit"
           class="rounded-md bg-amber-500 px-6 py-2 font-semibold text-slate-950 hover:bg-amber-400"
@@ -84,7 +84,7 @@ import ContactsLayout from "../../layouts/ContactsLayout.astro";
     </div>
   </section>
 
-  <!-- Отправка через fetch и красивый статус -->
+  <!-- UI section -->
   <script is:inline>
     const form = document.getElementById('contact-form');
     const statusBox = document.getElementById('form-status');

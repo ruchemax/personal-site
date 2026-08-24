@@ -16,8 +16,8 @@ type Pub = {
   type: "journal" | "book" | "abstract" | "thesis";
 };
 
-/* ---------- ДАННЫЕ ---------- */
-/* Статьи в журналах */
+/* Styling or implementation note. */
+/* Styling or implementation note. */
 const journals: Pub[] = [
   { title: "Using portable luminescence profiling to refine 14C and OSL-based chronologies of lacustrine littoral sedimentary sequences: a case study from Schweriner See (NE Germany)",
     authors: "Ruchkin, M. V., Lorenz, S., Adolph, M.-L., Haberzettl, T.",
@@ -76,7 +76,7 @@ const journals: Pub[] = [
     url: "https://karpinskyinstitute.ru/ru/public/reggeology_met/content/2020/82/82_02.pdf", type: "journal" },
 ];
 
-/* Книги */
+/* Styling or implementation note. */
 const books: Pub[] = [
   { title: "Очерки по геологии кватера Южного Приладожья и Приневской низменности. Путеводитель геологических экскурсий XI Всероссийской конференции по изучению четвертичного периода, 18–20 сентября 2025 г.",
     authors: "Шитов М. В., Бискэ Ю. С., Багдасарян Т. Е., Дуданова В. И., Ручкин М. В., Сумарева И. В., Шухвостов Р. С. (ред. Назаров Д. В.)",
@@ -86,7 +86,7 @@ const books: Pub[] = [
     year: 2015, venue: "Санкт-Петербург: Картографическая фабрика ВСЕГЕИ", url: "https://webftp.vsegei.ru/GGK1000/R-42/R-42_ObZap.pdf", type: "book" },
 ];
 
-/* Материалы конференций / Диссертации */
+/* Styling or implementation note. */
 const abstracts: Pub[] = [];
 const theses: Pub[] = [
   { title: "Хронология и условия формирования мгинской морской межледниковой толщи в Приневской низменности",
@@ -97,10 +97,10 @@ const theses: Pub[] = [
     type: "thesis" },
 ];
 
-/* Объединяем для группировки по годам */
+/* Styling or implementation note. */
 const pubs: Pub[] = [...journals, ...books, ...abstracts, ...theses];
 
-/* Группировка по годам: «В печати» → 2025 → 2024 → ... */
+/* Styling or implementation note. */
 const grouped = pubs.reduce((acc, p) => {
   const key = p.year == null ? "В печати" : String(p.year);
   (acc[key] ??= []).push(p);
@@ -113,7 +113,7 @@ const years = Object.keys(grouped).sort((a, b) => {
   return Number(b) - Number(a);
 });
 
-// Человеко-понятные подписи типов для бейджа
+// Implementation note.
 const typeLabel = (t: Pub["type"]) =>
   t === "journal" ? "Статья"
   : t === "book" ? "Книга"
@@ -129,7 +129,7 @@ const typeLabel = (t: Pub["type"]) =>
     <div class="mx-auto w-full max-w-[1000px] px-6 py-16">
       <h1 class="text-4xl font-bold">Публикации</h1>
 
-      <!-- Кнопки фильтра: отдельные, белые, с рамкой, без зазоров; по умолчанию активны Журнальные и Книги -->
+      <!-- UI section -->
       <div id="filters" class="mt-6 flex flex-wrap space-x-0">
         <button data-type="journal" class="filter-chip active rounded-md border border-white/30 bg-white px-4 py-2 text-sm font-medium text-black">
           Статьи в журналах
@@ -145,21 +145,21 @@ const typeLabel = (t: Pub["type"]) =>
         </button>
       </div>
 
-      <!-- Публикации по годам -->
+      <!-- UI section -->
       <div id="pubs" class="mt-8 space-y-10">
         {years.map((year) => (
           <section class="year-block" data-year={year}>
             <h2 class="text-2xl font-semibold border-b border-white/20 pb-1">{year}</h2>
             <ul class="mt-4 space-y-4">
               {grouped[year]
-                // Порядок внутри года: статьи → книги → тезисы → диссертации
+                // Implementation note.
                 .sort((a,b) => {
                   const order = {journal:0, book:1, abstract:2, thesis:3} as const;
                   return order[a.type] - order[b.type];
                 })
                 .map((p) => (
                 <li class="pub-item relative rounded-xl border border-white/10 bg-black/1 p-4 backdrop-blur" data-type={p.type}>
-                  <!-- Бейдж типа (справа сверху) -->
+                  <!-- UI section -->
                   <span class="absolute right-3 top-3 rounded-md border border-white/20 bg-white/90 px-2 py-0.5 text-[11px] font-medium text-black">
                     {typeLabel(p.type)}
                   </span>
@@ -229,7 +229,7 @@ const typeLabel = (t: Pub["type"]) =>
     </div>
   </section>
 
-  <!-- Логика фильтрации на клиенте -->
+  <!-- UI section -->
   <script is:inline>
     const chips = Array.from(document.querySelectorAll(".filter-chip"));
     const items = Array.from(document.querySelectorAll(".pub-item"));
@@ -239,11 +239,11 @@ const typeLabel = (t: Pub["type"]) =>
       const activeTypes = new Set(
         chips.filter(c => c.classList.contains("active")).map(c => c.dataset.type)
       );
-      // показать/скрыть элементы по типу
+      // Implementation note.
       items.forEach(li => {
         li.style.display = activeTypes.has(li.dataset.type) ? "" : "none";
       });
-      // скрыть пустые годы
+      // Implementation note.
       yearBlocks.forEach(sec => {
         const visible = Array.from(sec.querySelectorAll(".pub-item"))
           .some(li => li.style.display !== "none");
@@ -266,7 +266,7 @@ const typeLabel = (t: Pub["type"]) =>
       applyFilter(); paintChips();
     }));
 
-    // старт: активны «Статьи» и «Книги»
+    // Implementation note.
     applyFilter();
     paintChips();
   </script>
