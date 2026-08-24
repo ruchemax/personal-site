@@ -25,8 +25,8 @@ const headings = entries
   backgroundOverlay={0}
 >
   <section class="w-full text-white">
-    <div class="mx-auto w-full max-w-[1000px] px-6 pb-12 pt-4">
-      <article class="paper-old shadow-2xl">
+    <div class="parchment-shell mx-auto w-full max-w-[1000px] px-3 pb-12 pt-4 md:px-5">
+      <article class="paper-old">
         <div class="relative z-10">
           <p class="mb-4 text-xs text-gray-600">Опубликовано: {publishedAt}</p>
 
@@ -71,6 +71,7 @@ const headings = entries
           <div class="document-body text-base leading-tight" set:html={documentHtml} />
 
         </div>
+        <span class="paper-bottom-edge" aria-hidden="true"></span>
       </article>
 
       <div class="mt-10">
@@ -86,43 +87,88 @@ const headings = entries
   </section>
 
   <style>
+    .parchment-shell {
+      container-type: inline-size;
+    }
+
     .paper-old {
       position: relative;
+      --paper-safe-left: 18%;
+      --paper-safe-right: 12%;
+      --paper-top-edge: 17.578125cqi;
       overflow: hidden;
-      padding: 2rem;
+      padding: 5.5rem var(--paper-safe-right) 5.5rem var(--paper-safe-left);
       border-radius: 0;
-      color: #2a1e14;
-      background-color: #f3e4c9;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, .16), rgba(255, 255, 255, .16)),
-        url('/images/textures/old-paper.webp');
-      background-position: center;
-      background-repeat: repeat;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, .35), inset 0 0 140px rgba(0, 0, 0, .22), inset 0 0 24px rgba(0, 0, 0, .12);
-      filter: saturate(1.05) contrast(1.02);
+      color: #33281f;
+      background-color: transparent;
+      box-shadow: none;
     }
 
     .paper-old::before {
       position: absolute;
-      inset: 0;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1;
+      display: block;
+      width: 100%;
+      height: var(--paper-top-edge);
       content: "";
       pointer-events: none;
-      background: rgba(255, 255, 255, .68);
-      mix-blend-mode: screen;
+      background-image: url('/images/textures/parchment-top-edge-v5.webp');
+      background-position: top center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+
+    .paper-old::after {
+      position: absolute;
+      top: var(--paper-top-edge);
+      right: 0;
+      bottom: var(--paper-top-edge);
+      left: 0;
+      z-index: 0;
+      content: "";
+      pointer-events: none;
+      background-image: url('/images/textures/parchment-bound-seamless-v5.webp');
+      background-position: top center;
+      background-repeat: no-repeat round;
+      background-size: 100% auto;
+    }
+
+    .paper-bottom-edge {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      width: 100%;
+      height: var(--paper-top-edge);
+      pointer-events: none;
+      background-image: url('/images/textures/parchment-bottom-edge-v5.webp');
+      background-position: bottom center;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
     }
 
     .paper-old .text-white,
     .paper-old .text-white * {
-      color: #2a1e14 !important;
+      color: #33281f !important;
     }
 
     .document-body {
       max-width: 820px;
       margin-right: auto;
       margin-left: auto;
-      color: #2a1e14;
+      color: #33281f;
       font-size: .9375rem;
       line-height: 1.58;
+    }
+
+    .paper-old > .relative > :not(.document-body) {
+      max-width: 820px;
+      margin-right: auto;
+      margin-left: auto;
     }
 
     .document-body :global(.document-heading) {
@@ -159,7 +205,6 @@ const headings = entries
       margin-top: .1rem;
       margin-bottom: .1rem;
       padding: .8rem 1rem .8rem 2.75rem;
-      background: rgba(255, 251, 235, .28);
       text-indent: -1.65rem;
     }
 
@@ -206,11 +251,11 @@ const headings = entries
       background: rgba(0, 0, 0, .86);
     }
 
-    @media (min-width: 768px) {
-      .paper-old { padding: 2.5rem; }
-    }
-
     @media (max-width: 700px) {
+      .paper-old {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+      }
       .document-body { font-size: .9rem; }
       .document-body :global(.household-entry) {
         padding: .7rem .75rem .7rem 2rem;
