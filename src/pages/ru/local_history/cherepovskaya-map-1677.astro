@@ -13,7 +13,10 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
 <LocalHistoryLayout 
   title="Карта земельных владений — Максим Ручкин" 
   description="Интерактивная карта земельных владений Череповской волости Белозерского уезда 1677 года с историческими данными о владельцах и границах."
-  lang={lang}>
+  lang={lang}
+  backgroundUrl="/images/background/local-history-map-bg.webp"
+  backgroundOverlay={0}
+>
   <section class="w-full text-white">
     <div class="mx-auto w-full max-w-[1000px] px-0 md:px-6 pt-4 pb-12">
       <!-- Весь контент на фоне бумаги -->
@@ -902,7 +905,7 @@ const publishedAt = new Date("2025-11-16").toLocaleDateString("ru-RU", {
         <!-- Back navigation -->
         <div class="mt-10">
           <a href="/ru/local_history" class="inline-block rounded-lg border border-amber-800/30 bg-amber-100/50 px-4 py-2 text-sm text-slate-800 hover:bg-amber-200/50">
-            ← Назад к «Краеведение»
+            ← Назад к «Краеведению и генеалогии»
           </a>
         </div>
       </div>

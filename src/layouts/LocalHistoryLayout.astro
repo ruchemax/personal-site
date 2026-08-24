@@ -3,6 +3,8 @@ const {
   title = "Maksim Ruchkin",
   description = "Personal site",
   lang = "ru", // "en" | "ru" - по умолчанию русский для краеведения
+  backgroundUrl = "/images/background/local-history-map-bg.webp",
+  backgroundOverlay = 0.32,
 } = Astro.props;
 
 import "../styles/globals.css";
@@ -21,7 +23,7 @@ const menuRu = [
   { href: "/ru/projects", label: "Проекты" },
   { href: "/ru/publications", label: "Публикации" },
   { href: "/ru/software", label: "Программы" },
-  { href: "/ru/local_history", label: "Краеведение" },
+  { href: "/ru/local_history", label: "Краеведение и генеалогия" },
   { href: "/ru/contacts", label: "Контакты" },
 ];
 // По умолчанию используем русское меню, но на клиенте оно будет обновлено
@@ -54,17 +56,14 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
     <link rel="preload" as="image" href="/images/background/projects-bg.webp" />
     <link rel="preload" as="image" href="/images/background/contacts-bg.webp" />
     <link rel="preload" as="image" href="/images/background/software-bg.webp" />
-    <link rel="preload" as="image" href="/images/background/local-history-bg.webp" />
+    {backgroundUrl && <link rel="preload" as="image" href={backgroundUrl} />}
   </head>
 
   <body
     class="m-0 flex min-h-screen flex-col text-white bg-fixed bg-cover bg-center bg-no-repeat opacity-0 transition-opacity duration-1000 ease-in-out"
-    style="
-      background-image:
-        linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
-        url('/images/background/local-history-bg.webp');
-      background-color:#0b1220;
-    "
+    style={backgroundUrl
+      ? `background-image: linear-gradient(rgba(0,0,0,${backgroundOverlay}), rgba(0,0,0,${backgroundOverlay})), url('${backgroundUrl}'); background-color:#0b1220;`
+      : "background-image:none; background-color:#0b1220;"}
   >
     <header class="sticky top-0 z-40 border-b border-white/10 bg-black/40 backdrop-blur">
       <nav class="mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between px-4">
@@ -111,7 +110,7 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
       © {new Date().getFullYear()} Maksim Ruchkin
     </footer>
 
-    <script>
+    <script define:vars={{ backgroundUrl }}>
       // Простое сохранение языка при загрузке страницы краеведения
       document.addEventListener('DOMContentLoaded', function() {
         // Управление мобильным меню
@@ -183,17 +182,21 @@ const currentLang = path.startsWith("/ru") ? "ru" : "en";
         
         // Плавное появление фона после загрузки
         const body = document.body;
-        const backgroundImage = new Image();
-        
-        backgroundImage.onload = function() {
+        if (!backgroundUrl) {
           body.style.opacity = '1';
-        };
-        
-        backgroundImage.onerror = function() {
-          body.style.opacity = '1';
-        };
-        
-        backgroundImage.src = '/images/background/local-history-bg.webp';
+        } else {
+          const backgroundImage = new Image();
+
+          backgroundImage.onload = function() {
+            body.style.opacity = '1';
+          };
+
+          backgroundImage.onerror = function() {
+            body.style.opacity = '1';
+          };
+
+          backgroundImage.src = backgroundUrl;
+        }
       });
     </script>
   </body>
