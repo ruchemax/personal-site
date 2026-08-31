@@ -172,7 +172,7 @@ const headings = [...documentHtml.matchAll(/<h2 id="([^"]+)" class="document-hea
       color: #33281f;
       font-size: .9375rem;
       line-height: 1.58;
-      text-align: justify;
+      text-align: left;
     }
 
     .paper-old > .relative > :not(.document-body) {
@@ -203,6 +203,15 @@ const headings = [...documentHtml.matchAll(/<h2 id="([^"]+)" class="document-hea
       font-weight: 400;
     }
 
+    .document-body :global(h3.document-heading) {
+      margin-top: 1.5rem;
+      margin-bottom: .5rem;
+      padding-bottom: 0;
+      border-bottom: 0;
+      color: #111827;
+      text-align: center;
+    }
+
     .document-body :global(.document-entry:first-child strong) {
       font-weight: 400;
     }
@@ -210,6 +219,10 @@ const headings = [...documentHtml.matchAll(/<h2 id="([^"]+)" class="document-hea
     .document-body :global(.document-entry) {
       margin-top: .5rem;
       margin-bottom: .5rem;
+    }
+
+    .document-body :global(.document-summary) {
+      margin-top: 2rem;
     }
 
     .document-body :global(.household-entry) {
@@ -235,7 +248,7 @@ const headings = [...documentHtml.matchAll(/<h2 id="([^"]+)" class="document-hea
 
     .document-body :global(.surname) {
       color: #9a3412;
-      font-weight: 650;
+      font-weight: 600;
     }
 
     .toc-return {
